@@ -1,0 +1,2943 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ملخص منهج 001 - تقييم</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #1a1d24;
+    --border: #252830;
+    --accent: #d4a843;
+    --accent2: #4a9eff;
+    --accent3: #e05c5c;
+    --text: #e8eaf0;
+    --text-dim: #8891a4;
+    --correct: #3dba78;
+    --wrong: #e05c5c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0a0c10 0%, #111827 50%, #0d1117 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 32px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-title { font-size: 1.4rem; font-weight: 900; color: var(--accent); letter-spacing: -0.5px; }
+  .header-sub { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+  .progress-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* NAV TABS */
+  .nav {
+    display: flex;
+    gap: 4px;
+    padding: 20px 40px 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 10px 22px;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid transparent;
+    border-bottom: none;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--surface); }
+  .nav-tab.active {
+    color: var(--accent);
+    background: var(--surface);
+    border-color: var(--border);
+    border-bottom-color: var(--surface);
+    margin-bottom: -1px;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CHAPTER HEADER */
+  .chapter-header {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .chapter-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .chapter-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+  .chapter-desc {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title .icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(212, 168, 67, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+
+  /* INFO ROWS */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+
+  .info-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .info-label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .info-value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .info-value.highlight { color: var(--accent); }
+  .info-value.warning { color: var(--accent3); }
+
+  /* LISTS */
+  .styled-list { list-style: none; }
+  .styled-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    padding-right: 16px;
+    position: relative;
+    font-size: 0.93rem;
+    color: var(--text);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .styled-list li:last-child { border-bottom: none; }
+  .styled-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  /* NUMBERED LIST */
+  .num-list { list-style: none; counter-reset: item; }
+  .num-list li {
+    counter-increment: item;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.93rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before {
+    content: counter(item);
+    background: rgba(212, 168, 67, 0.15);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.8rem;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: rgba(212, 168, 67, 0.1);
+    color: var(--accent);
+    font-weight: 700;
+    padding: 12px 16px;
+    text-align: right;
+    border-bottom: 2px solid var(--accent);
+  }
+  .data-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .data-table tr:hover td { background: var(--surface2); }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .badge-gold { background: rgba(212,168,67,0.15); color: var(--accent); }
+  .badge-blue { background: rgba(74,158,255,0.15); color: var(--accent2); }
+
+  /* ALERT BOX */
+  .alert {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .alert-warn { background: rgba(224,92,92,0.1); border: 1px solid rgba(224,92,92,0.3); color: #f0a0a0; }
+  .alert-info { background: rgba(74,158,255,0.1); border: 1px solid rgba(74,158,255,0.3); color: #a0c8ff; }
+  .alert-success { background: rgba(61,186,120,0.1); border: 1px solid rgba(61,186,120,0.3); color: #90d4b0; }
+
+  /* MCQ QUESTIONS */
+  .quiz-container { display: flex; flex-direction: column; gap: 24px; }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .question-card.answered-correct { border-color: var(--correct); }
+  .question-card.answered-wrong { border-color: var(--wrong); }
+
+  .question-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .q-number {
+    background: rgba(212, 168, 67, 0.15);
+    color: var(--accent);
+    font-weight: 900;
+    font-size: 0.85rem;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .q-text {
+    font-size: 0.97rem;
+    font-weight: 600;
+    line-height: 1.6;
+    padding-top: 4px;
+  }
+
+  .options-list { padding: 16px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--surface2);
+  }
+  .option:hover { border-color: var(--accent); background: rgba(212,168,67,0.05); }
+  .option.selected-correct { border-color: var(--correct); background: rgba(61,186,120,0.1); }
+  .option.selected-wrong { border-color: var(--wrong); background: rgba(224,92,92,0.1); }
+  .option.reveal-correct { border-color: var(--correct); background: rgba(61,186,120,0.08); }
+
+  .option-letter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent);
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212,168,67,0.1);
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+  .option.selected-correct .option-letter { background: rgba(61,186,120,0.2); color: var(--correct); }
+  .option.selected-wrong .option-letter { background: rgba(224,92,92,0.2); color: var(--wrong); }
+  .option.reveal-correct .option-letter { background: rgba(61,186,120,0.2); color: var(--correct); }
+
+  .option-text { font-size: 0.9rem; line-height: 1.5; padding-top: 2px; }
+
+  .explanation {
+    margin: 0 24px 20px;
+    padding: 14px 16px;
+    background: rgba(212,168,67,0.06);
+    border: 1px solid rgba(212,168,67,0.2);
+    border-radius: 8px;
+    font-size: 0.87rem;
+    color: var(--text-dim);
+    display: none;
+  }
+  .explanation.show { display: block; }
+  .explanation strong { color: var(--accent); }
+
+  /* SCORE */
+  .score-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .score-text { font-size: 0.9rem; color: var(--text-dim); }
+  .score-num { font-size: 1.4rem; font-weight: 900; color: var(--accent); font-family: 'IBM Plex Mono', monospace; }
+  .reset-btn {
+    padding: 10px 20px;
+    background: rgba(212,168,67,0.1);
+    border: 1px solid rgba(212,168,67,0.3);
+    border-radius: 8px;
+    color: var(--accent);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { background: rgba(212,168,67,0.2); }
+
+  /* DEFINITION CARDS */
+  .def-grid { display: flex; flex-direction: column; gap: 14px; }
+  .def-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .def-term {
+    background: rgba(212,168,67,0.1);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .def-meaning {
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(212,168,67,0.08), rgba(212,168,67,0.04));
+    border: 1px solid rgba(212,168,67,0.25);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .highlight-box strong { color: var(--accent); }
+
+  /* TABLE */
+  .data-table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+  .data-table th { background:rgba(212,168,67,0.15); color:var(--accent); padding:10px 14px; text-align:right; border-bottom:2px solid var(--border); }
+  .data-table td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text); }
+  .data-table tr:hover td { background:var(--surface2); }
+
+  /* ALERT BOX */
+  .alert-box { background:rgba(212,168,67,0.08); border:1px solid rgba(212,168,67,0.3); border-right:4px solid var(--accent); border-radius:8px; padding:14px 18px; font-size:0.88rem; color:var(--text); }
+  .tag-warning { color:var(--accent3); font-weight:700; }
+  .highlight-num { color:var(--accent); font-weight:700; }
+
+  /* QUIZ */
+  .quiz-q { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:20px; }
+  .q-text { font-size:1rem; font-weight:600; margin-bottom:14px; display:flex; gap:12px; }
+  .q-num { background:var(--accent); color:#0a0c10; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.8rem; flex-shrink:0; }
+  .q-opts { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  @media (max-width:600px) { .q-opts { grid-template-columns:1fr; } }
+  .q-opt { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; cursor:pointer; font-size:0.88rem; transition:all 0.15s; }
+  .q-opt:hover { border-color:var(--accent); }
+  .q-opt.selected { background:rgba(212,168,67,0.15); border-color:var(--accent); color:var(--accent); }
+  .q-opt.correct-ans { background:rgba(61,186,120,0.15); border-color:var(--correct); color:var(--correct); }
+  .q-opt.wrong-ans { background:rgba(224,92,92,0.15); border-color:var(--wrong); color:var(--wrong); }
+  .btn-primary { background:var(--accent); color:#0a0c10; border:none; padding:14px 36px; border-radius:10px; font-family:Cairo,sans-serif; font-size:1rem; font-weight:700; cursor:pointer; transition:opacity 0.2s; }
+  .btn-primary:hover { opacity:0.85; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">ملخص منهج 001 — تقييم</div>
+    <div class="header-sub">الأطر التنظيمية لمهنة التقييم ومعايير التقييم الدولية</div>
+  </div>
+  <div class="progress-pill" id="score-pill">الوحدة الأولى • 4 فصول</div>
+</div>
+
+<div class="nav">
+  <button class="nav-tab active" onclick="showSection('ch1')">الفصل 1 — النظام</button>
+  <button class="nav-tab" onclick="showSection('q1')">أسئلة الفصل 1</button>
+  <button class="nav-tab" onclick="showSection('ch2')">الفصل 2 — الضوابط</button>
+  <button class="nav-tab" onclick="showSection('q2')">أسئلة الفصل 2</button>
+  <button class="nav-tab" onclick="showSection('ch3')">الفصل 3 — السلوك</button>
+  <button class="nav-tab" onclick="showSection('q3')">أسئلة الفصل 3</button>
+  <button class="nav-tab" onclick="showSection('ch4')">الفصل 4 — المفاهيم</button>
+  <button class="nav-tab" onclick="showSection('q4')">أسئلة الفصل 4</button>
+  <button class="nav-tab" onclick="showSection('final')" style="background:rgba(212,168,67,0.1);color:var(--accent);border:1px solid rgba(212,168,67,0.3);">🎯 اختبار شامل</button>
+  <button class="nav-tab" onclick="showSection('u2f1')">الوحدة ٢ - ف١</button>
+  <button class="nav-tab" onclick="showSection('u2f2')">الوحدة ٢ - ف٢</button>
+  <button class="nav-tab" onclick="showSection('u2f3')">الوحدة ٢ - ف٣</button>
+  <button class="nav-tab" onclick="showSection('u3f1')">الوحدة ٣ - ف١</button>
+  <button class="nav-tab" onclick="showSection('u3f2')">الوحدة ٣ - ف٢</button>
+  <button class="nav-tab" onclick="showSection('quiz_u2')">أسئلة الوحدة ٢</button>
+  <button class="nav-tab" onclick="showSection('quiz_u3')">أسئلة الوحدة ٣</button>
+</div>
+
+<div class="content">
+
+<!-- ===== CHAPTER 1 ===== -->
+<div id="ch1" class="section active">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الأولى • الفصل الأول</div>
+    <div class="chapter-title">نظام المقيمين المعتمدين ولائحته التنفيذية</div>
+    <div class="chapter-desc">الأساس القانوني والتنظيمي لمهنة التقييم في المملكة + أنواع العضويات والساعات المطلوبة</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏛️</span> هيئة تقييم — نشأتها ودورها</div>
+    <ul class="styled-list">
+      <li>أُنشئت بموجب <strong>المرسوم الملكي رقم م/43</strong> بتاريخ 9/7/1433هـ</li>
+      <li>تعمل تحت إشراف <strong>وزارة المالية</strong></li>
+      <li>شخصية اعتبارية مستقلة، غير هادفة للربح، لها ميزانية مستقلة</li>
+      <li>مقرها الرياض، ولها الحق في فتح مكاتب تابعة داخل المملكة</li>
+    </ul>
+    <div class="info-grid" style="margin-top:16px;">
+      <div class="info-item">
+        <div class="info-label">رؤية الهيئة</div>
+        <div class="info-value">الارتقاء بجودة مهنة التقييم في المملكة لتحقيق الريادة الدولية</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">رسالة الهيئة</div>
+        <div class="info-value">تطوير المهنة والإشراف على تنظيمها والارتقاء بالخدمات المقدمة</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span> أدوار الهيئة الخمسة — احفظها</div>
+    <ul class="num-list">
+      <li><strong>التنظيم:</strong> وضع معايير ولوائح المهنة</li>
+      <li><strong>التطوير:</strong> رفع مستوى العاملين مهنياً وفنياً وأخلاقياً</li>
+      <li><strong>الاعتماد:</strong> تأهيل المقيمين وإصدار التراخيص</li>
+      <li><strong>الرقابة:</strong> مراقبة الأداء والتحقق من التزام المعايير</li>
+      <li><strong>التوعية:</strong> زيادة ثقة المجتمع بالمهنة</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> أنواع العضويات — الأساسي والمنتسب والطلاب</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>نوع العضوية</th>
+          <th>الشرط الرئيسي</th>
+          <th>ملاحظة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-gold">أساسي</span></td>
+          <td>درجة جامعية + شهادة الزمالة في أحد الفروع</td>
+          <td>اسمه يُضاف إلى اسم العضوية</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-blue">منتسب</span></td>
+          <td>درجة جامعية بدون شهادة الزمالة (اجتاز المستوى الأول فقط)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-gold">شرف</span></td>
+          <td>يُمنح من المجلس تقديراً لإنجازاتهم</td>
+          <td>دائمة — لا تتحدد بمدة</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-blue">طلاب منتسبون</span></td>
+          <td>طلاب تخصصات ذات علاقة بالتقييم دون 25 سنة</td>
+          <td>لا تُمنح في أكثر من فرع واحد</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⏱️</span> مدة العضوية — تفاصيل مهمة</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">العضوية الشرفية</div>
+        <div class="info-value highlight">دائمة — لا تتحدد بمدة</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">العضوية السنوية</div>
+        <div class="info-value">سنة واحدة تبدأ 1 يناير وتنتهي 31 ديسمبر</div>
+      </div>
+    </div>
+    <div class="alert alert-info" style="margin-top:14px;">
+      <span class="alert-icon">ℹ️</span>
+      <div>لو صدور العضوية أو تجديدها أو حساب المنشأة جاء بعد بداية الربع الأخير من السنة (بعد 30 سبتمبر)، يُضاف المقابل المالي للفترة المتبقية من السنة الحالية + المقابل المالي للسنة التالية كاملة. <strong>مثال: عضوية أُصدرت 2 أكتوبر 2022 → يدفع المتبقي من 2022 + سنة 2023 كاملة.</strong></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎓</span> شهادة الزمالة — الشروط والمسار</div>
+    <ul class="styled-list">
+      <li>هدفها: التحقق من المعرفة النظرية + القدرة على التطبيق + الالتزام بالقواعد المهنية</li>
+      <li>شرط أساسي: درجة جامعية في التخصصات المعتمدة</li>
+      <li>اجتياز جميع مستويات الفرع المطلوب</li>
+      <li>الحد الأقصى للحصول عليها: <strong>5 سنوات</strong> من تاريخ أول تسجيل</li>
+      <li>استثناء: يمكن تمديدها سنة إضافية للعذر المقبول (إجمالي لا يتجاوز 6 سنوات)</li>
+    </ul>
+    <div class="alert alert-warn" style="margin-top:12px;">
+      <span class="alert-icon">⚠️</span>
+      <div>من يتجاوز المدة بدون إتمام الشهادة: يُعاد تسجيله في المستويات <strong>كاملة من جديد</strong></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⏰</span> ساعات الخبرة المطلوبة لكل فرع</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>فرع التقييم</th>
+          <th>إجمالي الخبرة</th>
+          <th>منها مباشرة (50%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>تقييم العقارات</td>
+          <td class="highlight-num"><strong style="color:var(--accent)">3,000 ساعة</strong></td>
+          <td>1,500 ساعة</td>
+        </tr>
+        <tr>
+          <td>تقييم المنشآت الاقتصادية</td>
+          <td><strong>2,000 ساعة</strong></td>
+          <td>1,000 ساعة</td>
+        </tr>
+        <tr>
+          <td>تقييم الآلات والمعدات</td>
+          <td><strong>2,000 ساعة</strong></td>
+          <td>1,000 ساعة</td>
+        </tr>
+        <tr>
+          <td>تقييم أضرار المركبات</td>
+          <td><strong style="color:var(--accent3)">3,500 ساعة</strong></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>تقييم المعادن الثمينة والأحجار الكريمة</td>
+          <td><strong>2,500 ساعة</strong></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📌</span> ساعات الخبرة المباشرة وغير المباشرة</div>
+    <div class="def-grid">
+      <div class="def-card">
+        <div class="def-term">ساعات الخبرة المباشرة</div>
+        <div class="def-meaning">الساعات المكتسبة من أداء مهام التقييم الفعلية في الفرع — تشمل: مهام التقييم الأساسية، مراجعة التقييمات، الأدوار الداعمة في مراحل التقييم</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">ساعات الخبرة غير المباشرة</div>
+        <div class="def-meaning">الساعات المكتسبة من أعمال ومهام ذات صلة بالتقييم — تحددها الأمانة العامة للهيئة</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏗️</span> فروع التقييم الستة</div>
+    <ul class="styled-list">
+      <li>تقييم العقارات (أكثر الفروع شيوعاً)</li>
+      <li>تقييم المنشآت الاقتصادية</li>
+      <li>تقييم الآلات والمعدات والممتلكات المنقولة</li>
+      <li>تقييم أضرار المركبات</li>
+      <li>تقييم المعادن الثمينة والأحجار الكريمة</li>
+      <li>الأصول غير الملموسة (ضمن فروع أخرى)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔑</span> شروط القيد في السجل — 5 شروط</div>
+    <ul class="num-list">
+      <li>سعودي الجنسية</li>
+      <li>كامل الأهلية</li>
+      <li>حسن السيرة والسلوك (غير محكوم بحد شرعي أو جريمة مخلة بالشرف)</li>
+      <li>لديه خبرة عملية بالتقييم</li>
+      <li>عضو أساسي في الهيئة</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚙️</span> إجراءات القيد — تفاصيل مهمة</div>
+    <ul class="styled-list">
+      <li>تُشكَّل لجنة تُسمى <strong>"لجنة قيد المقيمين"</strong> تنعقد بحضور جميع أعضائها وتصدر قراراتها <strong>بالأغلبية</strong></li>
+      <li>للهيئة النظر في طلبات أعضاء هيئات مهنية أخرى للحصول على ترخيص بمزاولة المهنة</li>
+      <li>النظام يُنشر في الجريدة الرسمية ويُعمل به بعد <strong>180 يوماً</strong> من تاريخ نشره</li>
+    </ul>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div>الـ 180 يوماً رقم يجيب في الاختبار — لا تخلطه بالـ 30 يوماً (مدة إبلاغ الهيئة بتغيير العنوان) ولا بالـ 30 يوماً (مدة التوقف عن العمل)</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== QUESTIONS 1 ===== -->
+<div id="q1" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">أسئلة الفصل الأول</div>
+    <div class="chapter-title">اختبر نفسك — نظام المقيمين المعتمدين</div>
+    <div class="chapter-desc">12 سؤال MCQ بمستوى الاختبار الفعلي</div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="score-text">نتيجتك</div>
+      <div class="score-num" id="score1">0/0</div>
+    </div>
+    <button class="reset-btn" onclick="resetQuiz('q1-quiz')">إعادة المحاولة</button>
+  </div>
+
+  <div class="quiz-container" id="q1-quiz">
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">01</div>
+        <div class="q-text">صدر نظام المقيمين المعتمدين ابتداءً بموجب مرسوم ملكي رقم:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">م/109 بتاريخ 22/8/1441هـ</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">م/43 بتاريخ 9/7/1433هـ</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">م/190 بتاريخ 22/11/1444هـ</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">م/33 بتاريخ 26/2/1443هـ</div></div>
+      </div>
+      <div class="explanation">✅ <strong>م/43 لعام 1433هـ</strong> هو النظام الأصلي. المرسوم م/109 جاء بتعديلات على بعض المواد، وم/190 جاء بتعديلات أخيرة.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">02</div>
+        <div class="q-text">الهيئة السعودية للمقيمين المعتمدين تعمل تحت إشراف:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">وزارة التجارة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مجلس الوزراء</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">وزارة المالية</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">البنك المركزي السعودي</div></div>
+      </div>
+      <div class="explanation">✅ الهيئة تعمل تحت إشراف <strong>وزارة المالية</strong>. هذا نص صريح في النظام.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">03</div>
+        <div class="q-text">كم عدد ساعات الخبرة المطلوبة للحصول على شهادة الزمالة في فرع تقييم أضرار المركبات؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">2,000 ساعة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">2,500 ساعة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">3,000 ساعة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">3,500 ساعة</div></div>
+      </div>
+      <div class="explanation">✅ <strong>3,500 ساعة</strong> — هذا الفرع الأعلى متطلبات من حيث ساعات الخبرة. تقييم العقارات يحتاج 3,000، والمعادن الثمينة 2,500.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">04</div>
+        <div class="q-text">الحد الأقصى لمدة الحصول على شهادة الزمالة من تاريخ أول تسجيل في المستويات هو:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">3 سنوات</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">5 سنوات</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">6 سنوات</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">7 سنوات</div></div>
+      </div>
+      <div class="explanation">✅ <strong>5 سنوات</strong> هو الحد الأصلي. يمكن استثناءً تمديدها سنة واحدة فقط لعذر مقبول — فيصبح الإجمالي 6 سنوات كحد أقصى مطلق.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">05</div>
+        <div class="q-text">شرط ألا تقل نسبة الساعات المباشرة عن 50% من إجمالي ساعات الخبرة ينطبق على أي الفروع التالية؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تقييم العقارات + تقييم المنشآت الاقتصادية + تقييم الآلات والمعدات</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">جميع الفروع بدون استثناء</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تقييم أضرار المركبات فقط</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">تقييم العقارات فقط</div></div>
+      </div>
+      <div class="explanation">✅ النص يذكر شرط الـ50% مباشرة لثلاثة فروع: العقارات (1,500 من 3,000) + المنشآت (1,000 من 2,000) + الآلات والمعدات (1,000 من 2,000).</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">06</div>
+        <div class="q-text">لو أن محمداً سجّل في مستويات الزمالة في يناير 2020 ولم يتمكن من إتمامها حتى ديسمبر 2025، ماذا يترتب على ذلك؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يحصل على تمديد تلقائي لمدة سنتين</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يُنهى تسجيله في الهيئة نهائياً</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يُعاد تسجيله في جميع المستويات من البداية</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يُمنح سنة إضافية أخيرة</div></div>
+      </div>
+      <div class="explanation">✅ تجاوز الـ5 سنوات بدون الحصول على الشهادة يترتب عليه <strong>إعادة جميع المستويات من جديد</strong>. السنة الإضافية تحتاج عذراً مقبولاً من الهيئة.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">07</div>
+        <div class="q-text">الهيئة السعودية للمقيمين المعتمدين من حيث طبيعتها هي:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">جهة حكومية تهدف للربح</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">شركة مساهمة مختلطة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مؤسسة خيرية</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">جهة اعتبارية مستقلة غير هادفة للربح</div></div>
+      </div>
+      <div class="explanation">✅ الهيئة <strong>شخصية اعتبارية مستقلة + غير هادفة للربح + لها ميزانية مستقلة</strong>. هذه الثلاث صفات مجتمعة هي الإجابة الصحيحة.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">08</div>
+        <div class="q-text">العضوية الشرفية في الهيئة تمتاز بأنها:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تتجدد تلقائياً كل سنة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">دائمة لا تتحدد بمدة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مدتها 3 سنوات قابلة للتجديد</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">تُمنح للمتقدمين الجدد فقط</div></div>
+      </div>
+      <div class="explanation">✅ العضوية الشرفية <strong>دائمة ولا تتحدد بمدة</strong>، ويمنحها المجلس تقديراً لإنجازات الشخص في المهنة.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">09</div>
+        <div class="q-text">أحمد مسجّل كعضو أساسي وحصل على الزمالة في تقييم العقارات. سيُضاف إلى اسم عضويته:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">اسم الفرع الذي حصل فيه على الزمالة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">رقم مستوى الزمالة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تاريخ الحصول على الزمالة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">رقم الترخيص</div></div>
+      </div>
+      <div class="explanation">✅ بالنسبة للعضوية الأساسية: <strong>اسم الفرع</strong> الذي حصل فيه على الزمالة يُضاف إلى اسم العضوية. مثلاً: "عضو أساسي — تقييم العقارات".</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">10</div>
+        <div class="q-text">ما الكفاءات الثلاث الأساسية التي يجب توفرها في المقيم المهني وفق معايير التقييم الدولية؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">الخبرة + الترخيص + العضوية</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">الشهادة الجامعية + الخبرة + التقارير</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">المعرفة المهنية + المهارات المهنية + القيم الأخلاقية والسلوكية</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">التعليم المستمر + الخبرة + السمعة</div></div>
+      </div>
+      <div class="explanation">✅ مجلس معايير التقييم الدولية (IVSC) حدد ثلاث كفاءات: <strong>المعرفة المهنية + المهارات المهنية + القيم الأخلاقية والسلوكية</strong>. يُكتسبن عبر الزمالة والتعليم المستمر.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">11</div>
+        <div class="q-text">العضوية السنوية للهيئة تبدأ وتنتهي في:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تبدأ بتاريخ إصدارها وتنتهي بعد سنة بالضبط</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">تبدأ أول رجب وتنتهي آخر جمادى الآخرة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تبدأ أول السنة المالية للهيئة وتنتهي بنهايتها</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">تبدأ 1 يناير وتنتهي 31 ديسمبر من نفس السنة</div></div>
+      </div>
+      <div class="explanation">✅ العضوية السنوية <strong>تبدأ أول يوم من كل سنة ميلادية (1 يناير) وتنتهي بنهايتها (31 ديسمبر)</strong>. وإجمالي أيام السنة الميلادية 365 يوماً.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">12</div>
+        <div class="q-text">الأعمال الواردة في النظام التي تستلزم شروطاً إضافية خاصة للمقيم تشمل: (اختر الإجابة الصحيحة كاملة)</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تقييم العقارات للحكومة + مراجعة تقارير مقيمين آخرين</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">تقييم الأصول الحكومية + تقييم نزع الملكية + تقييم صناديق الاستثمار + التقارير المالية للشركات المدرجة + مراجعة تقارير مقيمين آخرين</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">جميع أعمال التقييم دون استثناء</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">تقييم المعادن الثمينة فقط</div></div>
+      </div>
+      <div class="explanation">✅ النظام يحدد 5 أعمال خاصة: <strong>تقييم الأصول الحكومية، تقييم نزع الملكية، تقييم عقارات صناديق الاستثمار، التقارير المالية للشركات المدرجة، مراجعة تقارير مقيمين آخرين</strong>.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CHAPTER 2 ===== -->
+<div id="ch2" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الأولى • الفصل الثاني</div>
+    <div class="chapter-title">ضوابط مزاولة مهنة التقييم</div>
+    <div class="chapter-desc">الالتزامات العامة والخاصة + العقوبات + حالات إلغاء الترخيص والعضوية</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📜</span> الالتزامات العامة للمقيم المعتمد</div>
+    <ul class="num-list">
+      <li>الالتزام بقواعد السلوك والآداب + معايير التقييم + اللوائح والأنظمة</li>
+      <li>ممارسة المهنة من خلال منشأة التقييم فقط</li>
+      <li>السماح للهيئة بمراقبة الأداء وضبط المخالفات</li>
+      <li>إبراز عضويته وترخيصه عند أداء أي عمل من أعمال التقييم</li>
+      <li>إبلاغ الهيئة بعنوان منشأته وأي تغيير يطرأ عليه <strong>خلال 30 يوماً</strong></li>
+      <li>وضع لوحة على مقر منشأة التقييم تدل على ممارسة المهنة</li>
+      <li>لا يحق لأي شخص ممارسة التقييم في فرع ما إلا إذا كان مرخصاً في نفس الفرع</li>
+      <li>مراعاة نظام العمل بشأن نسبة الموظفين السعوديين</li>
+      <li>الالتزام بالتعليم المهني المستمر (CPD)</li>
+      <li>المساهمة في تدريب المنتسبين والطلاب</li>
+      <li>تجديد العضوية والترخيص قبل انتهائهما</li>
+      <li>لا يجوز الجمع بين المهنة وأعمال تتعارض مع قواعد السلوك والآداب</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> نسبة التوطين حسب عدد الموظفين</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>عدد الموظفين</th><th>النسبة المطلوبة</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1 إلى 20 موظف</td><td><strong>30%</strong></td></tr>
+        <tr><td>21 إلى 30 موظف</td><td><strong>35%</strong></td></tr>
+        <tr><td>31 إلى 40 موظف</td><td><strong>40%</strong></td></tr>
+        <tr><td>41 إلى 100 موظف</td><td><strong>45%</strong></td></tr>
+        <tr><td>أكثر من 100 موظف</td><td><strong style="color:var(--accent)">50%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📄</span> الالتزامات الخاصة بالتقارير</div>
+    <ul class="styled-list">
+      <li>يجب أن يوقّع التقرير المقيم المعتمد نفسه (لا يجوز إنابة شخص آخر في التوقيع)</li>
+      <li>إذا كان شخصاً اعتبارياً: يوقّع الشريك الذي شارك أو أشرف على التقييم</li>
+      <li>جميع تقارير التقييم باللغة العربية (يجوز استخدام لغة أخرى باتفاق مع العميل)</li>
+      <li>إعداد ملف عمل متكامل لكل تقرير تقييم نهائي</li>
+      <li>إيداع نسخة نهائية من كل تقرير في حساب المنشأة مع وضع رمز الإيداع لدى الهيئة</li>
+      <li>الالتزام بالحد الأدنى في نماذج تقرير التقييم وعقد تقديم الخدمات</li>
+      <li>الاحتفاظ بجميع المستندات المتعلقة بالتقييم <strong>10 سنوات</strong> من تاريخ إصدار التقرير النهائي</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⛔</span> الالتزامات الخاصة بالبيانات</div>
+    <ul class="styled-list">
+      <li>إفادة الهيئة بأي معلومات أو بيانات أو مستندات تطلبها خلال المدة التي تحددها</li>
+      <li>الملف المذكور يجب أن يكون معداً للفحص والمراجعة ويوضح المراحل التي مرّ بها المقيم</li>
+      <li>استخدام الأنظمة الإلكترونية المعتمدة لتنظيم ممارسة المهنة والتحديث المستمر</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🚫</span> إجراءات التوقف عن ممارسة المهنة</div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div>إذا توقف المقيم عن ممارسة المهنة مؤقتاً أو نهائياً يجب اتباع الإجراءات التالية:</div>
+    </div>
+    <ul class="num-list">
+      <li>إخطار الهيئة والعملاء بالتوقف ومدته <strong>خلال 30 يوماً</strong> من تاريخ التوقف</li>
+      <li>عند توقف أحد الشركاء: يقوم باقي الشركاء بتعديل عقد الشركة وإخطار الهيئة</li>
+      <li>إذا توقف نهائياً أو لمدة تضر بالعملاء: يصفّي جميع المعاملات والحقوق والالتزامات وفق الإجراءات المحددة</li>
+    </ul>
+    <div class="highlight-box" style="margin-top:14px;">
+      <strong>مدة التصفية:</strong> لا تتجاوز <strong>60 يوماً</strong> في جميع الأحوال
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">❌</span> حالات إلغاء الترخيص — 4 حالات</div>
+    <ul class="num-list">
+      <li>التوقف النهائي عن ممارسة المهنة</li>
+      <li>التقدم بطلب الإلغاء</li>
+      <li>الإخلال بأي من شروط الترخيص</li>
+      <li>صدور قرار من الجهة المختصة بالإلغاء أو شطب القيد</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🚷</span> حالات إلغاء العضوية — 5 حالات</div>
+    <ul class="num-list">
+      <li>التقدم بطلب الإلغاء</li>
+      <li>الإخلال بأي من شروط العضوية</li>
+      <li>صدور قرار إلغاء العضوية</li>
+      <li>صدور قرار بشطب القيد</li>
+      <li>صدور قرار بإلغاء الترخيص أو شطب القيد</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span> العقوبات المنصوص عليها — 8 أنواع</div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div>العقوبات تُطبق على من يخالف أحكام نظام المقيمين المعتمدين. قائمة العقوبات حسب التصاعد:</div>
+    </div>
+    <ul class="num-list">
+      <li>الإنذار</li>
+      <li>اللوم</li>
+      <li>الإيقاف عن ممارسة المهنة (لا يزيد عن سنة)</li>
+      <li>غرامة مالية (لا تتجاوز 200,000 ريال)</li>
+      <li>إلغاء الترخيص</li>
+      <li>إلغاء العضوية (لمن لم يُقيّد اسمه في السجل)</li>
+      <li>شطب قيد المخالف من سجل المقيمين</li>
+      <li>السجن (لا يتجاوز سنة واحدة)</li>
+    </ul>
+    <div class="alert alert-info" style="margin-top:12px;">
+      <span class="alert-icon">ℹ️</span>
+      <div>من أُلغي ترخيصه أو عضويته أو شُطب قيده: <strong>يحق له التقدم لترخيص جديد أو عضوية جديدة بعد مضي 3 سنوات</strong></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📌</span> المخالفات التي تنظر فيها المحكمة المختصة مباشرة</div>
+    <ul class="styled-list">
+      <li>ممارسة مهنة التقييم بدون ترخيص</li>
+      <li>ممارسة المهنة بعد إلغاء الترخيص أو شطبه أو انتهائه</li>
+      <li>فتح أو إنشاء أو إدارة مكتب بدون ترخيص</li>
+      <li>تقديم بيانات غير مطابقة للحقيقة للحصول على الترخيص</li>
+      <li>استخدام وسائل الدعاية لإيهام الجمهور بأحقيته في المهنة</li>
+      <li>انتحال لقب من ألقاب المقيمين المعتمدين</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ===== QUESTIONS 2 ===== -->
+<div id="q2" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">أسئلة الفصل الثاني</div>
+    <div class="chapter-title">اختبر نفسك — ضوابط مزاولة المهنة</div>
+    <div class="chapter-desc">10 أسئلة MCQ بمستوى الاختبار الفعلي</div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="score-text">نتيجتك</div>
+      <div class="score-num" id="score2">0/0</div>
+    </div>
+    <button class="reset-btn" onclick="resetQuiz('q2-quiz')">إعادة المحاولة</button>
+  </div>
+
+  <div class="quiz-container" id="q2-quiz">
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">01</div>
+        <div class="q-text">المقيم المعتمد ملزم بإبلاغ الهيئة عن تغيير عنوان منشأته خلال:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">7 أيام من تاريخ التغيير</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">15 يوماً من تاريخ التغيير</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">30 يوماً من تاريخ التغيير أو من تاريخ الحصول على الترخيص</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">60 يوماً من تاريخ التغيير</div></div>
+      </div>
+      <div class="explanation">✅ المدة المحددة هي <strong>30 يوماً</strong> — تنطبق على تغيير العنوان، وكذلك على أي تغيير يطرأ على المعلومات المسجلة في حساب المنشأة.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">02</div>
+        <div class="q-text">الحد الأقصى للغرامة المالية المفروضة على مخالفة أحكام نظام المقيمين المعتمدين هو:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">200,000 ريال</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">100,000 ريال</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">500,000 ريال</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">50,000 ريال</div></div>
+      </div>
+      <div class="explanation">✅ الغرامة المالية <strong>لا تتجاوز 200,000 ريال سعودي</strong>. وعقوبة السجن لا تتجاوز سنة واحدة.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">03</div>
+        <div class="q-text">المقيم المعتمد ملزم بالاحتفاظ بجميع المستندات المتعلقة بعمله لمدة:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">5 سنوات من تاريخ إصدار التقرير</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">7 سنوات من تاريخ إصدار التقرير</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">5 سنوات من نهاية العقد</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">10 سنوات من تاريخ إصدار التقرير النهائي</div></div>
+      </div>
+      <div class="explanation">✅ <strong>10 سنوات</strong> من تاريخ إصدار التقرير النهائي — تشمل التقارير الورقية والإلكترونية.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">04</div>
+        <div class="q-text">شركة تقييم لديها 45 موظفاً، ما هي النسبة الدنيا للموظفين السعوديين المطلوبة؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">40%</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">45%</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">50%</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">35%</div></div>
+      </div>
+      <div class="explanation">✅ من 41 إلى 100 موظف: النسبة <strong>45%</strong>. لو كانت 110 موظفاً مثلاً: النسبة 50%.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">05</div>
+        <div class="q-text">توقف المقيم المعتمد مؤقتاً عن العمل. ما الإجراء الواجب اتخاذه تجاه الهيئة والعملاء؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">الإبلاغ خلال 7 أيام من التوقف</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">الإبلاغ خلال 60 يوماً من التوقف</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">الإبلاغ خلال 30 يوماً من تاريخ التوقف</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">لا يلزمه الإبلاغ في التوقف المؤقت</div></div>
+      </div>
+      <div class="explanation">✅ سواء كان التوقف مؤقتاً أو نهائياً — الإبلاغ يجب أن يكون <strong>خلال 30 يوماً</strong>. أما مدة تصفية الأعمال فلا تتجاوز 60 يوماً.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">06</div>
+        <div class="q-text">من أُلغي ترخيصه بسبب مخالفة، متى يحق له التقدم للحصول على ترخيص جديد؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">بعد مضي 3 سنوات</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">بعد مضي سنة واحدة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">بعد مضي 5 سنوات</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">لا يحق له التقدم مطلقاً</div></div>
+      </div>
+      <div class="explanation">✅ من أُلغي ترخيصه أو عضويته أو شُطب قيده: يجوز له التقدم لترخيص جديد أو عضوية جديدة أو إعادة قيده <strong>بعد 3 سنوات</strong>.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">07</div>
+        <div class="q-text">خالد مقيم معتمد وشركته من نوع "شركة مساهمة مقفلة". أصدر تقرير تقييم بتوقيعه وحده دون توقيع الشريك الذي شارك في التقييم. هذا يُعدّ:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">صحيحاً لأن خالداً هو المسؤول الرئيسي</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">صحيحاً لأن شركات المساهمة تختلف في القواعد</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">خطأ فقط لو كان الشريك هو صاحب الخبرة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مخالفة — يجب توقيع جميع المشاركين في إعداد التقرير</div></div>
+      </div>
+      <div class="explanation">✅ النص صريح: إذا كان المقيم شخصاً اعتبارياً، يوقّع <strong>الشريك الذي شارك أو أشرف</strong>، ولا يجوز الإنابة في التوقيع.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">08</div>
+        <div class="q-text">النظام يمنع المقيم من الجمع بين مهنة التقييم وأنشطة أخرى بشرط أن تكون هذه الأنشطة:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">أي نشاط تجاري بدون استثناء</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">أعمال تتعارض مع قواعد سلوك مهنة التقييم وآدابها</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">أعمال تجارية منافسة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">أعمال تتطلب ترخيصاً من جهة أخرى</div></div>
+      </div>
+      <div class="explanation">✅ النص يقول: لا يجوز الجمع بين التقييم <strong>وأعمال تتعارض مع قواعد سلوك مهنة التقييم وآدابها</strong> وفق ما تحدده اللائحة التنفيذية.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">09</div>
+        <div class="q-text">المخالفات التي تنظر فيها المحكمة المختصة مباشرة تشمل:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">التأخر في تسليم التقرير للعميل</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">عدم الالتزام بالتعليم المهني المستمر</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">ممارسة التقييم بدون ترخيص أو بعد انتهائه أو إلغائه</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">عدم وضع لوحة على مقر المنشأة</div></div>
+      </div>
+      <div class="explanation">✅ المحكمة المختصة تنظر مباشرة في مخالفات مثل: ممارسة التقييم <strong>بدون ترخيص أو بعد إلغائه أو شطبه</strong>، فتح مكتب بلا ترخيص، انتحال اللقب، تقديم بيانات مزيفة.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">10</div>
+        <div class="q-text">المسؤولية عند ارتكاب المقيم المعتمد (الشركة — شخص اعتباري) خطأً يضر العميل هي:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يتحمل الشريك المسؤول عن الخطأ وحده</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">لا مسؤولية على الشركة لأنها شخص اعتباري</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يتحمل المدير التنفيذي المسؤولية كاملة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">المسؤولية تضامنية بين الشركاء</div></div>
+      </div>
+      <div class="explanation">✅ إذا كان المقيم شخصاً اعتبارياً: <strong>المسؤولية تضامنية بين الشركاء</strong>. أما إذا كان شخصاً طبيعياً: يُسأل شخصياً عن تعويض الضرر.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CHAPTER 3 & 4 PLACEHOLDER ===== -->
+<div id="ch3" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الأولى • الفصل الثالث</div>
+    <div class="chapter-title">قواعد سلوك مهنة التقييم وآدابها</div>
+    <div class="chapter-desc">المبادئ العامة + تعارض المصالح + العلاقة بالعميل وغير العميل + منشآت التقييم</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span> أهداف قواعد السلوك — 5 أهداف</div>
+    <ul class="num-list">
+      <li>تطوير مهنة التقييم</li>
+      <li>تعزيز الحماية التنظيمية للمقيم والعملاء</li>
+      <li>رفع كفاءة أداء منظومة التقييم</li>
+      <li>ضبط مسؤولية المقيم</li>
+      <li>الحفاظ على شرف المهنة ومكانتها</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span> المبادئ العامة لسلوك المقيم</div>
+    <ul class="styled-list">
+      <li>يحافظ على شرف المهنة ومكانتها ولا يتصرف بما يخل بثقة الناس به أو بالمهنة</li>
+      <li>يظهر بالزي المناسب أثناء ممارسة المهنة ولا يخالف العرف</li>
+      <li>يتحلى بالشرف والاستقامة والنزاهة على المستوى الشخصي — حتى خارج نطاق ممارسة المهنة</li>
+      <li>يحرص على التطوير والتعليم المهني المستمر ويتابع الجديد على الأحكام والقواعد المنظمة للمهنة</li>
+      <li>لا يجوز للمقيم ممارسة المهنة إذا صدر بحقه قرار نهائي بالإيقاف</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🚫</span> حالات يُحظر فيها على المقيم قبول التقييم — تعارض المصالح</div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div>هذه من أكثر نقاط الاختبار — حفظها بشكل كامل</div>
+    </div>
+    <ul class="num-list">
+      <li>إذا كان مالكاً للأصل أو شريكاً في ملكيته أو راغباً في ذلك أو له مصلحة مباشرة أو غير مباشرة فيه</li>
+      <li>إذا كانت بينه وبين مالك الأصل قرابة حتى الدرجة الرابعة</li>
+      <li>إذا كان يقدم لعميله خدمات أخرى تؤثر على استقلاليته بشكل مباشر أو غير مباشر</li>
+      <li>إذا كان يملك حصصاً أو أسهماً في المنشآت المالكة للأصل أو كان شريكاً لأحد كبار موظفيها أو أعضاء مجلس إدارتها أو ناظراً لأحد أوقافها</li>
+      <li>تقديم خدمة التقييم لأكثر من عميل واحد في نفس الموضوع إلا بعد أخذ موافقة خطية من جميع العملاء</li>
+    </ul>
+    <div class="highlight-box">
+      <strong>ملاحظة مهمة:</strong> قبل قبول أي مهمة، يجب على المقيم التحقق من التزام جميع المشاركين معه في المنشأة بنفس الأحكام، واستبدال من يتعذر التزامه.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🤝</span> العلاقة بين المقيم والعميل — قبل الموافقة</div>
+    <ul class="styled-list">
+      <li>التحقق من قدرته وقدرة منشأته على أداء الأعمال في الوقت المحدد — خاصة أعمال المعاينة</li>
+      <li>التحقق من عدم تعارض المصالح مع العميل المرتبط بالعمل المطلوب أو الأصل محل التقييم</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🤝</span> العلاقة بين المقيم والعميل — أثناء التعاقد</div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div>يُحظر على المقيم المعتمد القيام بما يلي:</div>
+    </div>
+    <ul class="styled-list">
+      <li>تنفيذ أعمال غير ضرورية لزيادة التكاليف على العميل</li>
+      <li>تقديم قيمة للأصل أو الوعد بتحديد قيمة قبل إعداد تقريره وفق القواعد المنظمة</li>
+      <li>ربط بدل التقييم بقيمة الأصل محل التقييم</li>
+      <li>تحصيل بدله أو قبوله من غير عميله إلا بموافقة خطية مسبقة من العميل</li>
+    </ul>
+    <ul class="styled-list">
+      <li>يلتزم بأحكام العقد الموقع مع العميل وبالقواعد المنظمة للمهنة</li>
+      <li>يبذل العناية اللازمة والجهد المعقول في عمله بالدقة والسرعة وفق نطاق التعاقد</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🤝</span> العلاقة بين المقيم والعميل — أثناء تنفيذ العمل</div>
+    <ul class="styled-list">
+      <li><strong>يُحظر:</strong> خداع العميل أو استغلال جهله أو ثقته — بما يتضمن تحقيق مكاسب شخصية غير مشروعة</li>
+      <li>يلتزم بتوثيق البيانات والمعلومات التي يقدمها العميل وبيان ذلك في تقريره (التوثيق لا يعفيه من التحقق من صحتها)</li>
+      <li>يُحيط العميل بالمستجدات المؤثرة في نطاق العمل ويحصل على موافقته الخطية على أي تعديل</li>
+      <li>يحافظ على سرية جميع المعلومات المتعلقة بعملية التقييم ومعلومات العميل — حتى بعد انتهاء التعاقد</li>
+    </ul>
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <div>الاعتذار عن الاستمرار في التقييم لا يُعد إخلالاً بالسلوك المهني إذا كان لسبب مشروع — بشرط إبلاغ العميل بوقت كافٍ</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📢</span> تعامل المقيم مع الإعلام — قواعد محددة</div>
+    <ul class="styled-list">
+      <li>الالتزام بالأحكام والقواعد الخاصة بالمهنة</li>
+      <li>الحفاظ على خصوصية العملاء وسرية معلوماتهم</li>
+      <li>عدم استخدام الشعار الرسمي للهيئة في الإعلان عن النفس أو المنشأة</li>
+      <li>تجنب التضليل والتزوير والخداع وما يتعارض مع شرف المهنة</li>
+      <li>عدم الإساءة إلى السلطات العامة بأي شكل</li>
+      <li>عدم نشر بيانات تقارير التقييم دون إذن الجهة المختصة</li>
+      <li>عند الإعلان عن النفس: يجب أن يكون الإعلان غير مضلل وغير كاذب، لا يسيء لأعمال المقيمين الآخرين، ولا ينتهك خصوصية العملاء</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏢</span> منشآت التقييم — الالتزامات</div>
+    <ul class="styled-list">
+      <li>تتخذ مقراً لائقاً بالمهنة وتضع الترخيص في مكان بارز</li>
+      <li>تلتزم بالقواعد وتتخذ الإجراءات اللازمة، وتُطلع العاملين عليها وتتحقق من التزامهم</li>
+      <li>يلتزم المقيم بالوفاء بحقوق المتعاملين معه والعاملين في منشأته ويكون لهم قدوة حسنة</li>
+      <li>يعمل على تنمية قدراتهم ويساعدهم على تحسين أدائهم</li>
+      <li>تحتفظ منشأة التقييم بجميع سجلاتها ومستنداتها <strong>لا تقل عن 10 سنوات</strong> من تاريخ انتهاء العملية أو إغلاق الحساب</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔗</span> الأحكام الختامية لقواعد السلوك</div>
+    <ul class="styled-list">
+      <li>المقيم مسؤول عن مخالفة القواعد سواء صدرت منه أو بتوجيهه أو بإقراره</li>
+      <li>أحكام القواعد تسري على المقيم المعتمد وأعضاء الهيئة وجميع العاملين في المهنة</li>
+      <li>القواعد الجديدة تحل محل قواعد السلوك الصادرة بقرار المجلس رقم 7/39/م/23 بتاريخ 11/9/1444هـ</li>
+      <li>يُعمل بها بعد <strong>30 يوماً</strong> من نشرها</li>
+    </ul>
+  </div>
+
+</div>
+
+<div id="q3" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">أسئلة الفصل الثالث</div>
+    <div class="chapter-title">اختبر نفسك — قواعد السلوك والآداب</div>
+    <div class="chapter-desc">10 أسئلة MCQ بمستوى الاختبار الفعلي</div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="score-text">نتيجتك</div>
+      <div class="score-num" id="score3">0/0</div>
+    </div>
+    <button class="reset-btn" onclick="resetQuiz('q3-quiz')">إعادة المحاولة</button>
+  </div>
+
+  <div class="quiz-container" id="q3-quiz">
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">01</div>
+        <div class="q-text">فيصل مقيم معتمد تقدم له عرض لتقييم أرض يملك هو شقيقه الأصغر حصة فيها. ما الموقف الصحيح؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يقبل التقييم لأن الحصة لشقيقه وليست له</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يقبل التقييم بشرط الإفصاح للعميل</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يرفض التقييم لأن الشقيق ضمن القرابة حتى الدرجة الرابعة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يقبله بشرط الحصول على موافقة الهيئة</div></div>
+      </div>
+      <div class="explanation">✅ القاعدة تمنع التقييم إذا كانت بين المقيم وبين مالك الأصل <strong>قرابة حتى الدرجة الرابعة</strong>. الشقيق من الدرجة الثانية — يُمنع التقييم.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">02</div>
+        <div class="q-text">ربط بدل التقييم بقيمة الأصل محل التقييم:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مسموح به بموافقة العميل الخطية</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">محظور في جميع الأحوال</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مسموح به لتحفيز المقيم</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يعود للاتفاق بين المقيم والعميل</div></div>
+      </div>
+      <div class="explanation">✅ <strong>محظور بشكل مطلق</strong> — ربط البدل بالقيمة يؤثر على استقلالية المقيم وموضوعيته. هذا نص صريح في قواعد السلوك.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">03</div>
+        <div class="q-text">وكالة تقييم تقدم خدمات استشارية لشركة عقارية كبيرة. طُلب منها تقييم أحد عقارات نفس الشركة. ما الحكم؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يُسمح لأن الوكالة مستقلة قانونياً</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يُسمح بشرط الإفصاح في التقرير</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يُسمح لأن العلاقة بالشركة تجارية وليست شخصية</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يُحظر لأن الخدمات الاستشارية قد تؤثر على استقلالية التقييم</div></div>
+      </div>
+      <div class="explanation">✅ القاعدة تمنع تقييم أصل لعميل يقدم له المقيم <strong>خدمات أخرى تؤثر على استقلاليته</strong> بشكل مباشر أو غير مباشر.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">04</div>
+        <div class="q-text">مقيم معتمد ظهر في برنامج تلفزيوني وتحدث عن معلومات سرية تخص أحد عملائه دون إذنه. هذا يُعد:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مخالفة صريحة لقواعد السلوك</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مقبولاً لأن البرنامج للتوعية العامة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مقبولاً إذا لم يُذكر اسم العميل</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مقبولاً إذا كانت المعلومات عامة</div></div>
+      </div>
+      <div class="explanation">✅ المقيم ملزم بـ<strong>الحفاظ على سرية معلومات العميل وخصوصيته</strong> حتى بعد انتهاء التعاقد. الظهور الإعلامي لا يبيح الكشف عن المعلومات السرية.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">05</div>
+        <div class="q-text">مقيم اكتشف أثناء تنفيذ مهمة التقييم أن الاستمرار فيها سيؤدي إلى مخالفة القواعد المنظمة للمهنة. ماذا يفعل؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يكمل التقييم ويشير إلى الإشكالية في التقرير</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يوقف العمل فوراً دون إبلاغ العميل</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يعتذر عن الاستمرار ويُبلغ العميل بوقت كافٍ</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يستمر لأن الاعتذار يُعد إخلالاً بالعقد</div></div>
+      </div>
+      <div class="explanation">✅ الاعتذار عن الاستمرار <strong>لا يُعد إخلالاً بالسلوك المهني</strong> إذا كان لسبب مشروع — بشرط إبلاغ العميل <strong>بوقت كافٍ</strong> لتجنب الأضرار المحتملة.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">06</div>
+        <div class="q-text">قبل قبول مهمة التقييم، ماذا يجب على المقيم التحقق منه فيما يخص مشاركيه في المنشأة؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">التحقق من خبراتهم المهنية فقط</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">التحقق من صلاحية عضوياتهم في الهيئة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">التحقق من موافقتهم على الأتعاب</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">التحقق من التزامهم بأحكام الفقرة الأولى من قواعد تعارض المصالح واستبدال من يتعذر التزامه</div></div>
+      </div>
+      <div class="explanation">✅ يجب على المقيم <strong>قبل قبول المهمة</strong> التحقق من التزام جميع المشاركين معه في المنشأة بأحكام قاعدة تعارض المصالح، واستبدال من يتعذر التزامه.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">07</div>
+        <div class="q-text">مقيم معتمد طُلب منه تقديم تقييم لعقار يملكه عميلان في نفس الوقت. هل يمكنه ذلك؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">لا يمكنه ذلك مطلقاً</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">نعم، بعد الحصول على موافقة خطية من جميع العملاء</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">نعم، بشرط إعداد تقرير منفصل لكل عميل</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">نعم، ما دام العقار واحداً</div></div>
+      </div>
+      <div class="explanation">✅ يمكن تقديم خدمة التقييم لأكثر من عميل في نفس الموضوع <strong>فقط بعد أخذ موافقة خطية من جميع العملاء</strong>.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">08</div>
+        <div class="q-text">منشأة التقييم مطالبة بالاحتفاظ بجميع سجلاتها ومستنداتها لمدة:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">لا تقل عن 10 سنوات من تاريخ انتهاء العملية أو إغلاق الحساب</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">5 سنوات من تاريخ إصدار التقرير</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">7 سنوات من تاريخ انتهاء العقد</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">10 سنوات من تاريخ إصدار التقرير النهائي</div></div>
+      </div>
+      <div class="explanation">✅ منشأة التقييم تحتفظ بسجلاتها <strong>لا تقل عن 10 سنوات من تاريخ انتهاء العملية أو إغلاق الحساب</strong>. لاحظ الفرق عن المقيم الفرد الذي يحتفظ بالمستندات 10 سنوات من تاريخ إصدار التقرير النهائي.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">09</div>
+        <div class="q-text">قواعد السلوك الجديدة تُعمل بها بعد نشرها بـ:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يوم واحد من النشر</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">180 يوماً من النشر</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">30 يوماً من النشر</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">فور صدورها بقرار المجلس</div></div>
+      </div>
+      <div class="explanation">✅ تُنشر القواعد ويُعمل بها بعد <strong>30 يوماً</strong> من نشرها.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">10</div>
+        <div class="q-text">مقيم توثّق البيانات التي قدمها له العميل وأشار إليها في تقريره. هل هذا يعفيه من التحقق من صحتها؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">نعم، التوثيق يُسقط مسؤوليته كاملاً</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">نعم، لأن المسؤولية تقع على العميل بعد التوثيق</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يعفيه جزئياً إذا كانت البيانات رسمية</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">لا — التوثيق لا يعفيه من مسؤولية التحقق من صحة البيانات وموثوقيتها</div></div>
+      </div>
+      <div class="explanation">✅ <strong>التوثيق لا يُعفي المقيم</strong> من مسؤولية التحقق من صحة وموثوقية البيانات والمعلومات التي قدمها العميل — هذا نص صريح.</div>
+    </div>
+
+  </div>
+</div>
+
+<div id="ch4" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الأولى • الفصل الرابع</div>
+    <div class="chapter-title">المفاهيم الأساسية في التقييم</div>
+    <div class="chapter-desc">القيمة والسعر والتكلفة + القيمة السوقية + مبادئ التقييم التسعة + أغراض التقييم + دور المقيم</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📌</span> الفرق بين القيمة والسعر والتكلفة — الأهم في الفصل</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>المفهوم</th><th>التعريف البسيط</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>القيمة</strong></td>
+          <td>رأي تقديري للمبلغ المحتمل — ليست حقيقة. هي وجهة نظر السوق في المنافع التي تعود لمالك الأصل. تتأثر بعوامل كثيرة (الموقع، المساحة، القرب من الخدمات...)</td>
+        </tr>
+        <tr>
+          <td><strong>السعر</strong></td>
+          <td>المبلغ الفعلي المتداول — يمثل مبلغ التبادل الفعلي في الصفقة. قد يساوي القيمة أو يختلف عنها</td>
+        </tr>
+        <tr>
+          <td><strong>التكلفة</strong></td>
+          <td>المبلغ الذي ستدفعه لإنتاج أو شراء السلعة — تحدد المبلغ المطلوب دفعه. قد تكون قيمة أو سعراً حسب الظروف</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="highlight-box" style="margin-top:14px;">
+      <strong>مثال:</strong> لو اشتريت منزلاً بـ 1.5 مليون ريال → هذا هو <strong>السعر</strong>. قيمته الحقيقية ممكن تكون 1.7 مليون (يعني اشتريت بأقل من القيمة). وتكلفة بناء منزل مشابه ممكن تكون 1.2 مليون.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏪</span> القيمة السوقية — التعريف والعناصر</div>
+    <div class="def-card">
+      <div class="def-term">تعريف القيمة السوقية</div>
+      <div class="def-meaning">المبلغ المقدر الذي ينبغي على أساسه مبادلة الأصول أو الالتزامات في تاريخ التقييم بين مشترٍ راغب وبائع راغب في معاملة على أساس محايد بعد تسويق مناسب حيث يتصرف كل طرف من الأطراف بمعرفة وحكمة ودون إكراه أو قسر.</div>
+    </div>
+    <div style="margin-top:14px;">
+      <table class="data-table">
+        <thead><tr><th>العنصر</th><th>المعنى المبسط</th></tr></thead>
+        <tbody>
+          <tr><td>المبلغ المقدر</td><td>رأي تقديري وليس مبلغاً فعلياً أو محدداً مسبقاً</td></tr>
+          <tr><td>الأصول أو الالتزامات</td><td>قيمة الأصل تقديرية وليست سعر بيع حقيقي</td></tr>
+          <tr><td>في تاريخ التقييم</td><td>القيمة مرتبطة بلحظة زمنية محددة — تتغير مع الوقت</td></tr>
+          <tr><td>مشترٍ راغب</td><td>غير حريص ولا مضطر — يتصرف وفق ظروف السوق الحالية</td></tr>
+          <tr><td>بائع راغب</td><td>يريد البيع لكن غير مجبر — لا يتعامل بسعر غير معقول</td></tr>
+          <tr><td>معاملة محايدة</td><td>بعيدة عن العلاقات المؤثرة كمعاملة شركة أم مع تابعاتها</td></tr>
+          <tr><td>بعد تسويق مناسب</td><td>عُرض الأصل في السوق بأفضل طريقة ممكنة قبل تاريخ التقييم</td></tr>
+          <tr><td>بمعرفة وحكمة</td><td>كل من البائع والمشتري على علم بطبيعة الأصل وحالة السوق</td></tr>
+          <tr><td>دون إكراه أو قسر</td><td>كل طرف لديه دافع لإتمام المعاملة لكن غير ملزم</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span> مبادئ التقييم التسعة — احفظها</div>
+    <div class="def-grid">
+      <div class="def-card">
+        <div class="def-term">1. مبدأ العرض والطلب</div>
+        <div class="def-meaning">العلاقة بين الطلب على العقار والكمية المعروضة منه للبيع أو التأجير وكيفية تأثيرها على القيمة</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">2. مبدأ الاستبدال</div>
+        <div class="def-meaning">لكل من البائع والمشتري خيار استغلال البدائل ذات السعر الأقل والنفع المشابه — وجود بديل أرخص يضغط على سعر الأصل الأغلى</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">3. مبدأ تعظيم الأرباح والاستخدام الأعلى والأفضل</div>
+        <div class="def-meaning">استخدام الأصل فيما يحقق أعلى منفعة اقتصادية للمالك على المدى الطويل في ظل الظروف التنافسية المفتوحة</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">4. مبدأ المساهمة</div>
+        <div class="def-meaning">القيمة السوقية للعقار ليست محددة بتكلفته المادية فقط — بل تتأثر أيضاً بالمساهمة الفعلية التي يقدمها في السوق أو المجتمع</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">5. مبدأ التكافؤ</div>
+        <div class="def-meaning">يساعد على تحقيق أقصى قيمة ممكنة من استخدام الأرض بالتكافؤ مع عقارات المنطقة المحيطة</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">6. مبدأ التوقع</div>
+        <div class="def-meaning">السعر الحالي للعقار = توقع للمنافع المستقبلية. يُستخدم لتقييم العقارات المدرّة للدخل — يتطلب توقع الدخل المستقبلي</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">7. مبدأ التغيير</div>
+        <div class="def-meaning">الأسواق تتسم بالديناميكية — قيم العقارات في تغير مستمر. أساس هذا المبدأ هو تغير المؤثرات الخارجية على المناطق</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">8. مبدأ حزمة الحقوق</div>
+        <div class="def-meaning">يجوز تقسيم الملكية العقارية إلى حقوق عقارية فرعية — حق البناء، حق الانتفاع، حق المرور، حق الارتفاق</div>
+      </div>
+      <div class="def-card">
+        <div class="def-term">9. مبدأ المنافسة</div>
+        <div class="def-meaning">القوى التنافسية تتجه نحو تقليل الأرباح المضخمة — المقيمون يعملون تسويات للأرباح غير الاعتيادية المؤقتة مدعومة بأدلة من السوق</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span> أغراض التقييم الستة</div>
+    <table class="data-table">
+      <thead><tr><th>الغرض</th><th>الهدف المختصر</th></tr></thead>
+      <tbody>
+        <tr><td>للبيع</td><td>تقدير السعر المتوقع في السوق المفتوح التنافسي</td></tr>
+        <tr><td>للشراء</td><td>تقدير السعر المتوقع حسب متطلبات العميل وأوضاعه المالية وظروف السوق</td></tr>
+        <tr><td>للرهن العقاري</td><td>تقدير المبلغ الذي يمكن الحصول عليه في أسوأ الظروف مع مراعاة مخاطر الائتمان</td></tr>
+        <tr><td>للقيمة الإيجارية</td><td>تقدير القيمة الإيجارية حسب رأس المال وإيجارات السوق للعقارات المشابهة</td></tr>
+        <tr><td>للتأمين</td><td>يختلف كلياً عن القيمة السوقية — يركز على تكلفة الإحلال لا القيمة السوقية</td></tr>
+        <tr><td>للأغراض المحاسبية</td><td>تقييم الأصول بالقيمة السوقية وفق IFRS الدولية</td></tr>
+        <tr><td>للأغراض القانونية</td><td>تقييم للتبادل الضريبي، نزع الملكية، تقسيم التركة...</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-info" style="margin-top:12px;">
+      <span class="alert-icon">ℹ️</span>
+      <div>تقييم التأمين: يعتمد على <strong>تكلفة الإحلال</strong> — أي تكلفة استعادة الأصل لحالته السابقة في حال تضرره. قد تكون أعلى أو أقل من القيمة السوقية.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">👨‍💼</span> دور المقيم — 6 مراحل</div>
+    <ul class="num-list">
+      <li><strong>جمع المعلومات:</strong> جمع البيانات حول الأصول</li>
+      <li><strong>تحليل الأصول:</strong> تقييم الحالة الحالية للأصل وتحديد قيمته بناءً على الخصائص والتفاصيل المالية والفنية</li>
+      <li><strong>تطبيق المعايير:</strong> استخدام معايير التقييم المعتمدة وتطبيق معايير التقييم الدولية وفق الهدف من التقييم</li>
+      <li><strong>إعداد التقارير:</strong> تقديم تقارير شاملة توضح القيمة المقدرة والمنهجيات والأسس المستخدمة</li>
+      <li><strong>تقديم المشورة:</strong> تقديم توصيات حول كيفية إدارة الأصول أو التعديلات بناءً على نتائج التقييم</li>
+      <li><strong>الالتزام بالقوانين:</strong> ضمان أن التقييم يتشامى مع القوانين واللوائح المحلية والدولية ذات الصلة</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">✅</span> الممارسات الجيدة للمقيم</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">اتجاه العميل</div>
+        <div class="info-value">تسجيل التعليمات والتأكد منها، مراعاة احتياجاته، استخدام أفضل الطرق الملائمة</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">اتجاه المنشأة</div>
+        <div class="info-value">الالتزام بالإجراءات الموحدة للمهام، تشجيع الابتكار، سن الإجراءات الصارمة بشأن المواعيد اليومية</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">اتجاه الإدارة</div>
+        <div class="info-value">متابعة إشراف الإدارة المعنية، وضع خطوط واضحة للمسؤوليات، نظام يراقب الوظائف والمهام</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">❌</span> أبرز الممارسات الخاطئة للمقيم</div>
+    <ul class="styled-list">
+      <li>ممارسة التقييم بعد إلغاء الترخيص أو شطبه أو انتهائه</li>
+      <li>فتح أو إنشاء أو إدارة مكتب للتقييم دون ترخيص</li>
+      <li>تقديم بيانات غير مطابقة للحقيقة للحصول على الترخيص</li>
+      <li>استعمال وسيلة من وسائل الدعاية شأنها حمل الجمهور على الاعتقاد بأحقيته في المهنة خلافاً للحقيقة</li>
+      <li>انتحال لقب من الألقاب التي تُطلق على مزاولي مهنة التقييم</li>
+      <li>التدليس أو الاحتيال</li>
+      <li>قصور المقيم وإهماله بموجب الأنظمة المفروضة</li>
+      <li>مخالفة قواعد السلوك والأداء المهني الصادرة عن الجهة المعنية</li>
+    </ul>
+  </div>
+
+</div>
+
+<div id="q4" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">أسئلة الفصل الرابع</div>
+    <div class="chapter-title">اختبر نفسك — المفاهيم الأساسية في التقييم</div>
+    <div class="chapter-desc">12 سؤال MCQ بمستوى الاختبار الفعلي</div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="score-text">نتيجتك</div>
+      <div class="score-num" id="score4">0/0</div>
+    </div>
+    <button class="reset-btn" onclick="resetQuiz('q4-quiz')">إعادة المحاولة</button>
+  </div>
+
+  <div class="quiz-container" id="q4-quiz">
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">01</div>
+        <div class="q-text">اشترى أحمد شقة بمبلغ 800,000 ريال. قام مقيم بتقييمها بـ 750,000 ريال. ما الـ 800,000 ريال؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">قيمة الشقة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">سعر الشقة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تكلفة الشقة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">القيمة السوقية</div></div>
+      </div>
+      <div class="explanation">✅ الـ 800,000 هو <strong>السعر</strong> — المبلغ الفعلي المتداول في الصفقة. أما الـ 750,000 فهي <strong>القيمة</strong> — الرأي التقديري للمقيم.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">02</div>
+        <div class="q-text">ما الذي يميز القيمة السوقية عن القيمة الأخرى وفق تعريف IVS؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">أنها تمثل المبلغ المتفق عليه بين الطرفين</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">أنها دائماً أعلى من سعر البيع الفعلي</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">أنها تفترض معاملة محايدة بين بائع راغب ومشترٍ راغب بمعرفة وحكمة ودون إكراه</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">أنها تعتمد فقط على تكلفة الإنشاء</div></div>
+      </div>
+      <div class="explanation">✅ القيمة السوقية تفترض: <strong>بائع راغب + مشترٍ راغب + معاملة محايدة + معرفة وحكمة + دون إكراه + بعد تسويق مناسب</strong>. هذه عناصر تعريفها في IVS.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">03</div>
+        <div class="q-text">مصنع يريد شراء ماكينة طباعة حديثة بـ 200,000 ريال. يوجد ماكينة أخرى قديمة بجودة مشابهة تُباع بـ 100,000 ريال لكن بقيود على السرعة. ما المبدأ الذي يُفسر تأثير وجود الماكينة الأقدم على سعر الجديدة؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مبدأ التوقع</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مبدأ المساهمة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مبدأ المنافسة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مبدأ الاستبدال</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ الاستبدال</strong>: وجود بديل بسعر أقل (الماكينة القديمة) يضغط على سعر الأصل الأغلى (الماكينة الجديدة). كل من المشتري والبائع لهما خيار استغلال البدائل.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">04</div>
+        <div class="q-text">شركة تأمين تطلب تقييم مستودع لأغراض التأمين. ما الذي يُركز عليه هذا التقييم؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تكلفة إحلال المستودع وإعادته لحالته السابقة في حال تضرره</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">القيمة السوقية الحالية للمستودع</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">سعر البيع المتوقع في السوق المفتوح</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">القيمة الإيجارية للمستودع</div></div>
+      </div>
+      <div class="explanation">✅ تقييم التأمين يختلف كلياً عن القيمة السوقية — يركز على <strong>تكلفة الإحلال</strong> أي استعادة الأصل لحالته السابقة، وقد تكون أعلى أو أقل من القيمة السوقية.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">05</div>
+        <div class="q-text">خالد يمتلك أرضاً في منطقة صناعية معظم أراضيها مستخدمة لمستودعات. قرر بناء مستودع لوجستي على أرضه. ما المبدأ الذي يدعم هذا القرار؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مبدأ التكافؤ</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مبدأ المنافسة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مبدأ تعظيم الأرباح والاستخدام الأعلى والأفضل</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مبدأ العرض والطلب</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ الاستخدام الأعلى والأفضل</strong>: استخدام الأصل فيما يحقق أعلى منفعة اقتصادية للمالك. في منطقة صناعية، المستودع يمثل الاستخدام الأمثل للأرض.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">06</div>
+        <div class="q-text">مبدأ يقول إن القيمة السوقية للعقار تتأثر بمساهمته الفعلية في السوق أو المجتمع — لا فقط بتكلفته المادية. ما هذا المبدأ؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مبدأ التوقع</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مبدأ المساهمة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مبدأ التكافؤ</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مبدأ الاستبدال</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ المساهمة</strong>: قيمة العقار ليست محددة بتكلفته المادية فقط — تتأثر بمساهمته الفعلية في السوق مثل الموقع الاستراتيجي، الجذب السياحي، تحسين البنية التحتية المحيطة.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">07</div>
+        <div class="q-text">حي سكني فيه 10 شقق للبيع وفجأة زاد عدد السكان بسبب مشاريع جديدة. ما الذي يحدث لأسعار الشقق وفق مبدأ العرض والطلب؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تنخفض الأسعار لأن الطلب يضغط على المعروض</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">تبقى ثابتة لأن العرض لم يتغير</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تنخفض لأن الطلب يوجد ضغطاً تنافسياً</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">ترتفع لأن الطلب زاد والعرض ثابت</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ العرض والطلب</strong>: زيادة الطلب مع ثبات العرض = ارتفاع الأسعار. لو بُنيت 20 شقة إضافية مع نفس عدد السكان، تنخفض الأسعار لأن العرض تجاوز الطلب.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">08</div>
+        <div class="q-text">مالك أرض بجانب طريق الملك فهد يريد تطوير أرضه. يتوقع المقيم أن يُبنى عليها برج لا فيلا. ما المبدأ الذي يطبقه المقيم؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مبدأ التغيير</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مبدأ التكافؤ</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مبدأ المساهمة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مبدأ حزمة الحقوق</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ التكافؤ</strong>: يساعد على تحقيق أقصى قيمة ممكنة من استخدام الأرض بالتكافؤ مع عقارات المنطقة المحيطة. بجانب الطريق الرئيسي، الأبراج هي الأنسب كافؤاً مع المحيط.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">09</div>
+        <div class="q-text">حق الانتفاع وحق المرور وحق الارتفاق — هذه كلها أمثلة على:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مبدأ حزمة الحقوق العقارية</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مبدأ التكافؤ</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مبدأ التوقع</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مبدأ المنافسة</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ حزمة الحقوق</strong>: يُقرر جواز تقسيم الملكية العقارية إلى حقوق فرعية متعددة — حق البناء، حق الانتفاع، حق المرور، حق الارتفاق.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">10</div>
+        <div class="q-text">مقيم يُقيّم آلات ومعدات مصنع في سوق تشهد تقلبات مفاجئة وتغيرات سريعة. ما أفضل إجراء يتخذه لضمان تقدير دقيق وموضوعي؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">استخدام نماذج رياضية ومعادلات للتنبؤ بالقيمة المستقبلية</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">الاعتماد على آخر بيانات السوق والمعاملات القائمة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تحديث التقييمات الفنية بانتظام لمراجعة حالة الآلات والمعدات وتقييم التأثيرات الاقتصادية على الصناعة وأثرها على العرض والطلب</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">استخدام نماذج رياضية لتقييم الاتجاهات المستقبلية وأثرها على الطلب على الآلات</div></div>
+      </div>
+      <div class="explanation">✅ في السوق المتقلبة: الأفضل هو <strong>تحديث التقييمات بانتظام + مراجعة حالة الأصول + تقييم التأثيرات الاقتصادية</strong> — هذا يضمن تقديراً واقعياً يعكس الظروف الحالية.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">11</div>
+        <div class="q-text">وفق تعريف القيمة السوقية في IVS، "البائع الراغب" يعني:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">بائع يريد البيع بأي سعر كان</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">بائع مضطر للبيع بسبب ضائقة مالية</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">بائع يرفض أي سعر أقل من سعر محدد</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">بائع لديه رغبة في البيع لكن غير مجبر ولا يتعامل بسعر غير معقول في ضوء السوق الحالية</div></div>
+      </div>
+      <div class="explanation">✅ البائع الراغب في تعريف القيمة السوقية: <strong>لديه رغبة في البيع + غير مجبر + غير حريص + لا يتعامل بسعر غير معقول في السوق الحالي</strong>.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">12</div>
+        <div class="q-text">أحمد مقيم معتمد للعقارات قدّم تقرير تقييم يحتوي على أخطاء أثبت العميل أنها سببت له خسائر مالية كبيرة. ما الذي قد يترتب على أحمد؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">لا يمكن للعميل رفع دعوى لأن التقرير كامل الحماية القانونية</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">قد يواجه دعوى قضائية من العميل ويُطلب منه دفع تعويضات عن الأضرار</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يُحذر بشكل غير رسمي ويأخذ على عاتقه تعهداً بتحسين الإجراءات</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يُطلب منه تقديم تقرير تصحيحي فقط لتجنب أي عواقب قانونية</div></div>
+      </div>
+      <div class="explanation">✅ الممارسات الخاطئة (كالتقصير والإهمال) تعرض المقيم لـ: <strong>دعوى قضائية من العميل المتضرر + المطالبة بتعويضات + إجراءات تأديبية</strong>. المقيم مسؤول مسؤولية مدنية عن أخطائه.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== FINAL EXAM ===== -->
+<div id="final" class="section">
+  <div class="chapter-header">
+    <div class="chapter-tag">اختبار شامل — الوحدة الأولى</div>
+    <div class="chapter-title">🎯 محاكاة الاختبار الحقيقي</div>
+    <div class="chapter-desc">25 سؤال من جميع الفصول الأربعة — مخلوطة ومرتبة عشوائياً كما في الاختبار الفعلي</div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="score-text">نتيجتك</div>
+      <div class="score-num" id="scorefinal">0/0</div>
+    </div>
+    <button class="reset-btn" onclick="resetQuiz('final-quiz')">إعادة المحاولة</button>
+  </div>
+
+  <div class="quiz-container" id="final-quiz">
+
+    <!-- F1: SYSTEM -->
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">01</div>
+        <div class="q-text">أصدر أحمد عضوية سنوية بتاريخ 2 أكتوبر 2022. ما المقابل المالي الذي يجب عليه دفعه؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يدفع مقابل سنة 2022 كاملة فقط</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يدفع مقابل الأشهر المتبقية من 2022 فقط</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يدفع مقابل المتبقي من 2022 + سنة 2023 كاملة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يدفع مقابل سنتين كاملتين 2022 و2023</div></div>
+      </div>
+      <div class="explanation">✅ <strong>القاعدة:</strong> إذا صدر الإصدار أو التجديد بعد 30 سبتمبر (بداية الربع الأخير)، يُضاف المقابل المالي للفترة المتبقية من السنة الحالية + السنة التالية كاملة. أكتوبر = بعد 30 سبتمبر → المتبقي من 2022 + 2023 كاملة.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">02</div>
+        <div class="q-text">النظام يُنشر في الجريدة الرسمية ويُعمل به بعد:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">30 يوماً من تاريخ نشره</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">180 يوماً من تاريخ نشره</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">90 يوماً من تاريخ نشره</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يُعمل به فور نشره</div></div>
+      </div>
+      <div class="explanation">✅ النظام يُنشر في الجريدة الرسمية ويُعمل به بعد <strong>180 يوماً</strong> من تاريخ نشره. لا تخلطه بالـ 30 يوماً الخاصة بإبلاغ الهيئة عند التوقف أو تغيير العنوان.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">03</div>
+        <div class="q-text">كم ساعة خبرة مباشرة (الحد الأدنى) مطلوبة للحصول على شهادة الزمالة في فرع تقييم العقارات؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">1,000 ساعة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">2,000 ساعة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">1,500 ساعة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">3,000 ساعة</div></div>
+      </div>
+      <div class="explanation">✅ فرع تقييم العقارات يتطلب <strong>3,000 ساعة إجمالاً</strong>، منها <strong>1,500 ساعة مباشرة</strong> (50% كحد أدنى).</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">04</div>
+        <div class="q-text">طالب منتسب في الهيئة يدرس تخصصاً ذا علاقة بالتقييم. ما أقصى عمر مسموح له بهذه العضوية؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">20 سنة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">22 سنة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">30 سنة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">25 سنة</div></div>
+      </div>
+      <div class="explanation">✅ عضوية الطلاب المنتسبين لا تُمنح لمن تجاوز <strong>25 سنة</strong>، ولا تُمنح في أكثر من فرع واحد.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">05</div>
+        <div class="q-text">الاجتماعات التي تنعقد فيها لجنة قيد المقيمين وطريقة إصدار قراراتها:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تنعقد بحضور جميع الأعضاء وتصدر قراراتها بالأغلبية</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">تنعقد بحضور النصف وتصدر قراراتها بالإجماع</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تنعقد بحضور الثلثين وتصدر قراراتها بالأغلبية</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">تنعقد بحضور الرئيس فقط ويكون قراره نافذاً</div></div>
+      </div>
+      <div class="explanation">✅ لجنة قيد المقيمين: تنعقد <strong>بحضور جميع الأعضاء</strong> وتصدر قراراتها <strong>بالأغلبية</strong>.</div>
+    </div>
+
+    <!-- F2: REGULATIONS -->
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">06</div>
+        <div class="q-text">شركة تقييم لديها 110 موظفين. ما النسبة الدنيا للموظفين السعوديين المطلوبة؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">45%</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">50%</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">40%</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">35%</div></div>
+      </div>
+      <div class="explanation">✅ أكثر من 100 موظف → النسبة <strong>50%</strong>. من 41 إلى 100 موظف → 45%. تذكر: كل ما زاد عدد الموظفين زادت النسبة.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">07</div>
+        <div class="q-text">توقف مقيم عن العمل مؤقتاً. خلال كم يوماً يجب أن يُبلّغ الهيئة والعملاء؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">7 أيام</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">60 يوماً</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">30 يوماً</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">15 يوماً</div></div>
+      </div>
+      <div class="explanation">✅ الإبلاغ عن التوقف (مؤقت أو نهائي) خلال <strong>30 يوماً</strong>. أما تصفية الأعمال فلا تتجاوز <strong>60 يوماً</strong>.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">08</div>
+        <div class="q-text">مقيم انتهى ترخيصه وأراد الحصول على ترخيص جديد. ما الشرط الزمني؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يمكنه التقديم فوراً</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">بعد سنة واحدة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">بعد 5 سنوات</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">بعد 3 سنوات إذا أُلغي أو شُطب، أما إذا انتهى طبيعياً فيجدده مباشرة</div></div>
+      </div>
+      <div class="explanation">✅ من <strong>أُلغي</strong> ترخيصه أو <strong>شُطب</strong> قيده: يجوز التقديم بعد <strong>3 سنوات</strong>. من انتهى ترخيصه طبيعياً: يجدده باتباع إجراءات التجديد العادية بدون انتظار.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">09</div>
+        <div class="q-text">أي من التالي يُعد مخالفة تنظر فيها المحكمة المختصة مباشرة (لا لجنة المخالفات)؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">انتحال لقب من ألقاب المقيمين المعتمدين</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">التأخر في تسليم التقرير للعميل</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">عدم الالتزام بالتعليم المهني المستمر</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">عدم وضع لوحة على مقر المنشأة</div></div>
+      </div>
+      <div class="explanation">✅ المحكمة تنظر مباشرة في: ممارسة التقييم بلا ترخيص، فتح مكتب بلا ترخيص، تقديم بيانات مزيفة، انتحال اللقاب، استخدام الدعاية لإيهام الجمهور بالأحقية. كل هذه جرائم جنائية.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">10</div>
+        <div class="q-text">المقيم ملزم بالاحتفاظ بالمستندات والتقارير الإلكترونية والورقية لمدة:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">5 سنوات من تاريخ العقد</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">10 سنوات من تاريخ إصدار التقرير النهائي</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">7 سنوات من تاريخ انتهاء الخدمة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">10 سنوات من تاريخ إغلاق الحساب</div></div>
+      </div>
+      <div class="explanation">✅ <strong>المقيم الفرد:</strong> 10 سنوات من تاريخ إصدار التقرير النهائي. <strong>المنشأة:</strong> 10 سنوات من تاريخ انتهاء العملية أو إغلاق الحساب. السؤال عن المقيم → إجابة ب.</div>
+    </div>
+
+    <!-- F3: CONDUCT -->
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">11</div>
+        <div class="q-text">مقيم معتمد تقدم له عرض لتقييم مبنى تجاري تملك شركته أسهماً فيه. ما الحكم؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يقبل بشرط الإفصاح في التقرير</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يقبل لأن الأسهم لشركته وليس له شخصياً</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يُحظر عليه القبول لأنه يملك حصصاً أو أسهماً في المنشأة المالكة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يقبل بشرط الحصول على موافقة الهيئة</div></div>
+      </div>
+      <div class="explanation">✅ يُحظر التقييم إذا كان المقيم يملك حصصاً أو أسهماً في المنشأة المالكة للأصل — سواء كانت الأسهم لشركته أو بشكل مباشر. هذا تعارض مصالح صريح.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">12</div>
+        <div class="q-text">أي من التالي يُسمح به بحسب قواعد سلوك مهنة التقييم؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">ربط بدل التقييم بقيمة الأصل المُقيَّم</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">تقديم قيمة تقديرية للأصل قبل إعداد التقرير الرسمي</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">تحصيل البدل من طرف ثالث دون موافقة العميل</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">الاعتذار عن إكمال التقييم لسبب مشروع مع إبلاغ العميل بوقت كافٍ</div></div>
+      </div>
+      <div class="explanation">✅ الاعتذار لسبب مشروع <strong>لا يُعد إخلالاً بالسلوك المهني</strong> — بشرط إبلاغ العميل بوقت كافٍ لتجنب الأضرار. الخيارات أ، ب، ج كلها محظورة صراحةً.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">13</div>
+        <div class="q-text">مقيم معتمد ظهر في برنامج تلفزيوني وأعلن عن نفسه. ما الذي يُحظر عليه تحديداً؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">استخدام الشعار الرسمي للهيئة في إعلانه عن نفسه أو منشأته</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">ذكر خبراته ومؤهلاته في البرنامج</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">الحديث عن تطورات السوق العقاري بشكل عام</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">ارتداء الزي المهني المناسب</div></div>
+      </div>
+      <div class="explanation">✅ يُحظر صراحةً <strong>استخدام الشعار الرسمي للهيئة</strong> في الإعلان عن النفس أو المنشأة. ذكر الخبرات والمؤهلات مسموح به إذا كان صادقاً وغير مضلل.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">14</div>
+        <div class="q-text">قواعد السلوك الجديدة تُعمل بها بعد نشرها بـ 30 يوماً. من يتحمل مسؤولية مخالفتها؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">المقيم فقط إذا صدرت المخالفة منه مباشرة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">المقيم سواء صدرت منه أو بتوجيهه أو بإقراره</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">المنشأة وحدها دون المقيم الفردي</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">العميل إذا كان هو من طلب المخالفة</div></div>
+      </div>
+      <div class="explanation">✅ المقيم مسؤول عن مخالفة القواعد <strong>سواء صدرت منه أو بتوجيهه أو بإقراره</strong>. الموافقة على المخالفة كافية لتحمّل المسؤولية.</div>
+    </div>
+
+    <!-- F4: CONCEPTS -->
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">15</div>
+        <div class="q-text">ديفيد مطور عقاري أراد شراء أرض بـ 5 ملايين ريال، لكن المقيم قدّرها بـ 4.5 مليون. وتكلفة بناء مبنى مشابه عليها 3 مليون. ما الترتيب الصحيح من الأكبر للأصغر؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">القيمة > السعر > التكلفة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">التكلفة > القيمة > السعر</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">السعر > القيمة > التكلفة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">السعر = القيمة دائماً</div></div>
+      </div>
+      <div class="explanation">✅ <strong>السعر</strong> (5M) = المبلغ المتفق عليه فعلياً. <strong>القيمة</strong> (4.5M) = الرأي التقديري للمقيم. <strong>التكلفة</strong> (3M) = ما ستدفعه لإنشاء بديل. الثلاثة مستقلة ولا تتساوى بالضرورة.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">16</div>
+        <div class="q-text">أي من العناصر التالية ليس شرطاً في تعريف القيمة السوقية وفق IVS؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">بائع راغب غير مجبر</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">معاملة على أساس محايد بعد تسويق مناسب</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">كل طرف يتصرف بمعرفة وحكمة دون إكراه</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يجب أن تكون الصفقة نقدية بالريال السعودي</div></div>
+      </div>
+      <div class="explanation">✅ القيمة السوقية لا تشترط العملة المحددة — تُعبَّر عنها بأي مبلغ نقدي. عناصرها: بائع راغب، مشترٍ راغب، معاملة محايدة، تسويق مناسب، معرفة وحكمة، دون إكراه.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">17</div>
+        <div class="q-text">منطقة سكنية فيها 5 شقق للبيع. بُنيت 15 شقة إضافية في نفس المنطقة مع بقاء عدد المشترين ثابتاً. أي مبدأ يُفسر ما سيحدث للأسعار؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مبدأ التوقع</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مبدأ العرض والطلب</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مبدأ التغيير</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مبدأ الاستبدال</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ العرض والطلب:</strong> العرض زاد (5 → 20 شقة) مع ثبات الطلب → الأسعار ستنخفض. لو الطلب زاد والعرض ثابت → الأسعار ترتفع.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">18</div>
+        <div class="q-text">تقييم لأغراض التأمين يختلف عن القيمة السوقية لأنه يركز على:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">تكلفة الإحلال — أي استعادة الأصل لحالته السابقة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">السعر الحالي في السوق المفتوح</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">القيمة الإيجارية المتوقعة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">القيمة المحاسبية في الميزانية</div></div>
+      </div>
+      <div class="explanation">✅ تقييم التأمين = <strong>تكلفة الإحلال</strong> (ما يلزم لاستعادة الأصل لحالته السابقة عند التضرر). قد تكون أعلى أو أقل من القيمة السوقية.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">19</div>
+        <div class="q-text">مالك أرض زراعية منح شخصاً آخر حق استخدام جزء من أرضه لمرور خطوط الكهرباء والمياه. ما المبدأ الذي يُجيز هذا؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">مبدأ التكافؤ</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">مبدأ المساهمة</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">مبدأ حزمة الحقوق — حق الارتفاق</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">مبدأ الاستبدال</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مبدأ حزمة الحقوق:</strong> يُجيز تقسيم الملكية إلى حقوق فرعية. حق الارتفاق = السماح بمرور الشبكات العامة عبر الأرض.</div>
+    </div>
+
+    <!-- MIXED HARD -->
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">20</div>
+        <div class="q-text">مقيم اكتشف أن أحد مشاركيه في مهمة التقييم الحالية لديه مصلحة مباشرة في الأصل المُقيَّم. ماذا يجب أن يفعل؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يكمل التقييم مع الإفصاح في التقرير</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يطلب من المشارك الإفصاح للعميل فقط</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يُبلّغ الهيئة ويكمل العمل</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يستبدل المشارك بشخص آخر لا تعارض لديه</div></div>
+      </div>
+      <div class="explanation">✅ القاعدة صريحة: المقيم يجب <strong>قبل قبول المهمة</strong> التحقق من التزام جميع المشاركين بقواعد تعارض المصالح، <strong>واستبدال من يتعذر التزامه</strong> منهم.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">21</div>
+        <div class="q-text">ما الفرق الجوهري بين ساعات الخبرة المباشرة وغير المباشرة؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">المباشرة هي ساعات الدراسة والتعليم، وغير المباشرة هي ساعات العمل الميداني</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">المباشرة هي ساعات أداء مهام التقييم الفعلية، وغير المباشرة هي ساعات الأعمال ذات الصلة بالتقييم</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">المباشرة لا تُحتسب في إجمالي الساعات المطلوبة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">غير المباشرة تمثل 70% على الأقل من الإجمالي</div></div>
+      </div>
+      <div class="explanation">✅ <strong>مباشرة:</strong> أداء مهام التقييم الفعلية (التقييم، المراجعة، الأدوار الداعمة في مراحل التقييم). <strong>غير مباشرة:</strong> أعمال ذات صلة بالتقييم تحددها الأمانة العامة. المباشرة ≥ 50% من الإجمالي.</div>
+    </div>
+
+    <div class="question-card" data-answer="ج">
+      <div class="question-header">
+        <div class="q-number">22</div>
+        <div class="q-text">مقيم عقارات أُسندت إليه مهمة تقييم مصنع كبير يتضمن آلات ومعدات متخصصة. ماذا يجب أن يفعل؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">يُقيّم كل شيء لأن ترخيصه يغطي جميع الأصول</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">يرفض المهمة كلياً</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">يُقيّم العقار وجزء البناء، ويُحيل الآلات والمعدات لمقيم معتمد في فرع الآلات، ويُبلّغ العميل</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">يستعين بخبير غير مرخص للآلات ويُوقّع التقرير بنفسه</div></div>
+      </div>
+      <div class="explanation">✅ الترخيص محدود بالفرع — ترخيص العقارات لا يُبيح تقييم الآلات. الصح: يُقيّم ما يندرج ضمن ترخيصه، ويُحيل الباقي لمقيم مختص، ويُوضح ذلك للعميل. إحالة جزء من المهمة لا تعارض لها في القواعد.</div>
+    </div>
+
+    <div class="question-card" data-answer="أ">
+      <div class="question-header">
+        <div class="q-number">23</div>
+        <div class="q-text">جهة حكومية تريد نزع ملكية أرض لمشروع عام. المقيم هنا يعمل لأغراض:</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">قانونية — لتحديد التعويض العادل وفق الأنظمة</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">محاسبية — لإدراج الأصل في الميزانية</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">للبيع — لتحديد سعر السوق</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">للتأمين — لحساب تكلفة الإحلال</div></div>
+      </div>
+      <div class="explanation">✅ نزع ملكية الأراضي للمنفعة العامة = غرض <strong>قانوني</strong>. المقيم يُحدد التعويض العادل للمالك وفق الأنظمة والقوانين المعمول بها.</div>
+    </div>
+
+    <div class="question-card" data-answer="د">
+      <div class="question-header">
+        <div class="q-number">24</div>
+        <div class="q-text">أدوار الهيئة السعودية للمقيمين المعتمدين خمسة. أي الآتي ليس من أدوارها؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">التنظيم — وضع المعايير واللوائح</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">الاعتماد — تأهيل المقيمين وإصدار التراخيص</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">التوعية — زيادة ثقة المجتمع بالمهنة</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">التمويل — توفير قروض للمقيمين لفتح مكاتبهم</div></div>
+      </div>
+      <div class="explanation">✅ الأدوار الخمسة: <strong>التنظيم، التطوير، الاعتماد، الرقابة، التوعية.</strong> التمويل ليس من أدوار الهيئة — هي جهة تنظيمية غير هادفة للربح.</div>
+    </div>
+
+    <div class="question-card" data-answer="ب">
+      <div class="question-header">
+        <div class="q-number">25</div>
+        <div class="q-text">ما أعلى عقوبة مالية يمكن فرضها على من يخالف أحكام نظام المقيمين المعتمدين، وما أقصى مدة سجن ممكنة؟</div>
+      </div>
+      <div class="options-list">
+        <div class="option" onclick="answer(this,'أ')"><div class="option-letter">أ</div><div class="option-text">100,000 ريال + سنتان سجناً</div></div>
+        <div class="option" onclick="answer(this,'ب')"><div class="option-letter">ب</div><div class="option-text">200,000 ريال + سنة سجناً</div></div>
+        <div class="option" onclick="answer(this,'ج')"><div class="option-letter">ج</div><div class="option-text">500,000 ريال + سنة سجناً</div></div>
+        <div class="option" onclick="answer(this,'د')"><div class="option-letter">د</div><div class="option-text">200,000 ريال + سنتان سجناً</div></div>
+      </div>
+      <div class="explanation">✅ الغرامة المالية: <strong>لا تتجاوز 200,000 ريال</strong>. السجن: <strong>لا يتجاوز سنة واحدة</strong>. وكلا العقوبتين يجب أن تتناسبا مع المخالفة.</div>
+    </div>
+
+  </div><!-- end final-quiz -->
+</div><!-- end final section -->
+
+</div><!-- end content -->
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function answer(el, chosen) {
+  const card = el.closest('.question-card');
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+  
+  const correct = card.dataset.answer;
+  const options = card.querySelectorAll('.option');
+  
+  options.forEach(opt => {
+    opt.style.pointerEvents = 'none';
+    const letter = opt.querySelector('.option-letter').textContent.trim();
+    if (letter === correct) opt.classList.add('reveal-correct');
+  });
+  
+  if (chosen === correct) {
+    el.classList.add('selected-correct');
+    card.classList.add('answered-correct');
+  } else {
+    el.classList.add('selected-wrong');
+    card.classList.add('answered-wrong');
+  }
+  
+  const explanation = card.querySelector('.explanation');
+  if (explanation) explanation.classList.add('show');
+  
+  updateScore();
+}
+
+function updateScore() {
+  const sections = ['q1-quiz', 'q2-quiz', 'q3-quiz', 'q4-quiz', 'final-quiz'];
+  const ids = ['score1', 'score2', 'score3', 'score4', 'scorefinal'];
+  sections.forEach((qid, idx) => {
+    const container = document.getElementById(qid);
+    if (!container) return;
+    const total = container.querySelectorAll('.question-card').length;
+    const correct = container.querySelectorAll('.answered-correct').length;
+    const answered = container.querySelectorAll('.answered-correct, .answered-wrong').length;
+    const scoreEl = document.getElementById(ids[idx]);
+    if (scoreEl) scoreEl.textContent = correct + '/' + answered + ' (من ' + total + ')';
+  });
+}
+
+function resetQuiz(qid) {
+  const container = document.getElementById(qid);
+  container.querySelectorAll('.question-card').forEach(card => {
+    card.classList.remove('answered-correct', 'answered-wrong');
+    card.querySelectorAll('.option').forEach(opt => {
+      opt.classList.remove('selected-correct', 'selected-wrong', 'reveal-correct');
+      opt.style.pointerEvents = '';
+    });
+    const exp = card.querySelector('.explanation');
+    if (exp) exp.classList.remove('show');
+  });
+  updateScore();
+}
+</script>
+
+
+<!-- ========== UNIT 2 CHAPTER 1 ========== -->
+<div class="section" id="u2f1">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الثانية • الفصل الأول</div>
+    <div class="chapter-title">الإطار العام لمعايير IVS الدولية</div>
+    <div class="chapter-desc">IVSC — هيكل المعايير — الالتزام بالمعايير — تاريخ النفاذ</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏛</span> IVSC ومهمته</div>
+    <ul class="styled-list">
+      <li>مجلس معايير التقييم الدولية IVSC — منظمة مستقلة غير هادفة للربح</li>
+      <li>هدفه: بناء ثقة الجمهور في عملية التقييم عبر معايير شفافة ومتسقة وموثوقة</li>
+      <li>يؤمن المجلس أن IVS جزء لا يتجزأ من النظام المالي العالمي</li>
+      <li>النسخة المعمول بها: <span class="highlight-num">IVS 2024</span> — صدرت 31 يناير 2024 — نافذة من 31 يناير 2025</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span> الجهات التي تستطيع فرض المعايير أو اعتمادها</div>
+    <ul class="styled-list">
+      <li><strong>جهة ذات سلطة قانونية:</strong> تلزم استخدام المعايير للغرض الذي يستلزم التقييم</li>
+      <li><strong>مؤسسة مهنية متخصصة في التقييم:</strong> تطلب من أعضائها استخدام المعايير لأغراض محددة</li>
+      <li><strong>باتفاق بين العميل والمقيّم:</strong> الطرفان يتفقان على استخدام المعايير</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span> هيكل IVS — المعايير العامة</div>
+    <table class="data-table">
+      <thead><tr><th>المعيار</th><th>الموضوع</th></tr></thead>
+      <tbody>
+        <tr><td>IVS 100</td><td>إطار التقييم — مبادئ المقيّم</td></tr>
+        <tr><td>IVS 101</td><td>نطاق العمل</td></tr>
+        <tr><td>IVS 102</td><td>أسس القيمة</td></tr>
+        <tr><td>IVS 103</td><td>أساليب التقييم</td></tr>
+        <tr><td>IVS 104</td><td>البيانات والمدخلات</td></tr>
+        <tr><td>IVS 105</td><td>نماذج التقييم</td></tr>
+        <tr><td>IVS 106</td><td>التوثيق وإعداد التقارير</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;color:var(--text-dim);font-size:0.88rem">المعايير العامة تسري على جميع عمليات التقييم. معايير الأصول تُضاف فوقها وتُطبَّق على أنواع أصول محددة.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">✅</span> الالتزام بالمعايير — المبادئ الجوهرية</div>
+    <ul class="styled-list">
+      <li>يجب أن يفي التقييم بمتطلبات المعايير العامة والملاحق ومعايير الأصول (إن وُجدت)</li>
+      <li>المعايير تتألف من متطلبات إلزامية يجب اتباعها للإفادة بأن التقييم ملتزم بالمعايير</li>
+      <li>المعايير لا تفرض إجراءً محدداً لكنها تقدم المبادئ والمفاهيم الأساسية</li>
+      <li>إذا تعارضت متطلبات قانونية/تنظيمية مع المعايير → أعطِ الأولوية للمتطلبات القانونية واشرحها ووثّقها</li>
+      <li>أي تغييرات تجعل التقييم غير ملتزم بالمعايير <span class="tag-warning">يجب الإفصاح عنها</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> IVS 100 — إطار التقييم: مبادئ المقيّم الأربعة</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">١ — الأخلاقيات</div>
+        <div class="info-value">اتباع المبادئ الأخلاقية: النزاهة، الموضوعية، الحياد، السرية، الكفاءة المهنية</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">٢ — الكفاءة</div>
+        <div class="info-value">التمتع بالمهارات التقنية والمعارف والخبرات اللازمة لإنجاز التقييم بشكل مناسب</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">٣ — الالتزام</div>
+        <div class="info-value">الإفصاح أو تقديم التقارير التي تُثبت استخدام المعايير أثناء تنفيذ التقييم</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">٤ — الشك المهني</div>
+        <div class="info-value">التحلي بالشك المهني في كل مرحلة من مراحل التقييم، أي مساءلة كل البيانات والافتراضات</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔍</span> IVS 100 — الفقرة 20: مراقبة جودة التقييم (8 نقاط)</div>
+    <ul class="styled-list">
+      <li>تطبيق ضوابط جودة لضمان تنفيذ عمليات التقييم بموضوعية وشفافية وبدون تحيز</li>
+      <li>تحديد نطاق الضوابط مراعاةً للاستخدام المقصود، نوع الأصل، درجة تعقيد التقييم</li>
+      <li>تقييم المحاكم الصادرة أثناء التقييم من ناحية المعقولية وعدم التحيز</li>
+      <li>يجب أن تحتوي الوثائق على التفاصيل الكافية لآخر مقيّم ليفهم فاعلية الضوابط</li>
+      <li>إجراء تقييم دوري للضوابط للتأكد من سلامتها واتساقها</li>
+      <li>إذا تمكن المقيّم من التصدي لمخاطر التقييم → تطبيق إجراءات رقابة الامتثال</li>
+      <li>يجب أن يستنتج المقيّم أن مستوى مخاطر التقييم مناسب وفقاً للضوابط المطبقة</li>
+      <li>الضمان بأن مخاطر الأصول الصناعية مناسبة وفقاً للضوابط المطبقة واحتياجات المنشأة</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📁</span> IVS 101 — نطاق العمل: 15 عنصراً إلزامياً</div>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>العنصر</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>الأصول أو الالتزامات (محل التقييم)</td></tr>
+        <tr><td>2</td><td>العملاء</td></tr>
+        <tr><td>3</td><td>الاستخدام المقصود</td></tr>
+        <tr><td>4</td><td>المستخدم المقصود (إن وُجد)</td></tr>
+        <tr><td>5</td><td>المقيّم</td></tr>
+        <tr><td>6</td><td>عملة التقييم</td></tr>
+        <tr><td>7</td><td>تاريخ التقييم</td></tr>
+        <tr><td>8</td><td>أسس أو أساس القيمة المستخدمة</td></tr>
+        <tr><td>9</td><td>طبيعة عمل المقيّم (دوره)</td></tr>
+        <tr><td>10</td><td>طبيعة المعلومات ومصدرها</td></tr>
+        <tr><td>11</td><td>الافتراضات الخاصة</td></tr>
+        <tr><td>12</td><td>الخبراء والمتخصصون (إن وُجدوا)</td></tr>
+        <tr><td>13</td><td>نوع التقرير</td></tr>
+        <tr><td>14</td><td>الوثائق الداعمة الأخرى</td></tr>
+        <tr><td>15</td><td>الامتثال للمعايير</td></tr>
+      </tbody>
+    </table>
+    <div class="alert-box" style="margin-top:12px">
+      <strong>قاعدة مهمة:</strong> يجب الاتفاق على نطاق العمل كتابةً بين المقيّم والعميل قبل الانتهاء من التقرير. أي تغييرات تطرأ أثناء التقييم يجب الاتفاق عليها كتابةً أيضاً.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚠️</span> مراجعة التقييم vs التقييم</div>
+    <ul class="styled-list">
+      <li><strong>مراجعة التقييم</strong> لا تُعدّ تقييماً — هي تحقق من امتثال التقييم للمعايير و/أو تأكيد نتائج القيمة</li>
+      <li><strong>مراجعة عملية التقييم:</strong> تتناول مدى الالتزام بالمعايير</li>
+      <li><strong>مراجعة القيمة:</strong> تتناول التأكد من نتائج القيمة</li>
+      <li>يجب أن يصف نطاق عمل مراجعة التقييم: نوع المراجعة، الأصل محل المراجعة، هوية المقيّم والعميل، الاستخدام المقصود، الافتراضات، الوثائق المراد مراجعتها</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== UNIT 2 CHAPTER 2 ========== -->
+<div class="section" id="u2f2">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الثانية • الفصل الثاني</div>
+    <div class="chapter-title">المعايير العامة — IVS 102 إلى IVS 106</div>
+    <div class="chapter-desc">أسس القيمة — أساليب التقييم — البيانات — النماذج — التوثيق</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> IVS 102 — أسس القيمة الـ 12</div>
+    <table class="data-table">
+      <thead><tr><th>الرمز</th><th>أساس القيمة</th><th>ملاحظة جوهرية</th></tr></thead>
+      <tbody>
+        <tr><td>10(أ)</td><td>القيمة السوقية</td><td>مشترٍ راغب + بائع راغب + حياد + تسويق مناسب + معرفة + بلا إكراه</td></tr>
+        <tr><td>20(أ)</td><td>الإيجار السوقي</td><td>تأجير ملك عقاري — بائع وشارٍ راغبان + شروط مناسبة</td></tr>
+        <tr><td>30(أ)</td><td>القيمة المنصفة (IVS)</td><td>السعر العادل بين طرفين محددين يعكس مصالح كلا الطرفين — أوسع نطاقاً من القيمة السوقية</td></tr>
+        <tr><td>40(أ)</td><td>القيمة الاستثمارية</td><td>قيمة الأصل لمالك أو مستثمر محدد — لا تفترض بيعاً</td></tr>
+        <tr><td>50(أ)</td><td>القيمة التكاملية</td><td>قيمة ناتجة عن ضم أصلين معاً تتجاوز مجموع قيمتيهما منفردتين</td></tr>
+        <tr><td>60(أ)</td><td>قيمة التصفية</td><td>البائع مُجبَر على البيع — قد تكون تصفية سريعة أو منظمة</td></tr>
+        <tr><td>70(أ)</td><td>القيمة العادلة (IFRS)</td><td>المعيار المحاسبي الدولي 13 — السعر عند البيع/نقل الالتزام في سوق منظمة</td></tr>
+        <tr><td>80(أ)</td><td>القيمة العادلة القانونية</td><td>تستخدمها محاكم وجهات حكومية وفق السوابق القضائية</td></tr>
+        <tr><td>90(أ)</td><td>الاستخدام الأعلى والأفضل</td><td>الاستخدام الذي يحقق أعلى قيمة — مباح قانوناً + ممكن مادياً + مجدٍ اقتصادياً</td></tr>
+        <tr><td>100(أ)</td><td>الاستخدام الحالي</td><td>الطريقة الحالية لاستخدام الأصل — ليس بالضرورة الأعلى والأفضل</td></tr>
+        <tr><td>110(أ)</td><td>التصفية المنظمة</td><td>تحديد قيمة مجموعة أصول في فترة زمنية معقولة للبيع</td></tr>
+        <tr><td>120(أ)</td><td>البيع القسري</td><td>البائع مضطر للبيع — فترة تسويق قصيرة — قد لا يكون قادراً على إجراء فحوص كاملة</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🧮</span> IVS 103 — أساليب التقييم الثلاثة</div>
+    <div class="method-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:12px">
+      <div class="method-card" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px">
+        <div style="color:var(--accent);font-weight:700;margin-bottom:10px">بوابة السوق</div>
+        <ul class="styled-list" style="font-size:0.88rem">
+          <li>طريقة المعاملات المقارنة</li>
+          <li>الدليل السعري</li>
+          <li>الطريقة الإرشادية للمعاملات المتداولة</li>
+        </ul>
+      </div>
+      <div class="method-card" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px">
+        <div style="color:var(--accent2);font-weight:700;margin-bottom:10px">بوابة الدخل</div>
+        <ul class="styled-list" style="font-size:0.88rem">
+          <li>التدفقات النقدية المخصومة (DCF)</li>
+          <li>رسملة الدخل</li>
+          <li>نموذج جوردن / الثابت</li>
+        </ul>
+      </div>
+      <div class="method-card" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px">
+        <div style="color:var(--accent3);font-weight:700;margin-bottom:10px">بوابة التكلفة</div>
+        <ul class="styled-list" style="font-size:0.88rem">
+          <li>طريقة تكلفة الإحلال</li>
+          <li>طريقة تكلفة إعادة الإنتاج</li>
+          <li>طريقة الجمع</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert-box" style="margin-top:14px">
+      <strong>مبدأ جوهري:</strong> ينظر المقيّم في جميع الأساليب الثلاثة ويختار الأنسب. إذا أنتجت أساليب متعددة مؤشرات متباينة، يجب أن يشرح سبب الاختلاف وكيفية التوفيق بينها — ولا يجوز تحديد متوسط القيم بشكل عشوائي.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📈</span> DCF — التدفقات النقدية المخصومة: خطوات التطبيق</div>
+    <ul class="styled-list">
+      <li>اختيار نوع التدفقات النقدية الأنسب (ما قبل الضريبة / ما بعدها / الأسهم / إجمالي)</li>
+      <li>تحديد أفضل فترة للتوقع وإعداد توقعات التدفقات النقدية</li>
+      <li>تحديد القيمة النهائية إن كان الأصل مستمراً بعد فترة التوقع</li>
+      <li>تحديد معدل الخصم المناسب — يعكس القيمة الزمنية للنقود + المخاطر المرتبطة</li>
+      <li>تطبيق معدل الخصم على التدفقات المستقبلية للوصول إلى القيمة الحالية</li>
+    </ul>
+    <div class="info-grid" style="margin-top:12px">
+      <div class="info-item">
+        <div class="info-label">طرق حساب معدل الخصم</div>
+        <div class="info-value" style="font-size:0.85rem">CAPM / WACC / معدلات عائد ملحوظة / طريقة بناء معدل الخصم</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">القيمة النهائية — طرقها</div>
+        <div class="info-value" style="font-size:0.85rem">نموذج جوردن (النمو الدائم) / بوابة السوق / قيمة الخردة / تكلفة التصرف</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗂️</span> IVS 104 — البيانات والمدخلات</div>
+    <ul class="styled-list">
+      <li>المقيّم مسؤول عن تقدير البيانات واختيارها واستخدامها في التقييم</li>
+      <li>يجب أن تصل درجة مستوى البيانات الملحوظة إلى أقصى مستويات استخدام البيانات الملحوظة</li>
+      <li><strong>البيانات الملحوظة:</strong> معلومات متاحة للمشاركين في السوق تتعلق بالأحداث أو المعاملات الفعلية</li>
+    </ul>
+    <div class="info-grid" style="margin-top:12px">
+      <div class="info-item">
+        <div class="info-label">خصائص البيانات ذات الصلة</div>
+        <div class="info-value" style="font-size:0.85rem">الدقة • الاكتمال • حسن التوقيت • الوضوح</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">مصادر البيانات المفتوحة (السعودية)</div>
+        <div class="info-value" style="font-size:0.85rem">بورصة العقار / وزارة العدل / منصة البيانات المفتوحة / منصة رأيك / الهيئة العامة للعقار</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🤖</span> IVS 105 — نماذج التقييم</div>
+    <ul class="styled-list">
+      <li>نموذج تقييم آلي (AVM) — يقدم حساباً آلياً لأصل محدد في تاريخ محدد باستخدام خوارزميات حسابية أو تقنية</li>
+      <li>دون أن يطبّق المقيّم حكمه المهني على النموذج</li>
+      <li>يجب توثيق تفاصيل تصميم النموذج وتنفيذه واختباره</li>
+      <li>يجب أن يتضمن التوثيق تفاصيل كافية تمكّن مقيّماً آخر من فهم النموذج ومراجعته</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📄</span> IVS 106 — التوثيق وإعداد التقارير</div>
+    <ul class="styled-list">
+      <li>يجب أن يكون التوثيق كافياً لتقديم سجل التقييم ومعلومات تصف نتائجه</li>
+      <li>يجب توثيق المدخلات الهامة للنموذج مع تفاصيل تصميمه وتنفيذه واختباره</li>
+      <li>يجب على المقيّم توثيق جميع معلومات التقييم بناءً على الاستخدام المقصود</li>
+      <li>نوع التقرير لا يؤثر على ضرورة استيفاء العناصر الإلزامية — سواء كان سردياً أو مختصراً</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏷️</span> الافتراضات والافتراضات الخاصة — IVS 102</div>
+    <ul class="styled-list">
+      <li><strong>الافتراضات العادية:</strong> تتعلق بوقائع ليس بمقدور المقيّم التحقق منها — مثل: افتراض ملكية مطلقة شاغرة، افتراض اكتمال المبنى في تاريخ التقييم</li>
+      <li><strong>الافتراضات الخاصة:</strong> وقائع مفترضة تختلف عن الموجودة فعلياً في تاريخ التقييم — تُستخدم لإظهار أثر تغيُّر محتمل على قيمة أصل</li>
+      <li>يجب أن تكون جميع الافتراضات معقولة ومدعومة بالأدلة ومناسبة للاستخدام المقصود</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔗</span> المنفعة التكاملية — IVS 102 الفقرة 40</div>
+    <ul class="styled-list">
+      <li>المنفعة التكاملية = الفوائد الناشئة عن الجمع بين أصلين أو أكثر بحيث تصبح قيمتهما معاً أكبر من مجموع قيمتيهما منفردتين</li>
+      <li>مثال: شركتان تشتركان بمنتجات تكاملية — دخلهما معاً أكبر مما تنتجانه منفردتين</li>
+      <li>المنفعة التكاملية المتاحة للمشاركين في السوق تُعتبر من ضمن القيمة السوقية</li>
+      <li>المنفعة التكاملية الخاصة بمشترٍ معين فقط → لا تُدرج في القيمة السوقية → تُعكس في القيمة الاستثمارية</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== UNIT 2 CHAPTER 3 ========== -->
+<div class="section" id="u2f3">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الثانية • الفصل الثالث</div>
+    <div class="chapter-title">معايير الأصول — IVS 200 إلى IVS 230</div>
+    <div class="chapter-desc">تطبيق المعايير على أنواع الأصول المختلفة</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗺️</span> خريطة معايير الأصول كاملة</div>
+    <table class="data-table">
+      <thead><tr><th>المعيار</th><th>نوع الأصل</th></tr></thead>
+      <tbody>
+        <tr><td>IVS 200</td><td>المنشآت التجارية والصناعية وحصصها</td></tr>
+        <tr><td>IVS 210</td><td>الأصول غير الملموسة</td></tr>
+        <tr><td>IVS 220</td><td>الالتزامات غير المالية</td></tr>
+        <tr><td>IVS 230</td><td>المخزون</td></tr>
+        <tr><td>IVS 300</td><td>الآلات والمعدات والبنية التحتية (PEI)</td></tr>
+        <tr><td>IVS 400</td><td>المصالح والحقوق العقارية</td></tr>
+        <tr><td>IVS 410</td><td>العقارات التطويرية</td></tr>
+        <tr><td>IVS 500</td><td>الأدوات المالية</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;color:var(--text-dim);font-size:0.88rem">مبدأ جوهري: معايير الأصول تضيف متطلبات إضافية فوق المعايير العامة — لا تحلّ محلها.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏢</span> IVS 200 — تقييم المنشآت التجارية وحصصها</div>
+    <ul class="styled-list">
+      <li>تعريف منشأة الأعمال يختلف بحسب الاستخدام المقصود — قد تضم أصول مجتمعة ومتكاملة لتوليد نشاط اقتصادي</li>
+      <li>المنشأة قد تأخذ أشكالاً عدة: شركة فردية، شركة مساهمة مشتركة، مشروع مشترك، شراكة</li>
+      <li><strong>بوابة السوق:</strong> تُطبَّق كثيراً — 3 مصادر رئيسية: الأسواق العامة لحصص الملكية، سوق الاستحواذ، المعاملات السابقة</li>
+      <li><strong>بوابة الدخل:</strong> الأكثر شيوعاً — DCF بناءً على توقعات ربحية معقولة</li>
+      <li><strong>بوابة التكلفة:</strong> نادراً تُطبَّق — في حالات المنشآت في بدايتها أو عدم توفر مقارنات موثوقة</li>
+      <li>علاوات السيطرة وخصومات الأقلية: تُعتبر عند تقييم حصص ملكية في المنشأة</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">💡</span> IVS 210 — الأصول غير الملموسة: التعريف والتصنيف</div>
+    <ul class="styled-list">
+      <li>الأصل غير الملموس = أصل غير نقدي لا يمتلك خصائص مادية — يمنح حقوقاً أو منافع اقتصادية لمالكه</li>
+      <li><strong>المرتبطة بالتسويق:</strong> العلامات التجارية، أسماء النطاقات، التصاميم الفريدة</li>
+      <li><strong>المرتبطة بالعملاء:</strong> قوائم العملاء، العقود وعلاقاتهم التعاقدية وغير التعاقدية</li>
+      <li><strong>المرتبطة بالفنون:</strong> حق الاستفادة من مسرحيات وكتب وأفلام وموسيقى — حقوق النشر والتأليف غير التعاقدية</li>
+      <li><strong>المرتبطة بالعقود:</strong> قيمة حقوق الناشئة عن اتفاقيات تعاقدية — تراخيص، عقود إيجار، عقود توريد، براءات اختراع، صياغات وتركيبات</li>
+      <li><strong>المرتبطة بالتقنية:</strong> قواعد البيانات، البرمجيات، الأساليب المسجلة وغير المسجلة</li>
+    </ul>
+    <div class="alert-box" style="margin-top:10px">بوابة السوق تُطبَّق بحسب نشاط السوق — بوابة الدخل تُستخدم بناءً على الفائدة المستقبلية المتوقعة — بوابة التكلفة تُطبَّق عند غياب بيانات سوقية موثوقة.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚡</span> IVS 220 — الالتزامات غير المالية</div>
+    <ul class="styled-list">
+      <li>الالتزامات غير المالية = التزام يحتوي على التزام غير مالي — مثل الضمانات وبنود التعويض والعقوبات البيئية</li>
+      <li>غالباً تُطلب لأغراض التقارير المالية عند دمج الشركات أو بيع الأصول وتحليل انخفاض القيمة</li>
+      <li><strong>طريقة بوابة السوق — الطريقة التنازلية:</strong> تبدأ بالسعر الرسمي المقدّر للمطالبات غير النقدية ثم تخصم التكاليف الفعلية</li>
+      <li><strong>طريقة بوابة الدخل — الطريقة التصاعدية:</strong> تقيس التكاليف المطلوبة لأداء الالتزام مضافاً إليها علاوة معقولة — مخصومة للقيمة الحالية</li>
+      <li><strong>بوابة التكلفة:</strong> محدودة التطبيق في الالتزامات غير المالية</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📦</span> IVS 230 — المخزون</div>
+    <ul class="styled-list">
+      <li>المخزون يشمل: مواد خام، بضائع قيد الإنجاز، بضائع جاهزة للبيع</li>
+      <li>القيمة الدفترية للمخزون تعتمد على التكاليف التاريخية فقط — لا تعكس الأرباح المحققة في جزء من التصنيع</li>
+      <li>القيمة السوقية للمخزون عادةً أعلى من قيمته الدفترية</li>
+      <li><strong>مثال عددي:</strong> مواد خام 100,000 ر.س / بضائع قيد الإنجاز 150,000 ر.س / بضائع جاهزة 200,000 ر.س → القيمة الدفترية = 450,000 ر.س — القيمة السوقية = 550,000 ر.س</li>
+    </ul>
+    <div class="alert-box" style="margin-top:10px"><strong>قاعدة:</strong> بوابة السوق تُطبَّق إذا توفرت معلومات عن معاملات تجارية حيادية تتضمن مخزوناً مماثلاً أو مقارباً في تاريخ التقييم أو قريباً منه.</div>
+  </div>
+</div>
+
+<!-- ========== UNIT 3 CHAPTER 1 ========== -->
+<div class="section" id="u3f1">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الثالثة • الفصل الأول</div>
+    <div class="chapter-title">معايير الأصول — IVS 300 إلى IVS 410</div>
+    <div class="chapter-desc">الآلات والمعدات — المصالح العقارية — العقارات التطويرية</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏭</span> IVS 300 — الآلات والمعدات والبنية التحتية (PEI)</div>
+    <ul class="styled-list">
+      <li>PEI = أصول ملموسة تمتلكها منشأة لاستخدامها في التصنيع أو الإنتاج أو توريد البضائع أو تقديم الخدمات</li>
+      <li>PEI قد تشمل أصول البنية التحتية كشبكة أو نظام متخصص</li>
+      <li>المنشأة قد تمتلك مجموعة من الأصول التكاملية التي تحقق قيمة أعلى معاً من كل منها على حدة</li>
+      <li>أنواع الإهلاك الثلاثة: <strong>الإهلاك المادي</strong> (تدهور جسدي بسبب الاستخدام والتقدم في العمر) + <strong>الإهلاك الوظيفي</strong> (قصور الأصل مقارنة بالبديل الحديث) + <strong>الإهلاك الاقتصادي/الخارجي</strong> (عوامل خارجية تؤثر على القيمة — قد يكون دائماً أو مؤقتاً)</li>
+    </ul>
+    <div class="info-grid" style="margin-top:12px">
+      <div class="info-item">
+        <div class="info-label">العمر المادي</div>
+        <div class="info-value" style="font-size:0.88rem">المدة التي يمكن فيها استخدام الأصل قبل أن يصبح باليًا أو غير قابل للإصلاح اقتصادياً</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">العمر الاقتصادي</div>
+        <div class="info-value" style="font-size:0.88rem">المدة التي يتوقع أن ينتج فيها الأصل دخلاً مالياً أو منفعة غير مالية وفقاً لاستخدامه الحالي</div>
+      </div>
+    </div>
+    <div class="alert-box" style="margin-top:12px">
+      <strong>بوابة التكلفة — الأكثر استخداماً:</strong> تكلفة الإحلال (ثابتة مكافئة بتقنيات حديثة) — تكلفة إعادة الإنتاج (نسخة طبق الأصل من الأصل). مثال: إعادة إنتاج = 2,000,000 ر.س — إحلال = 1,800,000 ر.س → تُستخدم الأقل كتكلفة الإحلال المبدئية.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏠</span> IVS 400 — المصالح والحقوق العقارية</div>
+    <ul class="styled-list">
+      <li>المصلحة العقارية = الحق في ملكية الأرض والمباني أو السيطرة عليها أو لغلالها</li>
+      <li>تحددها الأنظمة الوطنية والتشريعات المحلية عادةً</li>
+    </ul>
+    <table class="data-table" style="margin-top:10px">
+      <thead><tr><th>نوع المصلحة</th><th>التعريف</th></tr></thead>
+      <tbody>
+        <tr><td>المصلحة العليا (ملكية مطلقة)</td><td>الحق المطلق في الملكية — صاحبها يتمتع بالسيطرة الكاملة بلا قيود إلا ما يتعلق بمصالح دنيا أو قانونية</td></tr>
+        <tr><td>المصلحة الدنيا (حق انتفاع)</td><td>تُمنح عادةً من خلال عقد إيجار لفترة محددة — الحق في استخدام أرض أو مباني بشروط الإيجار</td></tr>
+        <tr><td>مصلحة أخرى محددة</td><td>مثل: حق المرور على الأرض، مرتبط بشروط محددة — مؤقت أو دائم وفق النظام</td></tr>
+      </tbody>
+    </table>
+    <ul class="styled-list" style="margin-top:12px">
+      <li><strong>بوابة السوق:</strong> تُطبَّق رغم تباين خصائص العقارات — تعديلات لمراعاة الفروق الكمية والنوعية</li>
+      <li><strong>بوابة الدخل:</strong> تُستخدم للعقارات الاستثمارية التي يُدرّ إيجاراتها — DCF أو رسملة الدخل</li>
+      <li><strong>بوابة التكلفة:</strong> تُستخدم للمباني القديمة أو ذات الاستخدام الخاص — مع تعديل الإهلاك</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏗️</span> IVS 410 — العقارات التطويرية: التعريف والأغراض</div>
+    <ul class="styled-list">
+      <li><strong>تعريف العقار التطويري:</strong> مصالح يلزم تطويرها لتحقيق استخدام أعلى وأفضل — أو التطوير لا يزال جارياً أو قيد النظر في تاريخ التقييم</li>
+    </ul>
+    <table class="data-table" style="margin-top:10px">
+      <thead><tr><th>نوع العقار التطويري</th></tr></thead>
+      <tbody>
+        <tr><td>أراضٍ لم يسبق تطويرها</td></tr>
+        <tr><td>أراضٍ مخصصة للتطوير أو لاستخدامات عليا</td></tr>
+        <tr><td>تحسين المباني القائمة أو إعادة تطويرها</td></tr>
+        <tr><td>بناء المباني / إدخال تعديلات أو زيادة الكثافة</td></tr>
+        <tr><td>أراضٍ سبق تطويرها وجرى تطويرها مرة أخرى</td></tr>
+      </tbody>
+    </table>
+    <div class="alert-box" style="margin-top:12px">
+      <strong>الافتراضان الأساسيان في التقييم:</strong><br>
+      ١. القيمة الحالية مبنية على الأسعار الموجودة في وقت التقييم<br>
+      ٢. القيمة التقديرية في وقت إنجاز المشروع مبنية على الأسعار الموجودة عند إنجازه<br><br>
+      <strong>بوابة الدخل — الأكثر استخداماً:</strong> طريقة القيمة المتبقية — تطرح التكاليف المتوقعة (إنشاء + تمويل + أرباح) من القيمة الكاملة للعقارات المكتملة.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">💰</span> طريقة القيمة المتبقية — مثال تطبيقي</div>
+    <ul class="styled-list">
+      <li>قيمة العقارات المكتملة: 45,000,000 ر.س</li>
+      <li>ناقص تكاليف البناء والإنشاء</li>
+      <li>ناقص تكاليف التمويل: 1,800,000 ر.س</li>
+      <li>ناقص أرباح المطور / هامش الربح المستهدف</li>
+      <li>= <span class="highlight-num">القيمة المتبقية للأرض أو العقار التطويري</span></li>
+    </ul>
+    <div class="alert-box" style="margin-top:10px">تختلف مخاطر مرحلة البناء عن مخاطر ما بعد الإنجاز — لذلك معدل خصم مرحلة البناء قد يختلف ويجب دراسته بحذر.</div>
+  </div>
+</div>
+
+<!-- ========== UNIT 3 CHAPTER 2 ========== -->
+<div class="section" id="u3f2">
+  <div class="chapter-header">
+    <div class="chapter-tag">الوحدة الثالثة • الفصل الثاني</div>
+    <div class="chapter-title">IVS 500 — الأدوات المالية + الملاحق</div>
+    <div class="chapter-desc">تقييم الأدوات المالية — قائمة المصطلحات — عناصر تقرير التقييم الإلزامية</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📉</span> IVS 500 — الأدوات المالية: خصائص التقييم</div>
+    <ul class="styled-list">
+      <li>تطبَّق المبادئ الواردة في المعايير العامة على تقييم الأدوات المالية</li>
+      <li>في بعض الحالات القيم متاحة وملحوظة بناءً على عمليات التداول المنشورة</li>
+      <li>في حالات أخرى تُحدَّد القيم باستخدام نماذج متوافقة مع المعايير بتدرجات متفاوتة من القابلية للملاحظة</li>
+      <li>يجب على المقيّم استخدام الحكم المهني لتحديد طبيعة وحجم الجهد المبذول</li>
+      <li>يجب تصميم عمليات التقييم وتنفيذها وتطبيقها وإدارة مخاطر التقييم</li>
+    </ul>
+    <div class="alert-box" style="margin-top:10px"><strong>شرط مهم:</strong> إذا لم يتمتع المقيّم بالمهارات التقنية أو الخبرات أو البيانات اللازمة، يجب أن يطلب مساعدة متخصص أو مؤسسة خدمات — مع الإفصاح عن ذلك في التقارير.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📖</span> قائمة المصطلحات الأساسية — الملحق ١</div>
+    <table class="data-table">
+      <thead><tr><th>المصطلح</th><th>التعريف المختصر</th></tr></thead>
+      <tbody>
+        <tr><td>الأصل</td><td>الحق في الحصول على منفعة اقتصادية</td></tr>
+        <tr><td>أساس القيمة</td><td>المبادئ والافتراضات الأساسية التي ترتكز عليها القيم المقررة</td></tr>
+        <tr><td>مراجعة القيمة</td><td>تحليل ينفذه مقيّم وفق المعايير للرأي في قيمة استنتجها مقيّم آخر</td></tr>
+        <tr><td>نموذج التقييم الآلي (AVM)</td><td>نموذج يقدم حساباً آلياً لأصل محدد باستخدام خوارزميات دون تطبيق حكم مهني</td></tr>
+        <tr><td>القيمة</td><td>الاستنتاج الكمي للمقيّم عن نتائج التقييم الملتزمة بالمعايير كاملاً</td></tr>
+        <tr><td>السعر</td><td>المبلغ النقدي أو ما يشابهه المعروض أو المطلوب أو المدفوع لقاء ما — قد يختلف عن القيمة</td></tr>
+        <tr><td>المقيّم</td><td>فرد أو مجموعة يمتلك المؤهلات والقدرة والخبرة اللازمة لتنفيذ التقييم بموضوعية ونزاهة وكفاءة</td></tr>
+        <tr><td>البيانات الملحوظة</td><td>معلومات متاحة للمشاركين في السوق بسهولة لتحديد قيمة الأصل أو الالتزام</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> الملحق ٢ — العناصر الأساسية الإلزامية في تقرير التقييم</div>
+    <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:14px">يجب على جميع المقيّمين المعتمدين والعاملين في منشآت التقييم ضمان توفرها في كل تقرير تقييم</p>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>القسم</th><th>العناصر</th></tr></thead>
+      <tbody>
+        <tr>
+          <td colspan="3" style="background:rgba(212,168,67,0.1);color:var(--accent);font-weight:700">أولاً: العناصر المهنية</td>
+        </tr>
+        <tr><td>1</td><td>التقييم / نطاق العمل</td><td>تحديد الأصل أو الالتزام محل التقييم + الغرض + أساس القيمة</td></tr>
+        <tr><td>2</td><td>المقيّم</td><td>اسم المقيّم وصفته ومؤهلاته ورقم عضويته</td></tr>
+        <tr><td>3</td><td>تاريخ التقييم</td><td>تاريخ محدد يعكس القيمة في وقت السوق ذلك الحين</td></tr>
+        <tr><td>4</td><td>أسس وافتراضات التقييم</td><td>الأسس المستخدمة والافتراضات العادية والخاصة</td></tr>
+        <tr><td>5</td><td>الأساليب والمناهج</td><td>الأساليب والطرق المستخدمة وتبريرها</td></tr>
+        <tr><td>6</td><td>البيانات والمصادر</td><td>تحديد البيانات الهامة ومصادرها وكيفية التحقق منها</td></tr>
+        <tr><td>7</td><td>الاستعانة بخبراء</td><td>الإفصاح عن أي خبراء أو مؤسسات خدمات تم الاستعانة بها</td></tr>
+        <tr><td>8</td><td>الافتراضات الهامة</td><td>تحديد جميع الافتراضات الهامة والخاصة بنطاق العمل مدعومة بالأدلة</td></tr>
+        <tr><td>9</td><td>نوع التقرير</td><td>وصف نوع التقرير وكيفية إيصال التقييم — سواء كان سردياً أو مختصراً</td></tr>
+        <tr><td>10</td><td>القيود والتحفظات</td><td>توثيق أي قيود أو ظروف محدودة أثّرت على التقييم</td></tr>
+        <tr>
+          <td colspan="3" style="background:rgba(212,168,67,0.1);color:var(--accent);font-weight:700">ثانياً: العناصر النظامية</td>
+        </tr>
+        <tr><td>1</td><td>اسم المقيّم ورقمه</td><td>اسم المقيّم ورقم ترخيصه وتاريخه في جميع صفحات التقرير</td></tr>
+        <tr><td>2</td><td>توقيع المقيّم</td><td>العلامة أو الرسم الخاص بالمقيّم — لا يكتفى بالباركود</td></tr>
+        <tr><td>3</td><td>رمز الإيداع</td><td>الرمز الممنوح للتقرير في منصة قيمة الإلكترونية بعد إيداعه</td></tr>
+        <tr><td>4</td><td>فئة العضوية</td><td>نوع وفئة العضوية الممنوحة للمقيّم المعتمد من الهيئة</td></tr>
+        <tr><td>5</td><td>نوع فرع التقييم</td><td>الفرع الذي رُخِّص له المقيّم مزاولة المهنة فيه</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ========== UNIT 2 QUIZ ========== -->
+<div class="section" id="quiz_u2">
+  <div class="chapter-header">
+    <div class="chapter-tag">أسئلة تدريبية</div>
+    <div class="chapter-title">اختبار الوحدة الثانية</div>
+    <div class="chapter-desc">30 سؤال يغطي IVS 100–106 ومعايير الأصول 200-230</div>
+  </div>
+  <div id="quiz-u2-container"></div>
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn-primary" onclick="startQuiz('u2')">ابدأ الاختبار</button>
+  </div>
+</div>
+
+<!-- ========== UNIT 3 QUIZ ========== -->
+<div class="section" id="quiz_u3">
+  <div class="chapter-header">
+    <div class="chapter-tag">أسئلة تدريبية</div>
+    <div class="chapter-title">اختبار الوحدة الثالثة</div>
+    <div class="chapter-desc">30 سؤال يغطي IVS 300–500 وعناصر تقرير التقييم</div>
+  </div>
+  <div id="quiz-u3-container"></div>
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn-primary" onclick="startQuiz('u3')">ابدأ الاختبار</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// QUIZ DATA - UNIT 2
+// ============================================================
+const quizDataU2 = [
+  // ===== من تمارين الوحدة الثانية - الفصل الأول (PDF ص87) =====
+  {q:"عند تعارض متطلبات قانونية أو تنظيمية مع معايير IVS، ماذا يجب على المقيّم أن يفعل؟", opts:["تجاهل المتطلبات القانونية والتركيز على المعايير فقط","إعطاء الأولوية للمتطلبات القانونية مع شرحها وتوثيقها","استشارة جهة قانونية لتحديد الأولويات دون توثيق","اتباع المعايير فقط دون النظر لأي متطلبات أخرى"], ans:1},
+  {q:"ما المعيار الذي يختص بالتوثيق وإعداد التقارير ضمن معايير IVS الدولية؟", opts:["المعيار 100","المعيار 105","المعيار 102","المعيار 106"], ans:3},
+  {q:"أي من العناصر التالية تشمله المعايير العامة ضمن معايير IVS الدولية؟", opts:["معايير الأصول وملاحقها","التقييم الاجتماعي والبيئي","أسس القيمة وأساليب التقييم والتوثيق وإعداد التقارير","تقييم العقارات والمصالح العقارية"], ans:2},
+  {q:"أي العناصر التالية يتم تضمينه في المعيار 103 من معايير IVS الدولية؟", opts:["أسس القيمة","البيانات والمدخلات","التوثيق وإعداد التقارير","أساليب التقييم"], ans:3},
+  {q:"ما مسؤولية المقيّم وفقاً للمعايير الدولية؟", opts:["ضمان التزام الأطراف الأخرى بالمعايير","تطبيق الأسس القانونية المحلية فقط","تقديم تقرير مفصل عن الأنظمة المالية للمؤسسة","ضمان الالتزام بالمعايير الدولية للتقييم في العملية"], ans:3},
+  // ===== من تمارين الوحدة الثانية - الفصل الثاني (PDF ص139) =====
+  {q:"أي من النقاط التالية يُعتبر من العوامل التي يجب على المقيّم أخذها بعين الاعتبار عند اختيار أسلوب التقييم؟", opts:["مقدار العائد المتوقع من الأصل","السعر الحالي للسوق للأصل","أساس وفرضية القيمة المناسبة","تجربة المقيّم السابقة في تقييم الأصول"], ans:2},
+  {q:"ما الوثيقة التي يجب أن يتفق عليها العميل والمقيّم قبل البدء في تقرير التقييم؟", opts:["تقييم الجودة","الوثائق المالية","التقرير النهائي للتقييم","نطاق العمل"], ans:3},
+  {q:"خالد مقيّم في فرع المعادن الثمينة والأحجار الكريمة، ما العامل الأساسي الذي يجب أن يتأكد منه عند اختيار نموذج التقييم؟", opts:["أن يكون النموذج سهل الاستخدام ويفهمه الجميع","أن يكون النموذج مناسباً للاستخدام المقصود ويتوافق مع المدخلات","أن يكون النموذج سهل الاستخدام مستقبلاً","أن يكون النموذج قد تم استخدامه من قبل في تقييمات سابقة"], ans:1},
+  {q:"عند إجراء عمليات التقييم، ما المبدأ الذي يجب على المقيّم الالتزام به لضمان تقديم تقييم غير متحيز؟", opts:["الأخلاقيات","الكفاءة","الالتزام","الشك المهني"], ans:3},
+  {q:"إذا كان مقيّم يستخدم نموذج تقييم يحتوي على أخطاء ويغفل بعض خصائص الأصل، فما الخصائص التي لم يحققها النموذج؟", opts:["حسن التوقيت والوضوح","الوضوح","الدقة والاكتمال","حسن التوقيت والدقة"], ans:2},
+  // ===== إضافات بنفس أسلوب الكتاب - الوحدة الثانية =====
+  {q:"ما الفرق بين مراجعة عملية التقييم ومراجعة القيمة؟", opts:["لا فرق بينهما","مراجعة العملية تتناول الامتثال للمعايير، ومراجعة القيمة تتناول صحة نتائج القيمة","مراجعة القيمة تشمل مراجعة العملية أيضاً","مراجعة العملية يقوم بها المقيّم نفسه دون طرف ثالث"], ans:1},
+  {q:"ما عدد المعايير العامة ضمن معايير IVS؟", opts:["5","6","7","8"], ans:2},
+  {q:"ما عدد العناصر الإلزامية في نطاق العمل IVS 101؟", opts:["10","12","15","18"], ans:2},
+  {q:"مجلس معايير التقييم الدولية IVSC هو منظمة؟", opts:["حكومية تابعة لوزارة المالية","مستقلة غير هادفة للربح","مهنية تجارية تهدف للربح","تابعة للأمم المتحدة"], ans:1},
+  {q:"متى بدأ نفاذ نسخة IVS 2024؟", opts:["31 يناير 2024","31 يناير 2025","1 يوليو 2024","1 يناير 2025"], ans:1},
+  {q:"أي المعايير يتناول أسس القيمة في IVS؟", opts:["IVS 100","IVS 101","IVS 102","IVS 103"], ans:2},
+  {q:"القيمة التي تفترض مشترياً راغباً وبائعاً راغباً في سوق محايدة بعد تسويق مناسب تسمى؟", opts:["القيمة الاستثمارية","القيمة التكاملية","القيمة السوقية","قيمة التصفية"], ans:2},
+  {q:"القيمة التي تعكس قيمة الأصل لمالك أو مستثمر محدد بغض النظر عن السوق تسمى؟", opts:["القيمة السوقية","القيمة الاستثمارية","القيمة المنصفة IVS","قيمة التصفية المنظمة"], ans:1},
+  {q:"الاستخدام الأعلى والأفضل يجب أن يكون ثلاثة شروط مجتمعة. أيها صحيح؟", opts:["مباح قانوناً + ممكن مادياً + مجدٍ اقتصادياً","مربح + مباح قانوناً + مدعوم بالعميل","مجدٍ اقتصادياً + سهل تطبيقه + مقبول اجتماعياً","ممكن مادياً + مطلوب من السوق + مقبول قانوناً"], ans:0},
+  {q:"القيمة العادلة وفق IFRS تُستخدم أساساً في؟", opts:["التقارير القضائية","التقارير المحاسبية للشركات المدرجة","تقييم الرهن العقاري","تقييم أضرار المركبات"], ans:1},
+  {q:"المنفعة التكاملية المتاحة لجميع المشاركين في السوق تُدرج في؟", opts:["القيمة الاستثمارية فقط","القيمة السوقية","لا تُدرج أبداً","قيمة التصفية"], ans:1},
+  {q:"كم أسلوباً رئيسياً للتقييم في IVS 103؟", opts:["2","3","4","5"], ans:1},
+  {q:"بوابة التكلفة في تقييم الأصول غير الملموسة تُطبَّق عادةً عند؟", opts:["وفرة البيانات السوقية","غياب بيانات سوقية موثوقة","وجود أرباح مستقبلية معقولة","الطلب الشديد من العميل"], ans:1},
+  {q:"ما الرمز الدولي لمعيار المخزون؟", opts:["IVS 210","IVS 220","IVS 230","IVS 300"], ans:2},
+  {q:"لماذا تكون القيمة السوقية للمخزون عادةً أعلى من قيمته الدفترية؟", opts:["لأن المحاسبين يقدّرون بأقل دائماً","لأن القيمة الدفترية تعتمد على التكاليف التاريخية دون الأرباح المحققة في التصنيع","لا فرق بينهما","لأن المخزون يرتفع دائماً مع الزمن"], ans:1},
+  {q:"الالتزامات غير المالية في IVS 220 — الطريقة التنازلية تبدأ من؟", opts:["تكاليف أداء الالتزام","السعر الرسمي المقدّر للمطالبات غير النقدية","قيمة الأصول المقابلة","معدل الخصم المناسب"], ans:1},
+  {q:"نموذج التقييم الآلي AVM يتميز بـ؟", opts:["تطبيق الحكم المهني الكامل","حساب آلي باستخدام خوارزميات دون تطبيق حكم مهني للمقيّم","مراجعة يدوية لكل تقييم","اعتماد بيانات يدوية فقط"], ans:1},
+  {q:"الافتراضات الخاصة في IVS هي؟", opts:["الافتراضات المتفق عليها عادةً في السوق","وقائع مفترضة تختلف عن الموجودة فعلاً في تاريخ التقييم","القيود القانونية المفروضة على الأصل","افتراضات يضعها العميل وحده"], ans:1}
+];
+
+const quizDataU3 = [
+  // ===== من تمارين الوحدة الثالثة - الفصل الثاني (PDF ص191-193) =====
+  {q:"عند تقييم ما إذا كانت مجموعة من الأصول تشكل منشأة أعمال، أي النقاط التالية تُعتبر الأكثر أهمية؟", opts:["تقييم ما إذا كانت الأصول تشمل مزيجاً من الملموسة وغير الملموسة","تحديد ما إذا كانت الأصول والالتزامات المشتركة تخلق قيمة اقتصادية إضافية","فحص ما إذا كانت الأصول تتضمن معدات وموارد بشرية","تحديد ما إذا كان يمكن بيع الأصول بشكل مستقل في السوق"], ans:1},
+  {q:"وفقاً لبوابة السوق، ما الشرط الأساسي الذي يجب توفره لتطبيق هذا الأسلوب عند تقييم الأصول غير الملموسة؟", opts:["وجود معلومات حول معاملات تتضمن أصول غير ملموسة مشابهة","توفر معلومات حول بيع الأصول غير الملموسة بشكل مستقل وبأسعار محددة في السوق بتاريخ التقييم أو قريباً منه وإمكانية تعديل الفروق المهمة بينها","وجود أصول غير ملموسة متاحة للبيع في السوق بشكل مستقل وفي إطار معروف ومتكرر في السوق دون الحاجة إلى معلومات حول الأصول ودون تعديل للفروق","قدرة المقيّم على العثور على معلومات سوقية حول الأصول غير الملموسة"], ans:1},
+  {q:"في تقييم الالتزامات غير المالية باستخدام الطريقة التصاعدية، أي الخطوات التالية تُعتبر الأكثر أهمية لضمان دقة التقييم؟", opts:["حساب جميع التكاليف المباشرة وغير المباشرة بدقة","التأكد من استبعاد التكاليف المرتبطة بأنشطة غير مقصودة بما في ذلك رسوم استخدام الأصول المساهمة وإضافة علاوة معقولة بالبيع المرتبطة بالالتزام","تحديد معدل الخصم بدقة ليعكس القيمة الزمنية للنقود وإدراج عدم اليقين في التدفقات النقدية وعلاوة مخاطر عدم الأداء","مراعاة تأثير الخصم عند مقارنة التكاليف المشتقة مقابل المدفوع المسبق مثل العوائد على الخدمات"], ans:2},
+  {q:"في سياق تقييم المخزون، إذا كانت القيمة الدفترية للمخزون تعتمد فقط على التكاليف التاريخية، كيف يؤثر هذا على مقارنة القيمة السوقية للمخزون بالقيمة الدفترية؟", opts:["ستكون القيمة السوقية للمخزون عادةً أقل من قيمته الدفترية","ستكون القيمة السوقية للمخزون عادةً أعلى من قيمته الدفترية لأن التكاليف التاريخية لا تعكس تغيرات في أسعار المواد الخام والتكاليف التشغيلية والأرباح المحققة","ستكون القيمة السوقية للمخزون مماثلة لقيمته الدفترية","ستعكس القيمة السوقية القيمة الدفترية لأن القيمة السوقية تعتمد على التكاليف التاريخية وليس على الأرباح المحققة مباشرة"], ans:1},
+  // سؤال 5 من الوحدة 3
+  {q:"شركة تمتلك معدات ثقيلة تُستخدم في الإنتاج بناءً على فرضية التصفية. أي الخطوات التالية يجب أن يتبعها المقيّم لضمان دقة التقييم؟", opts:["تقدير القيمة بناءً على بيع المعدات في موقعها الحالي","حساب القيمة بناءً على فرضية بيع المعدات كجزء من مجموعة دون تضمين أي تكاليف إضافية","تقدير القيمة بناءً على بيع المعدات في موقعها الحالي مع إهمال التكاليف المتعلقة بإزالة المعدات أو نقلها","احتساب القيمة بناءً على فرضية بيع المعدات في موقعها الحالي وفق الوضع الراهن مع مراعاة تكاليف الإزالة أو النقل"], ans:3},
+  // ===== سؤال 8 من الوحدة 3 (IVS 500) =====
+  {q:"في إطار عملية تقييم أداة مالية معقدة، اكتشف المقيّم أن مجموعة البيانات الأساسية التي كان يعتمد عليها قد تم تحديثها بسبب تعديلات جديدة في السوق. ما الإجراء الأمثل الذي ينبغي للمقيّم اتباعه لضمان أن التقييم لا يزال دقيقاً ويتوافق مع المعايير المعتمدة؟", opts:["ينبغي على المقيّم تحديث التقييم باستخدام مجموعة البيانات الجديدة والقيام بالتقييم بناءً عليها دون الحاجة إلى الاحتفاظ بالبيانات القديمة","يتطلب الأمر من المقيّم الاستمرار في استخدام البيانات الجديدة دون إدخال تغييرات بناءً على التحديثات مع توثيق التعديلات في التقرير النهائي","يجب على المقيّم مراجعة التقييم باستخدام مجموعة البيانات الجديدة والتأكد من أن التعديلات والافتراضات والبيانات الأصلية لا تزال متاحة للمقارنة وتوثيق التغييرات في التقرير النهائي","ينبغي على المقيّم إهمال البيانات القديمة وتحديث التقييم باستخدام البيانات الجديدة دون الحاجة إلى مراجعة الإجراءات السابقة للاحتفاظ بالتعديلات الأصلية"], ans:2},
+  // ===== إضافات بنفس أسلوب الكتاب - الوحدة الثالثة =====
+  {q:"ما الرمز الدولي لمعيار الآلات والمعدات والبنية التحتية؟", opts:["IVS 200","IVS 300","IVS 400","IVS 410"], ans:1},
+  {q:"كم نوعاً من الإهلاك في تقييم الآلات والمعدات وفق IVS 300؟", opts:["نوع واحد","نوعان","3 أنواع","4 أنواع"], ans:2},
+  {q:"الإهلاك الناتج عن عوامل خارجية كتغيّر الطلب في السوق يسمى؟", opts:["إهلاك مادي","إهلاك وظيفي","إهلاك اقتصادي/خارجي","إهلاك تقني"], ans:2},
+  {q:"تكلفة الحصول على أصل جديد يقدم نفس المنفعة بتقنية حديثة تسمى؟", opts:["تكلفة إعادة الإنتاج","تكلفة الإحلال","القيمة الدفترية","تكلفة الاستبدال الكلية"], ans:1},
+  {q:"ما الرمز الدولي لمعيار المصالح والحقوق العقارية؟", opts:["IVS 300","IVS 400","IVS 410","IVS 500"], ans:1},
+  {q:"المصلحة العليا في العقار تمنح صاحبها؟", opts:["حق الانتفاع لفترة محددة فقط","الحق المطلق في الملكية والسيطرة الكاملة على الأرض والمباني","حق المرور والوصول فقط","حق الإيجار دون التصرف"], ans:1},
+  {q:"المصلحة الدنيا (حق الانتفاع) في العقار تنشأ عادةً عن؟", opts:["الميراث المباشر","الشراء المباشر من المالك","عقد إيجار لفترة محددة","قرار قضائي"], ans:2},
+  {q:"ما الرمز الدولي لمعيار العقارات التطويرية؟", opts:["IVS 300","IVS 400","IVS 410","IVS 500"], ans:2},
+  {q:"العقار التطويري في IVS 410 يُعرَّف بأنه مصالح؟", opts:["مكتملة وجاهزة للسكن","يلزم تطويرها لتحقيق استخدام أعلى وأفضل أو التطوير لا يزال جارياً","زراعية فقط","مؤجرة بعقود طويلة الأمد"], ans:1},
+  {q:"الأسلوب الأكثر استخداماً في تقييم العقارات التطويرية هو؟", opts:["بوابة التكلفة المباشرة","بوابة السوق بالمقارنة","بوابة الدخل — طريقة القيمة المتبقية","الأسلوب الإحصائي"], ans:2},
+  {q:"في طريقة القيمة المتبقية للعقارات التطويرية، ما نقطة البداية؟", opts:["تكاليف الإنشاء والبناء","قيمة الأرض الفارغة","قيمة العقارات المكتملة المقدّرة","تكاليف التمويل والفوائد"], ans:2},
+  {q:"ما الرمز الدولي لمعيار الأدوات المالية؟", opts:["IVS 300","IVS 400","IVS 410","IVS 500"], ans:3},
+  {q:"في تقييم الأدوات المالية، ما الذي يجب أن يمتلكه المقيّم إذا لم تتوفر لديه المهارات أو البيانات الكافية؟", opts:["يرفض المهمة مباشرةً","يطلب مساعدة متخصص مع الإفصاح عن ذلك في التقارير","يكمل التقييم بدون إفصاح","يستخدم بيانات تقييمات سابقة مماثلة"], ans:1},
+  {q:"كم عنصراً نظامياً إلزامياً في تقرير التقييم وفق الملحق 2؟", opts:["3","4","5","7"], ans:2},
+  {q:"هل يؤثر نوع التقرير (سردي/مختصر) على ضرورة استيفاء العناصر الإلزامية؟", opts:["نعم، المختصر يحتاج عناصر أقل","لا، جميع العناصر الإلزامية واجبة بغض النظر عن نوع التقرير","نعم، السردي يحتاج عناصر أقل","حسب قرار المقيّم وموافقة العميل"], ans:1},
+  {q:"رمز الإيداع في تقرير التقييم هو؟", opts:["رقم العضوية في الهيئة","الرمز الممنوح بعد رفع التقرير لمنصة قيمة الإلكترونية","رقم الترخيص المهني","رقم التسجيل التجاري للمنشأة"], ans:1},
+  {q:"الملحق 1 من معايير IVS يتضمن؟", opts:["معايير الأصول","قائمة المصطلحات","نماذج التقارير الإلزامية","الأسئلة التدريبية"], ans:1},
+  {q:"الملحق 2 من معايير IVS يتضمن؟", opts:["قائمة المصطلحات","عناصر التقرير الإلزامية","جدول معايير الأصول","إرشادات التسعير"], ans:1},
+  {q:"في IVS 300، ما الفرق الجوهري بين العمر المادي والعمر الاقتصادي للأصل؟", opts:["لا فرق بينهما في التطبيق","العمر المادي مرتبط بالتدهور الجسدي، الاقتصادي بفترة إنتاج الدخل والمنفعة","العمر الاقتصادي دائماً أطول من المادي","العمر المادي يُقدَّر بالسنوات فقط دون اعتبار للمنفعة"], ans:1},
+  {q:"أي من التالي من معايير الأصول ينطبق على المخزون؟", opts:["IVS 200","IVS 210","IVS 220","IVS 230"], ans:3},
+  {q:"أي من التالي ليس ضمن أنواع العقارات التطويرية في IVS 410؟", opts:["أراضٍ لم يسبق تطويرها","مباني سكنية مكتملة وبها ساكنون","أراضٍ سبق تطويرها وأُعيد تطويرها","تحسين المباني القائمة أو إعادة تطويرها"], ans:1}
+];
+
+
+// ============================================================
+// QUIZ ENGINE
+// ============================================================
+let activeQuiz = null;
+let quizState = {};
+
+function startQuiz(unit) {
+  const data = unit === 'u2' ? quizDataU2 : quizDataU3;
+  const containerId = unit === 'u2' ? 'quiz-u2-container' : 'quiz-u3-container';
+  const container = document.getElementById(containerId);
+  
+  quizState[unit] = { data, answers: new Array(data.length).fill(null), submitted: false };
+  
+  let html = '';
+  data.forEach((q, i) => {
+    html += `<div class="quiz-q" id="${unit}-q${i}">
+      <div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div>
+      <div class="q-opts">`;
+    q.opts.forEach((opt, j) => {
+      html += `<div class="q-opt" onclick="selectOpt('${unit}', ${i}, ${j})" id="${unit}-q${i}-o${j}">${opt}</div>`;
+    });
+    html += `</div></div>`;
+  });
+  
+  html += `<div style="text-align:center;margin-top:32px">
+    <button class="btn-primary" onclick="submitQuiz('${unit}')">تسليم الاختبار</button>
+  </div>`;
+  
+  container.innerHTML = html;
+}
+
+function selectOpt(unit, qIdx, optIdx) {
+  if (quizState[unit] && quizState[unit].submitted) return;
+  quizState[unit].answers[qIdx] = optIdx;
+  
+  const q = document.getElementById(`${unit}-q${qIdx}`);
+  q.querySelectorAll('.q-opt').forEach((el, j) => {
+    el.classList.toggle('selected', j === optIdx);
+  });
+}
+
+function submitQuiz(unit) {
+  const state = quizState[unit];
+  if (!state) return;
+  state.submitted = true;
+  
+  let correct = 0;
+  state.data.forEach((q, i) => {
+    const userAns = state.answers[i];
+    const qEl = document.getElementById(`${unit}-q${i}`);
+    qEl.querySelectorAll('.q-opt').forEach((el, j) => {
+      if (j === q.ans) el.classList.add('correct-ans');
+      if (j === userAns && j !== q.ans) el.classList.add('wrong-ans');
+    });
+    if (userAns === q.ans) correct++;
+  });
+  
+  const containerId = unit === 'u2' ? 'quiz-u2-container' : 'quiz-u3-container';
+  const container = document.getElementById(containerId);
+  
+  const pct = Math.round(correct / state.data.length * 100);
+  const color = pct >= 90 ? '#3dba78' : pct >= 70 ? '#d4a843' : '#e05c5c';
+  
+  const resultDiv = document.createElement('div');
+  resultDiv.style.cssText = `background:var(--surface);border:1px solid ${color};border-radius:12px;padding:24px;text-align:center;margin-bottom:24px`;
+  resultDiv.innerHTML = `<div style="font-size:2.5rem;font-weight:900;color:${color}">${pct}%</div>
+    <div style="color:var(--text);margin-top:8px">${correct} من ${state.data.length} إجابة صحيحة</div>
+    <div style="color:var(--text-dim);font-size:0.88rem;margin-top:6px">${pct >= 90 ? '🎯 ممتاز! جاهز للاختبار' : pct >= 70 ? '✅ جيد، راجع الأسئلة الخاطئة' : '⚠️ راجع المادة وأعد المحاولة'}</div>`;
+  
+  container.insertBefore(resultDiv, container.firstChild);
+}
+</script>
+</body>
+</html>
+
+<!-- ============================================================ -->
+<!-- UNIT 2 TAB - INJECTED -->
+<!-- ============================================================ -->
