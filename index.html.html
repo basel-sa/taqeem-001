@@ -1,0 +1,2876 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منهج 102 — مبادئ التقييم العقاري الأساسية</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f7f8fa;
+  --bg-card:#ffffff;
+  --ink:#16202e;
+  --ink-dim:#5b6674;
+  --ink-faint:#98a1af;
+  --line:#e7e9ee;
+  --line-soft:#f0f1f4;
+  --accent:#132a44;
+  --accent-hover:#1d3c5f;
+  --accent-tint:#f2f5f9;
+  --gold:#a9863c;
+  --ok:#15784e;
+  --ok-bg:#eef7f2;
+  --ok-line:#cfe7dc;
+  --no:#b02734;
+  --no-bg:#fbeef0;
+  --no-line:#f0d2d7;
+  --radius:14px;
+  --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI","Tahoma",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink); line-height:1.9; min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent-tint);color:var(--accent)}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px}
+
+/* ---------- header ---------- */
+header.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.top-in{max-width:860px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+.brand .mark{
+  width:36px;height:36px;border-radius:9px;flex:none;
+  background:var(--accent);
+  display:grid;place-items:center;font-weight:700;color:#fff;font-size:15px;
+}
+.brand h1{font-size:15px;font-weight:700;letter-spacing:.1px;color:var(--ink)}
+.brand .sub{font-size:11.5px;color:var(--ink-faint);font-weight:500}
+.prog-mini{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--ink-dim)}
+.prog-mini .bar{width:84px;height:5px;border-radius:3px;background:var(--line);overflow:hidden}
+.prog-mini .bar i{display:block;height:100%;background:var(--accent);width:0%;transition:width .5s}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 40px;text-align:center;position:relative}
+.hero .eyebrow{
+  display:inline-block;font-size:11.5px;letter-spacing:2.5px;color:var(--gold);
+  font-weight:600;margin-bottom:22px;
+  padding:5px 0;text-transform:uppercase}
+.hero h2{font-size:clamp(28px,5vw,42px);font-weight:800;line-height:1.28;margin-bottom:18px;letter-spacing:-.5px;color:var(--ink)}
+.hero h2 .hl{color:var(--accent)}
+.hero p{color:var(--ink-dim);max-width:540px;margin:0 auto 40px;font-size:15px}
+.hero-stats{display:flex;gap:0;justify-content:center;flex-wrap:wrap;margin-top:8px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;max-width:560px;margin-inline:auto}
+.hero-stats .stat{flex:1;min-width:120px;padding:22px 14px;border-inline-start:1px solid var(--line)}
+.hero-stats .stat:first-child{border-inline-start:none}
+.hero-stats .num{font-size:26px;font-weight:800;color:var(--accent);line-height:1.2}
+.hero-stats .lbl{font-size:12px;color:var(--ink-faint);margin-top:3px}
+.examstrip{
+  margin:40px auto 0;max-width:620px;
+  display:flex;align-items:flex-start;gap:12px;text-align:start;
+  background:var(--bg-soft);border:1px solid var(--line);
+  padding:16px 18px;border-radius:var(--radius);font-size:13.5px;color:var(--ink-dim)}
+.examstrip .ic{font-size:16px;flex:none;line-height:1.6}
+.examstrip b{color:var(--accent);font-weight:700}
+
+/* ---------- sections / units ---------- */
+.unit-block{margin:0 0 44px}
+.unit-head{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.unit-head .tag{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-tint);
+  padding:4px 12px;border-radius:20px;margin-bottom:10px}
+.unit-head h3{font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
+.unit-head .meta{font-size:12.5px;color:var(--ink-faint);margin-top:5px;display:block}
+
+.ch-grid{display:flex;flex-direction:column;gap:12px}
+.ch-card{
+  display:flex;align-items:center;gap:16px;cursor:pointer;
+  background:var(--bg-card);border:1px solid var(--line);
+  padding:18px 20px;border-radius:var(--radius);
+  transition:border-color .18s, transform .18s}
+.ch-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.ch-card .idx{
+  width:34px;height:34px;border-radius:8px;flex:none;
+  display:grid;place-items:center;font-weight:700;font-size:14px;
+  background:var(--accent-tint);color:var(--accent)}
+.ch-card .body{flex:1;min-width:0}
+.ch-card .n{font-size:11.5px;color:var(--gold);font-weight:600;letter-spacing:.3px}
+.ch-card .t{font-size:15.5px;font-weight:700;color:var(--ink);margin:1px 0 3px}
+.ch-card .d{font-size:12.5px;color:var(--ink-faint)}
+.ch-card .stat-badge{flex:none}
+.pill{font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;white-space:nowrap}
+.pill.done{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-line)}
+.pill.q{background:var(--bg-soft);color:var(--ink-dim);border:1px solid var(--line)}
+.ch-card .arrow{color:var(--ink-faint);font-size:17px;flex:none;transition:color .18s}
+.ch-card:hover .arrow{color:var(--accent)}
+
+/* exam cards */
+.exam-card{
+  display:flex;align-items:center;gap:16px;cursor:pointer;margin-top:14px;
+  background:var(--bg-soft);border:1px solid var(--line);
+  padding:18px 20px;border-radius:var(--radius);
+  transition:border-color .18s, transform .18s}
+.exam-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.exam-card .ic{font-size:22px;flex:none;width:40px;text-align:center}
+.exam-card .body{flex:1}
+.exam-card .t{font-size:15px;font-weight:700;color:var(--ink)}
+.exam-card .d{font-size:12.5px;color:var(--ink-dim);margin-top:3px}
+.exam-card .arrow{color:var(--ink-faint);font-size:17px;flex:none}
+.exam-card:hover .arrow{color:var(--accent)}
+.exam-card.final{background:var(--accent);border-color:var(--accent)}
+.exam-card.final .t{color:#fff}
+.exam-card.final .d{color:rgba(255,255,255,.72)}
+.exam-card.final .arrow{color:rgba(255,255,255,.8)}
+.exam-card.final:hover{transform:translateY(-1px);background:var(--accent-hover)}
+.exam-card.alt{background:var(--bg-card);border:1px solid var(--gold)}
+.exam-card.alt .ic{color:var(--gold)}
+
+/* ---------- formulas block ---------- */
+.formula-box{
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--bg-soft);padding:22px 24px;margin:0 0 26px}
+.formula-box h4{
+  font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.formula-box h4::before{content:"∑";color:var(--gold);font-size:15px}
+.fgroup{margin-bottom:16px}
+.fgroup:last-child{margin-bottom:0}
+.fgroup .glabel{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px}
+.fitem{
+  font-family:"Consolas","Courier New",monospace;
+  direction:ltr;text-align:left;
+  font-size:14px;color:var(--ink);
+  background:var(--bg-card);border:1px solid var(--line);
+  padding:9px 14px;border-radius:8px;margin-bottom:7px;
+  letter-spacing:.2px}
+.fitem:last-child{margin-bottom:0}
+
+/* ---------- buttons ---------- */
+.btn{
+  font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;
+  padding:12px 22px;border-radius:var(--radius-sm);border:1px solid transparent;
+  transition:all .18s;display:inline-flex;align-items:center;gap:8px}
+.btn-gold{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-gold:hover:not(:disabled){background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn-gold:disabled{background:var(--line);color:var(--ink-faint);border-color:var(--line);cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--ink-dim);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- views ---------- */
+.view{display:none;min-height:60vh}
+.view.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.back-row{padding:26px 0 6px}
+
+/* ---------- lesson ---------- */
+.lesson-head{margin:8px 0 26px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.lesson-head .crumb{font-size:12.5px;color:var(--gold);font-weight:600;margin-bottom:8px}
+.lesson-head h2{font-size:27px;font-weight:800;color:var(--ink);letter-spacing:-.3px;line-height:1.3}
+.lesson-intro{
+  font-size:15.5px;color:var(--ink-dim);margin-bottom:30px;
+  background:var(--bg-soft);border:1px solid var(--line);
+  padding:20px 22px;border-radius:var(--radius);line-height:1.85}
+.lsec{margin-bottom:26px}
+.lsec h4{
+  font-size:16.5px;font-weight:700;color:var(--accent);margin-bottom:12px;
+  padding-inline-start:14px;border-inline-start:3px solid var(--gold)}
+.lsec ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.lsec li{
+  font-size:14.5px;color:var(--ink);padding:11px 16px;padding-inline-start:34px;
+  background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius-sm);
+  position:relative;line-height:1.8}
+.lsec li::before{
+  content:"";position:absolute;inset-inline-start:15px;top:20px;
+  width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+.start-quiz-bar{
+  margin-top:36px;text-align:center;
+  background:var(--accent-tint);border:1px solid var(--line);
+  padding:30px 24px;border-radius:var(--radius)}
+.start-quiz-bar h4{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.start-quiz-bar p{font-size:13.5px;color:var(--ink-dim);margin-bottom:20px}
+
+/* ---------- quiz ---------- */
+.quiz-meta{
+  position:sticky;top:69px;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 20px;margin-bottom:26px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.quiz-meta .ttl{font-size:16px;font-weight:700;color:var(--ink);flex:1;min-width:180px}
+.quiz-meta .ttl small{display:block;font-size:12px;color:var(--ink-faint);font-weight:500;margin-top:2px}
+.quiz-meta .pbar{flex:1;min-width:120px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.quiz-meta .pbar i{display:block;height:100%;background:var(--accent);width:0%;transition:width .4s}
+.quiz-meta .count{font-size:12.5px;color:var(--ink-dim);font-weight:600;white-space:nowrap}
+
+.qcard{
+  background:var(--bg-card);border:1px solid var(--line);
+  padding:24px 24px 20px;border-radius:var(--radius);margin-bottom:16px}
+.qnum{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:.3px}
+.qtext{font-size:16px;font-weight:600;color:var(--ink);margin:8px 0 18px;line-height:1.8}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{
+  display:flex;align-items:flex-start;gap:12px;cursor:pointer;
+  padding:13px 16px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  transition:border-color .15s, background .15s;background:var(--bg-card)}
+.opt:hover{border-color:var(--accent)}
+.opt .ki{
+  width:26px;height:26px;border-radius:7px;flex:none;
+  display:grid;place-items:center;font-size:13px;font-weight:700;
+  background:var(--bg-soft);color:var(--ink-dim);border:1px solid var(--line);transition:all .15s}
+.opt .txt{font-size:14.5px;color:var(--ink);line-height:1.7;padding-top:2px}
+.opt.sel{border-color:var(--accent);background:var(--accent-tint)}
+.opt.sel .ki{background:var(--accent);color:#fff;border-color:var(--accent)}
+.opt.locked{cursor:default}
+.opt.locked:hover{border-color:var(--line)}
+.opt.correct{border-color:var(--ok-line);background:var(--ok-bg)}
+.opt.correct .ki{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.correct .txt{color:var(--ok)}
+.opt.wrong{border-color:var(--no-line);background:var(--no-bg)}
+.opt.wrong .ki{background:var(--no);color:#fff;border-color:var(--no)}
+.opt.wrong .txt{color:var(--no)}
+
+.expl{
+  max-height:0;overflow:hidden;font-size:13.5px;color:var(--ink-dim);line-height:1.85;
+  transition:max-height .3s ease, padding .3s, margin .3s}
+.expl.show{max-height:600px;padding:14px 16px;margin-top:14px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-sm)}
+.verdict{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.verdict.ok{color:var(--ok)}
+.verdict.no{color:var(--no)}
+
+.submit-row{text-align:center;margin:28px 0 8px}
+.submit-row .btn{padding:14px 34px;font-size:15px}
+.warn{font-size:12.5px;color:var(--ink-faint);margin-top:10px}
+
+/* ---------- result ---------- */
+.result{text-align:center;padding:20px 0 8px}
+.pass-badge{
+  display:inline-block;font-size:13px;font-weight:700;
+  padding:7px 18px;border-radius:24px;margin-bottom:26px}
+.pass-badge.p{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-line)}
+.pass-badge.f{background:var(--no-bg);color:var(--no);border:1px solid var(--no-line)}
+.ring{position:relative;width:150px;height:150px;margin:0 auto 8px}
+.ring svg{transform:rotate(-90deg)}
+.ring .pct{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:34px;font-weight:800}
+.ring .pct small{font-size:11px;font-weight:600;color:var(--ink-faint);margin-top:2px}
+.verdict-txt{font-size:15px;color:var(--ink-dim);max-width:480px;margin:20px auto 0;line-height:1.8}
+.score-line{display:flex;gap:0;justify-content:center;margin:28px auto;max-width:380px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.score-line .sc{flex:1;padding:16px 10px;border-inline-start:1px solid var(--line)}
+.score-line .sc:first-child{border-inline-start:none}
+.score-line .n{font-size:24px;font-weight:800}
+.score-line .l{font-size:11.5px;color:var(--ink-faint);margin-top:2px}
+.sc.ok .n{color:var(--ok)} .sc.no .n{color:var(--no)} .sc.tot .n{color:var(--accent)}
+.result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+
+.rev-head{display:flex;align-items:center;justify-content:space-between;margin:38px 0 18px;flex-wrap:wrap;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.rev-head h4{font-size:18px;font-weight:700;color:var(--ink)}
+.rev-filter{display:flex;gap:8px}
+.fbtn{
+  font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
+  padding:7px 15px;border-radius:20px;border:1px solid var(--line);
+  background:var(--bg-card);color:var(--ink-dim);transition:all .15s}
+.fbtn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);margin-top:70px;padding:34px 0 40px}
+footer p{font-size:12.5px;color:var(--ink-faint);text-align:center;line-height:1.9}
+footer .gold{color:var(--gold);font-weight:600}
+
+/* ---------- responsive ---------- */
+@media(max-width:640px){
+  .wrap{padding:0 18px}
+  .hero{padding:48px 0 30px}
+  .hero-stats .stat{min-width:50%;flex:none}
+  .quiz-meta{top:65px}
+  .quiz-meta .ttl{min-width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand" onclick="goHome()">
+      <div class="mark">١٠٢</div>
+      <div>
+        <h1>مبادئ التقييم العقاري الأساسية</h1>
+        <div class="sub">منصة المذاكرة التفاعلية · هيئة تقييم</div>
+      </div>
+    </div>
+    <div class="prog-mini" title="نسبة الفصول المكتملة">
+      <div class="bar"><i id="miniBar"></i></div>
+      <span id="miniTxt">0%</span>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<div id="home" class="view active">
+  <div class="wrap">
+    <div class="hero">
+      <span class="eyebrow">منهج ١٠٢ · زمالة المقيمين المعتمدين</span>
+      <h2>ذاكر المنهج <span class="hl">كامل</span><br>واختبر نفسك قبل الاختبار</h2>
+      <p>شرح مركّز لكل فصل، يتبعه اختبار بنفس أسلوب أسئلة الهيئة. اختبار لكل وحدة، واختبار شامل لكل المنهج بالنهاية.</p>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">٣</div><div class="lbl">وحدات</div></div>
+        <div class="stat"><div class="num">٨</div><div class="lbl">فصول</div></div>
+        <div class="stat"><div class="num" id="totalQ">٠</div><div class="lbl">سؤال</div></div>
+        <div class="stat"><div class="num">٧٠٪</div><div class="lbl">شرط الاجتياز</div></div>
+      </div>
+      <div class="examstrip">
+        <span class="ic">📅</span>
+        <span>الاختبار والدورة بتاريخ <b>٧ / ٥</b> — ذاكر فصل فصل، وكل ما تخلص فصل سوّ اختباره. لا تنتقل للي بعده إلا وأنت ضامن.</span>
+      </div>
+    </div>
+
+    <div id="curriculum"></div>
+
+    <div class="unit-block">
+      <div class="unit-head">
+        <span class="tag">اختبارات شاملة</span>
+        <h3>الاختبارات النهائية على كل المنهج</h3>
+        <span class="meta">اختباران مستقلان · كل واحد يغطي الوحدات الثلاث · شرط الاجتياز ٧٠٪</span>
+      </div>
+      <div class="exam-card final" onclick="startQuiz('final')">
+        <div class="ic">🎯</div>
+        <div class="body">
+          <div class="t">الاختبار الشامل الأول</div>
+          <div class="d">٥٠ سؤالاً عشوائياً من كل الوحدات · محاكاة لاختبار الهيئة · يشمل الأسئلة الحسابية والقوانين</div>
+        </div>
+        <span class="arrow">←</span>
+      </div>
+      <div class="exam-card alt" onclick="startQuiz('final2')">
+        <div class="ic">🧠</div>
+        <div class="body">
+          <div class="t">الاختبار الشامل الثاني — تطبيقي متقدّم</div>
+          <div class="d">أسئلة أصعب تعتمد على التمييز بين المفاهيم المتقاربة وتطبيقها · كلها ضمن المنهج</div>
+        </div>
+        <span class="arrow">←</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <p>منصة مذاكرة منهج <span class="gold">١٠٢ — مبادئ التقييم العقاري الأساسية</span><br>
+      المحتوى والأسئلة مبنية على المنهج الرسمي · للاستخدام الدراسي · تقدّمك محفوظ على جهازك تلقائياً</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ================= LESSON ================= -->
+<div id="lessonView" class="view">
+  <div class="wrap">
+    <div class="back-row">
+      <button class="btn btn-ghost" onclick="goHome()">→ رجوع للقائمة</button>
+    </div>
+    <div id="lessonBody"></div>
+  </div>
+  <footer><div class="wrap"><p class="gold">منهج ١٠٢</p></div></footer>
+</div>
+
+<!-- ================= QUIZ ================= -->
+<div id="quizView" class="view">
+  <div class="wrap">
+    <div class="back-row">
+      <button class="btn btn-ghost" onclick="confirmLeaveQuiz()">→ خروج من الاختبار</button>
+    </div>
+    <div class="quiz-meta">
+      <div class="ttl" id="quizTitle">اختبار<br><small></small></div>
+      <div class="pbar"><i id="quizBar"></i></div>
+      <div class="count" id="quizCount">٠ / ٠ مُجاب</div>
+    </div>
+    <div id="quizBody"></div>
+    <div class="submit-row">
+      <button class="btn btn-gold" id="submitBtn" onclick="submitQuiz()" disabled>تسليم الاختبار وعرض النتيجة</button>
+      <div class="warn" id="submitWarn">جاوب على كل الأسئلة لتفعيل التسليم</div>
+    </div>
+  </div>
+  <footer><div class="wrap"><p class="gold">منهج ١٠٢</p></div></footer>
+</div>
+
+<!-- ================= RESULT ================= -->
+<div id="resultView" class="view">
+  <div class="wrap">
+    <div id="resultBody"></div>
+  </div>
+  <footer><div class="wrap"><p class="gold">منهج ١٠٢</p></div></footer>
+</div>
+
+
+<script>
+/* ===== questions ===== */
+const BANK = {
+
+u1c1: [
+  {
+    q: "وصف المنهج التقييم العقاري بأنه يجمع بين العلم والفن. ما المقصود بهذا الوصف؟",
+    o: [
+      "أنه يقوم على المعادلات الرياضية وحدها دون حاجة إلى اجتهاد المُقيِّم",
+      "أنه يجمع تحليل البيانات بالمنهجية الرياضية مع تكوين رأي يوازن الحقائق والتنبؤات",
+      "أنه نشاط ذوقي يعتمد على خبرة المُقيِّم دون الرجوع إلى بيانات السوق",
+      "أنه إجراء يختار فيه المُقيِّم القيمة الأقرب لرغبة العميل في كل حالة"
+    ],
+    a: 1,
+    e: "التقييم يجمع العلم (تحليل البيانات والمنهجية الرياضية) مع الفن (تكوين الرأي بالنظر للحقائق الحالية والتنبؤات المستقبلية والموازنة بينها)، فلا يقتصر على الحسابات وحدها."
+  },
+  {
+    q: "أي مما يلي يمثّل المتطلبات الأساسية لإنجاز المُقيِّم عمله بكفاءة ونزاهة؟",
+    o: [
+      "امتلاك عقارات مماثلة في المنطقة محل التقييم وقت إعداد التقرير",
+      "توافر علاقات شخصية مع البائعين تتيح الوصول لبيانات الصفقات",
+      "المعرفة المهنية والمهارات المهنية والقيم الأخلاقية والسلوكية",
+      "رأس مال كافٍ يغطي تكاليف المعاينة وإصدار التقرير النهائي"
+    ],
+    a: 2,
+    e: "حل مشكلة التقييم بكفاءة ونزاهة يتطلب تمتّع المُقيِّم بالمعرفة المهنية، والمهارات المهنية، والقيم المهنية والأخلاقية والسلوكية."
+  },
+  {
+    q: "أي العبارات التالية تصف مفهوم (القيمة) في التقييم العقاري وصفاً دقيقاً؟",
+    o: [
+      "هي المبلغ النقدي الذي دُفع فعلاً عند إتمام صفقة بيع العقار",
+      "هي التكلفة الكلية اللازمة لإنشاء العقار أو اقتنائه من جديد",
+      "هي حقيقة ثابتة يتفق عليها أطراف السوق في وقت التقييم",
+      "هي رأي تقديري للمبلغ الممكن دفعه مقابل سلعة في وقت محدد"
+    ],
+    a: 3,
+    e: "القيمة ليست حقيقة بل رأي تقديري للمبلغ الممكن دفعه مقابل سلعة أو خدمة في وقت محدد ووفق تعريف محدد للقيمة، وتبيّن وجهة نظر السوق في المنافع التي تعود للمالك."
+  },
+  {
+    q: "ما الفرق الجوهري بين القيمة والسعر في التقييم العقاري؟",
+    o: [
+      "القيمة رأي تقديري، أما السعر فهو المقابل المطلوب أو المدفوع فعلاً",
+      "القيمة تخص العقارات المبنية، أما السعر فيخص الأراضي البيضاء فقط",
+      "القيمة دائماً أعلى من السعر لأنها تشمل المنافع المستقبلية كاملة",
+      "القيمة يحددها البائع وحده، أما السعر فتحدده الجهة المُقيِّمة رسمياً"
+    ],
+    a: 0,
+    e: "القيمة استنتاج تقديري لنتائج عملية التقييم، بينما السعر هو المقابل النقدي المطلوب أو المعروض أو المدفوع فعلاً مقابل الأصل، وقد يختلف عن القيمة."
+  },
+  {
+    q: "تشتري إحدى الشركات مواد بناء وتدفع أجور العمال لتشييد مبنى. هذه المبالغ في مفهوم التقييم تمثّل:",
+    o: [
+      "السعر الذي سيُباع به المبنى بعد اكتمال تشييده في السوق",
+      "القيمة السوقية التي يعكسها رأي المشترين في منافع المبنى",
+      "التكلفة، وهي المصروفات اللازمة لاقتناء الأصل أو إنشائه",
+      "العائد المتوقع من تأجير المبنى خلال سنواته التشغيلية الأولى"
+    ],
+    a: 2,
+    e: "التكلفة هي الدفعات أو المصروفات اللازمة لاقتناء الأصل أو إنشائه، كأجور العمال ومواد البناء، وتختلف عن القيمة (رأي السوق) والسعر (المقابل المدفوع)."
+  },
+  {
+    q: "أي العبارات التالية تعرّف (العقار) تعريفاً صحيحاً؟",
+    o: [
+      "كل أصل يملكه الشخص سواء كان قابلاً للنقل أو غير قابل للنقل",
+      "الأرض وكل ما اتصل بها اتصالاً دائماً لا يُنقل دون تلف كالمباني",
+      "الأموال النقدية والأوراق المالية المملوكة للأفراد والمنشآت",
+      "كل ما يمكن تحريكه ونقله من مكان لآخر دون أن يلحقه ضرر"
+    ],
+    a: 1,
+    e: "العقار هو الأرض وكل ما اتصل بها اتصالاً دائماً لا يمكن نقله دون تلف كالمباني والأشجار. وتحدد القوانين المحلية أسس تمييز العقارات من المنقولات."
+  },
+  {
+    q: "أحمد يملك منزلاً وكتب لشخص آخر عقداً يحدد فيه مدة الإيجار وقيمته الشهرية. أي حقوق الملكية مارسه أحمد؟",
+    o: [
+      "حق الرهن العقاري المقابل لدين",
+      "حق الوقف على جهة محددة",
+      "حق التأجير لمنفعة العقار",
+      "حق الهبة دون عوض مالي"
+    ],
+    a: 2,
+    e: "حق التأجير يعني أن المالك يمكنه تأجير المنزل، أي كتابة عقد إيجار وتحديد شروطه بما فيها المدة والقيمة الشهرية المتفق عليها."
+  },
+  {
+    q: "حبّس علي أصل عقاره وسبّل ريعه لجمعية خيرية. أي الحقوق العقارية مارسه؟",
+    o: [
+      "حق الهبة",
+      "حق الوقف",
+      "حق الاستعمال",
+      "حق الانتفاع"
+    ],
+    a: 1,
+    e: "حق الوقف هو تحبيس مال متقوّم وتسبيل منفعته أو ريعه لمصرف خيري أو أهلي أو كليهما، وهو ما فعله علي بمنح الريع لجهة خيرية مع تحبيس الأصل."
+  },
+  {
+    q: "أي مما يلي يصف (الهبة) ضمن حزمة الحقوق العقارية؟",
+    o: [
+      "عقد يملّك بمقتضاه الواهب حال حياته الموهوب له مالاً دون عوض",
+      "عقد يبيح للمستأجر استغلال العقار مدة محددة مقابل بدل معلوم",
+      "حق يخوّل صاحبه استعمال عقار مملوك لغيره مقابل أجر سنوي",
+      "حق يضمن للدائن استيفاء دينه من قيمة العقار عند تعذر السداد"
+    ],
+    a: 0,
+    e: "حق الهبة: عقد يملّك بمقتضاه الواهب حال حياته الموهوب له مالاً دون عوض. أما الخيارات الأخرى فتصف الإيجار والانتفاع والرهن."
+  },
+  {
+    q: "تركت فاطمة عقاراً لورثتها مشتركاً بينهم بحيث لا يُباع أو يُقسم إلا باتفاقهم. هذا النوع من الملكية هو:",
+    o: [
+      "الملكية المطلقة غير محددة المدة",
+      "الملكية المقيدة الخاضعة لحدود",
+      "الملكية المشروطة بوقوع شرط",
+      "الملكية مدى الحياة المقرونة بالعمر"
+    ],
+    a: 1,
+    e: "الملكية المقيدة يظهر عليها حد شرعي أو قانوني يحد من حرية التصرف. وفي الميراث المشترك يصعب بيع العقار أو تقسيمه دون موافقة جميع الورثة، فتكون الملكية مقيدة."
+  },
+  {
+    q: "أي مما يلي يصف (الملكية المطلقة)؟",
+    o: [
+      "ملكية باقية ما لم يقع شرط منصوص عليه في عقد منحها",
+      "ملكية محددة بمدة العقد المبرم بين المؤجر والمستأجر",
+      "ملكية غير محددة المدة يحظى المالك فيها بسلطة مطلقة في التصرف",
+      "ملكية تخضع لحدود شرعية أو قانونية تحد من حرية التصرف فيها"
+    ],
+    a: 2,
+    e: "الملكية المطلقة غير محددة المدة، وبموجبها يحظى المالك بسلطة مطلقة في التصرف بالعقار، وتشمل الملكية الحرة غير المقيدة."
+  },
+  {
+    q: "يملك خالد أرضاً عليها رهن من المحكمة فلا يستطيع بيعها حتى يُرفع الرهن. ما نوع هذه الملكية؟",
+    o: [
+      "ملكية مطلقة",
+      "ملكية مقيدة",
+      "ملكية مدى الحياة",
+      "ملكية حرة غير مقيدة"
+    ],
+    a: 1,
+    e: "الملكية المقيدة تخضع لحدود تحد من حرية التصرف، ومنها وجود رهن على العقار يمنع المالك من التصرف بحرية حتى يُرفع الرهن."
+  },
+  {
+    q: "ملكية تؤول إلى المانح عند وقوع شرط منصوص عليه في عقد منحها. هذه هي الملكية:",
+    o: [
+      "المطلقة",
+      "المقيدة",
+      "المشروطة",
+      "الإيجارية"
+    ],
+    a: 2,
+    e: "الملكية المشروطة باقية ما لم يقع أحد الشروط المنصوص عليها في عقد منحها، وعند وقوع الشرط تؤول الملكية للمانح أو يؤول الحق المتبقي للغير."
+  },
+  {
+    q: "حق عيني مقرر لمنفعة عقار لشخص على عقار مملوك لشخص آخر. هذا هو حق:",
+    o: [
+      "الوقف",
+      "الارتفاق",
+      "الاستعمال",
+      "الانتفاع"
+    ],
+    a: 1,
+    e: "حق الارتفاق هو حق عيني مقرر لمنفعة عقار لشخص على عقار مملوك لشخص آخر."
+  },
+  {
+    q: "أي مما يلي يصف (حق الانتفاع)؟",
+    o: [
+      "رخصة شخصية للمستأجر باستغلال العقار مدة محددة بمقابل مالي",
+      "حق عيني يخوّل المنتفع استعمال شيء مملوك لغيره واستغلاله",
+      "تحبيس أصل العقار وتسبيل ريعه لجهة خيرية أو أهلية محددة",
+      "ضمان عيني يخوّل الدائن استيفاء دينه من قيمة العقار المرهون"
+    ],
+    a: 1,
+    e: "حق الانتفاع حق عيني يخوّل المنتفع استعمال شيء مملوك لغيره واستغلاله، وقد يكون بمقابل أو بدون، وغير محدد المدة. أما الأول فيصف الحيازة الإيجارية."
+  },
+  {
+    q: "ما الفرق بين حق الانتفاع والحيازة الإيجارية من حيث المقابل المالي والمدة؟",
+    o: [
+      "الانتفاع يكون بمقابل ومدة محددة، والحيازة الإيجارية بلا مقابل",
+      "كلاهما رخصة شخصية تكون بمقابل مالي ومدة محددة في العقد",
+      "الانتفاع قد يكون بلا مقابل وغير محدد المدة، والحيازة بمقابل ومدة محددة",
+      "كلاهما حق عيني دائم لا يتقيد بمقابل مالي ولا بمدة معينة"
+    ],
+    a: 2,
+    e: "حق الانتفاع قد يكون بمقابل أو بدون وغير محدد المدة، بينما الحيازة الإيجارية رخصة شخصية بمقابل مالي ومدتها محددة في العقد."
+  },
+  {
+    q: "أي مما يلي يعرّف (الأصول) تعريفاً صحيحاً؟",
+    o: [
+      "الالتزامات والديون المستحقة على المنشأة تجاه الغير",
+      "موارد تتحكم فيها المنشأة نتيجة أحداث سابقة وتتوقع منها منافع",
+      "المصروفات التشغيلية التي تتحملها المنشأة خلال السنة المالية",
+      "رأس المال الذي يدفعه ملّاك المنشأة عند تأسيسها فقط"
+    ],
+    a: 1,
+    e: "الأصول موارد تتحكم فيها المنشأة نتيجة أحداث سابقة؛ حيث تتوقع المنشأة منها تدفق منافع اقتصادية لها."
+  },
+  {
+    q: "أي مما يلي يُصنّف ضمن الأصول المتداولة؟",
+    o: [
+      "المخزون والنقدية وما يعادلها قصيرة الأجل",
+      "الآلات والمعدات المستخدمة في الإنتاج المستمر",
+      "المباني الثابتة المحتفظ بها للاستخدام طويل الأجل",
+      "الأراضي المخصصة للأنشطة الأساسية للمنشأة"
+    ],
+    a: 0,
+    e: "الأصول المتداولة قصيرة الأجل لا تتجاوز سنة، كالمخزون والحسابات المدينة والنقدية وما يعادلها، بينما الآلات والمباني والأراضي أصول غير متداولة."
+  },
+  {
+    q: "أي العقارات التالية يُعد من العقارات التي تحقق دخلاً لأصحابها؟",
+    o: [
+      "المنازل التي يشغلها مالكوها للسكن الخاص",
+      "الأراضي البيضاء غير المستغلة المحتفظ بها",
+      "المكاتب ووحدات بيع التجزئة المؤجرة للغير",
+      "العقارات المخصصة للاستخدام الشخصي للمالك"
+    ],
+    a: 2,
+    e: "العقارات التي تحقق دخلاً كالمكاتب ووحدات التجزئة والوحدات السكنية المؤجرة، بينما المنازل التي يشغلها مالكوها لا تحقق دخلاً."
+  },
+  {
+    q: "الأراضي الاستثمارية في مشاريع التطوير العقاري تتميز بأنها:",
+    o: [
+      "أراضٍ مخصصة لأغراض التصنيع والتخزين الصناعي",
+      "أراضٍ بيضاء تُبنى عليها وحدات سكنية للملّاك",
+      "أراضٍ استثمارية تحقق أرباحاً رأسمالية أو ريعاً",
+      "أراضٍ مستخدمة في النشاط الزراعي والرعوي"
+    ],
+    a: 2,
+    e: "أراضي مشاريع التطوير العقاري هي الاستثمارات العقارية التي تحقق أرباحاً رأسمالية أو ريعاً، كالوحدات المكتبية ووحدات التجزئة وعمارات الشقق الفندقية."
+  },
+  {
+    q: "عند معاينة عقار، ما الإجراء الصحيح الذي يتبعه المعاين بشأن الاستخدام؟",
+    o: [
+      "يعتمد الاستخدام المذكور في إعلان العقار دون مراجعة",
+      "يفترض أن استخدام العقار سكني ما لم يُذكر خلاف ذلك",
+      "يتحقق من الاستخدام الفعلي ويقارنه بالمستندات الرسمية",
+      "يكتفي بقياس مساحة العقار دون النظر إلى استخدامه"
+    ],
+    a: 2,
+    e: "يجب على المعاين التحقق من الاستخدام الفعلي للعقار في وضعه الحالي ومقارنته بالمستندات الرسمية، والتأكد من تطابق المستندات مع الواقع."
+  },
+  {
+    q: "يقوم مبدأ الاستبدال في التقييم العقاري على أن:",
+    o: [
+      "سعر العقار الحالي يمثّل توقعاً لمنافعه المستقبلية",
+      "لكل من البائع والمشتري خياراتٍ أخرى بديلة في السوق",
+      "الأسواق العقارية ديناميكية وقيمها في تغير مستمر",
+      "جزءاً من العقار يسهم في تحديد قيمته بصرف النظر عن تكلفته"
+    ],
+    a: 1,
+    e: "مبدأ الاستبدال يقوم على أن لكل من البائع والمشتري خياراتٍ بديلة، فلا يدفع المشتري للعقار أكثر من تكلفة الحصول على بديل مماثل."
+  },
+  {
+    q: "اعتماد سعر العقار الحالي على توقع منافعه المستقبلية يمثّل مبدأ:",
+    o: [
+      "الاستبدال",
+      "التوقع",
+      "المنافسة",
+      "الإسهام"
+    ],
+    a: 1,
+    e: "مبدأ التوقع يعني أن سعر العقار الحالي توقع لمنافعه المستقبلية، فقيمته تمثل القيمة الحالية للمنافع المتوقع الحصول عليها مستقبلاً."
+  },
+  {
+    q: "إضافةُ مسبحٍ لفيلا قد لا تزيد قيمتها بمقدار تكلفة المسبح نفسه. أي مبدأ يوضّح ذلك؟",
+    o: [
+      "مبدأ الاستبدال",
+      "مبدأ التوقع",
+      "مبدأ الإسهام",
+      "مبدأ المنافسة"
+    ],
+    a: 2,
+    e: "مبدأ الإسهام يقوم على إسهام جزء من العقار في تحديد قيمته السوقية بصرف النظر عن تكلفته المادية، فقد لا تساوي قيمة الإضافة تكلفتها."
+  },
+  {
+    q: "المبدأ الذي يقوم على استخدام الأصل بما يحقق للمالك أعلى منفعة اقتصادية على المدى الطويل في ظروف تنافسية هو:",
+    o: [
+      "مبدأ الاستبدال بين الخيارات البديلة",
+      "مبدأ الاستخدام الأعلى والأفضل لتعظيم الأرباح",
+      "مبدأ الإسهام في تحديد القيمة السوقية",
+      "مبدأ التوقع للمنافع المستقبلية"
+    ],
+    a: 1,
+    e: "مبدأ الاستخدام الأعلى والأفضل (تعظيم الأرباح) يقوم على استخدام الأصل بما يحقق للمالك أعلى منفعة اقتصادية على المدى الطويل في ظل الظروف التنافسية المفتوحة على نحو معقول."
+  },
+  {
+    q: "لماذا يلزم المُقيِّم بذكر نوع الملكية في تقريره؟",
+    o: [
+      "لأنه إجراء شكلي يكمل متطلبات صياغة التقرير فقط",
+      "لتأثير نوع الملكية في قيمة الأصل محل التقييم",
+      "لأن النظام يمنع إصدار أي تقرير دون هذا البند",
+      "لزيادة تفاصيل التقرير أمام الجهة الطالبة له"
+    ],
+    a: 1,
+    e: "يجب ذكر نوع الملكية في التقرير لتأثيرها في قيمة الأصل محل التقييم؛ فالملكية المطلقة ليست شرطاً للانتفاع، إذ يمكن الانتفاع بحيازة إيجارية أو ملكية مقيدة."
+  }
+],
+
+u1c2: [
+  {
+    q: "تنقسم خصائص العقار إلى ثلاثة أنواع رئيسية، هي:",
+    o: [
+      "خصائص نقدية وخصائص مالية وخصائص تجارية",
+      "خصائص مكانية وخصائص تطويرية وخصائص اقتصادية",
+      "خصائص قانونية وخصائص شرعية وخصائص إدارية",
+      "خصائص سكنية وخصائص تجارية وخصائص صناعية"
+    ],
+    a: 1,
+    e: "يتميز العقار بخصائص يمكن تقسيمها إلى مكانية (جغرافية) وتطويرية واقتصادية."
+  },
+  {
+    q: "قطعتا أرض بنفس الحجم في مجمع واحد، إحداهما بواجهة شمالية شرقية والأخرى غربية، وتختلف قيمتهما. أي خاصية مكانية تفسّر ذلك؟",
+    o: [
+      "التفاوت وعدم التماثل بين قطع الأرض",
+      "الندرة وعدم إمكانية إنتاج أراضٍ جديدة",
+      "الاستقرار وطول مدة الاحتفاظ بالعقار",
+      "صعوبة التسييل وتحويل العقار إلى نقد"
+    ],
+    a: 0,
+    e: "التفاوت وعدم التماثل: كل أرض لها خصائص فريدة من ناحية الموقع، فلا توجد قطعتان متماثلتان بل متشابهتان فقط، وتختلف القيمة بحسب تلك الاختلافات."
+  },
+  {
+    q: "تغيّر قيمة الأرض تبعاً لجاذبية الموقع وقربه من المرافق والخدمات يمثّل خاصية:",
+    o: [
+      "الندرة",
+      "تفضيلات الموقع",
+      "الاستقرار",
+      "صعوبة التسييل"
+    ],
+    a: 1,
+    e: "تفضيلات الموقع تعني أن قيمة الأرض تتغير حسب جاذبية الموقع وأهداف الاستخدام، بما في ذلك القرب من المرافق والخدمات العامة."
+  },
+  {
+    q: "إمكانية تعديل الأراضي بتطويرها أو زراعتها أو تشييد مبانٍ عليها تُعد من الخصائص:",
+    o: [
+      "المكانية الجغرافية",
+      "الاقتصادية السوقية",
+      "التطويرية العمرانية",
+      "القانونية النظامية"
+    ],
+    a: 2,
+    e: "قابلية التطوير من الخصائص التطويرية، وتعني إمكانية التعديل على الأراضي بتطويرها أو زراعتها أو تشييد مبانٍ ووحدات سكنية."
+  },
+  {
+    q: "بحث محمد عن (بلوك) سكني شاغر في حي المروج فلم يجد أي بلوك متاح. أي خاصية اقتصادية يعكسها هذا الموقف؟",
+    o: [
+      "الاستقرار في الاستثمار طويل المدى",
+      "الندرة ومحدودية المعروض من الأراضي",
+      "إمكانية الاستثمار وتحقيق عائد مستقبلي",
+      "صعوبة تسييل العقار وتحويله إلى نقد"
+    ],
+    a: 1,
+    e: "الندرة تعني أن عدد الأراضي محدود ولا يمكن إنتاج أراضٍ جديدة، وفي المثال لم يجد المسوّق أي بلوك شاغر لمحدودية المعروض."
+  },
+  {
+    q: "مدى سهولة أو صعوبة بيع العقار وتحويله إلى نقد في السوق يمثّل خاصية:",
+    o: [
+      "إمكانية الاستثمار",
+      "الندرة النسبية",
+      "صعوبة التسييل",
+      "تفضيلات الموقع"
+    ],
+    a: 2,
+    e: "صعوبة التسييل تعني مدى سهولة أو صعوبة بيع العقار وتحويله إلى نقد، فالاستثمار في عقار واحد أصل ثابت غير قابل لتجزئة الأموال المستثمرة فيه."
+  },
+  {
+    q: "كون الاستثمار في الأراضي طويل المدى وتتميز الأراضي بطول مدة الاحتفاظ بها يمثّل خاصية:",
+    o: [
+      "الندرة",
+      "الاستقرار",
+      "إمكانية الاستثمار",
+      "عدم التماثل"
+    ],
+    a: 1,
+    e: "الاستقرار يعني أن الاستثمار في الأراضي طويل المدى، إذ تتميز الأراضي بطول مدة الاحتفاظ بالعقار لتحقيق أقصى استفادة منه."
+  },
+  {
+    q: "أي مما يلي يُعد من خصائص السوق العقاري؟",
+    o: [
+      "سهولة تجزئة الاستثمار في العقار الواحد",
+      "السيولة العالية وسرعة بيع العقارات",
+      "التشتت وقلة التنظيم والتوجيه العام للسوق",
+      "ثبات قيمة العقارات وعدم تأثرها بالعوامل"
+    ],
+    a: 2,
+    e: "من خصائص السوق العقاري التشتت وقلة التنظيم والتوجيه العام، وكونه ذا طبيعة متنوعة ومعقدة وله أبعاد وطنية وإقليمية، وعدم مرونة العرض للأراضي."
+  },
+  {
+    q: "تكلفة التمويل العقاري ومعدل النمو الاقتصادي ودخل الأفراد تُصنّف ضمن العوامل المؤثرة على الطلب من نوع:",
+    o: [
+      "العوامل الاجتماعية والثقافية",
+      "العوامل الاقتصادية",
+      "العوامل المكانية والبيئية",
+      "العوامل الحكومية والتنظيمية"
+    ],
+    a: 1,
+    e: "العوامل الاقتصادية المؤثرة على طلب العقار تشمل دخل الأفراد ومعدل النمو الاقتصادي وتكلفة التمويل العقاري."
+  },
+  {
+    q: "أي العوامل التالية يُعد عاملاً اجتماعياً وثقافياً مؤثراً على الطلب على العقار؟",
+    o: [
+      "موقع العقار وقربه من الخدمات",
+      "معدل النمو الاقتصادي العام",
+      "تكلفة التمويل العقاري المتاح",
+      "ثقافة وذوق الأفراد في المجتمع"
+    ],
+    a: 3,
+    e: "ثقافة وذوق الأفراد من العوامل الاجتماعية والثقافية، بينما موقع العقار عامل مكاني، ومعدل النمو وتكلفة التمويل عاملان اقتصاديان."
+  },
+  {
+    q: "يُصنّف (موقع العقار) ضمن العوامل المؤثرة على طلب العقار من نوع:",
+    o: [
+      "العوامل الاقتصادية",
+      "العوامل الاجتماعية",
+      "العوامل المكانية والبيئية",
+      "العوامل الحكومية"
+    ],
+    a: 2,
+    e: "موقع العقار والتطوير العقاري من العوامل المكانية والبيئية المؤثرة في طلب العقار، بينما دخل الأفراد عامل اقتصادي."
+  },
+  {
+    q: "تعني خاصية الاستقرار الاقتصادي للأرض أن:",
+    o: [
+      "الأراضي لا تخضع لأي رسوم دورية على ملّاكها",
+      "الاستثمار في الأراضي يكون طويل الأجل",
+      "أسعار الأراضي ترتفع باستمرار دون انخفاض",
+      "الاستثمار في الأراضي من أسرع وسائل الربح"
+    ],
+    a: 1,
+    e: "الاستقرار من الخصائص الاقتصادية للأرض، ويعني أن الاستثمار في الأراضي يكون طويل الأجل مع طول مدة الاحتفاظ بالعقار."
+  },
+  {
+    q: "أي العبارات التالية صحيحة بشأن خصائص العقارات؟",
+    o: [
+      "العقارات تتطلب رأس مال صغيراً نسبياً للاستثمار فيها",
+      "يمكن تجزئة الأموال المستثمرة في العقار الواحد بسهولة",
+      "العقارات تُعد ثابتة ومعمّرة بنسبة كبيرة",
+      "قيمة العقار تعتمد أساساً على العوامل المؤقتة"
+    ],
+    a: 2,
+    e: "العقارات ثابتة ومعمّرة بنسبة كبيرة، وتتطلب رأس مال كبيراً، ولا يمكن تجزئة الأموال المستثمرة فيها لأنها أصل ثابت."
+  }
+],
+
+u1c3: [
+  {
+    q: "أي مما يلي يعرّف (الاستثمار) تعريفاً صحيحاً؟",
+    o: [
+      "ادخار الأموال في حساب بنكي دون توظيفها في أي نشاط",
+      "إنفاق رأس المال على السلع الاستهلاكية اليومية للأفراد",
+      "استخدام رأس المال لإنشاء مشروع أو تطويره لتحقيق منفعة اقتصادية",
+      "بيع الأصول المملوكة بأقل من قيمتها السوقية لتسييلها"
+    ],
+    a: 2,
+    e: "الاستثمار هو استخدام رأس المال لإنشاء مشروع استثماري أو توسيعه أو تطويره أو تمويله أو تملّكه؛ من أجل تحقيق منفعة اقتصادية."
+  },
+  {
+    q: "أي مما يلي يصف (العائد) في الاستثمار؟",
+    o: [
+      "رأس المال المستثمر في بداية المشروع الاستثماري",
+      "الدخل المتأتي من الاستثمار كفوائد سنوية أو قيمة إيجارية",
+      "التكاليف والرسوم والعمولات المدفوعة على الاستثمار",
+      "حجم المخاطر التي يتحملها المستثمر في السوق"
+    ],
+    a: 1,
+    e: "العائد هو الدخل المتأتي من الاستثمار، وقد يتحقق كفوائد سنوية أو قيمة إيجارية من العقارات ونمو في القيمة الرأسمالية."
+  },
+  {
+    q: "ما طبيعة العلاقة بين العائد والمخاطرة في الاستثمار؟",
+    o: [
+      "علاقة عكسية، فكلما زاد العائد المطلوب قلّت المخاطرة",
+      "علاقة طردية، فكلما زاد العائد المطلوب زادت المخاطرة",
+      "علاقة ثابتة لا تتأثر بتغير العائد أو المخاطرة",
+      "لا توجد علاقة، فكل منهما مستقل عن الآخر تماماً"
+    ],
+    a: 1,
+    e: "العلاقة طردية بين العائد والمخاطرة؛ فبحسب العائد الذي يريده المستثمر تنعكس خصائص الاستثمار وسماته، فكلما زاد العائد المطلوب زادت المخاطرة."
+  },
+  {
+    q: "أي مما يلي يُعد من المبادئ الأساسية للاستثمار؟",
+    o: [
+      "تركيز كامل الأموال في أصل واحد لزيادة العائد",
+      "الدخول في الاستثمار دون فهم الأصل أو الأداة المالية",
+      "التنويع بتوزيع الأموال على مجموعة متنوعة من الأصول",
+      "تأجيل تحديد الأهداف المالية إلى ما بعد بدء الاستثمار"
+    ],
+    a: 2,
+    e: "من مبادئ الاستثمار التنويع الذي يقلل المخاطر بتوزيع الأموال على أصول متنوعة، إضافة إلى تحديد الأهداف والفهم والمعرفة والصبر والانضباط."
+  },
+  {
+    q: "يتمثّل الاستثمار الخالي من المخاطر في الاستثمار في:",
+    o: [
+      "الأسهم العادية المتداولة في السوق المالية",
+      "العقارات السكنية والتجارية المؤجرة",
+      "السندات الحكومية وأذونات الخزينة",
+      "السندات التي تصدرها الشركات الخاصة"
+    ],
+    a: 2,
+    e: "الاستثمار الخالي من المخاطر هو الاستثمار في السندات الحكومية وأذونات الخزينة، لأنها مضمونة من الحكومة."
+  },
+  {
+    q: "أي مما يلي يُعد من مزايا الاستثمار الخالي من المخاطر؟",
+    o: [
+      "ارتفاع معدل العوائد مقارنة بغيره",
+      "تأمين رأس المال بالقيمة الاسمية",
+      "التقلبات السوقية العالية المربحة",
+      "السيولة المنخفضة طويلة الأجل"
+    ],
+    a: 1,
+    e: "من مزايا الاستثمار الخالي من المخاطر تأمين رأس المال بالقيمة الاسمية، مقابل أنه يتميز بانخفاض معدل العوائد."
+  },
+  {
+    q: "ما الميزة الرئيسة للأسهم الممتازة مقارنة بالأسهم العادية؟",
+    o: [
+      "حق التصويت الكامل في اجتماعات المُسهمين",
+      "الأولوية في حق تلقي توزيعات الأرباح",
+      "إمكانية تحويلها إلى سندات دين مضمونة",
+      "تعرضها لخسائر أكبر عند تصفية الشركة"
+    ],
+    a: 1,
+    e: "الميزة الرئيسة للأسهم الممتازة هي الأولوية في حق تلقي توزيعات الأرباح مقارنة بالأسهم العادية."
+  },
+  {
+    q: "أي نوع من الاستثمار يشمل الأسهم والسندات والصناديق المشتركة؟",
+    o: [
+      "الاستثمار في الأوراق المالية",
+      "الاستثمار في المعادن الثمينة",
+      "الاستثمار في الأصول العقارية",
+      "الاستثمار في شهادات الادخار"
+    ],
+    a: 0,
+    e: "الاستثمار في الأوراق المالية يشمل الأسهم والسندات والصناديق المشتركة."
+  },
+  {
+    q: "علام يعتمد الأمان والاستقرار في الاستثمار العقاري؟",
+    o: [
+      "حجم التوزيعات النقدية على حملة السندات",
+      "تطورات سوق الأوراق المالية وأسعار الأسهم",
+      "الظروف المحلية وتطورات سوق العقارات",
+      "تكاليف الاستيراد ومعدلات الرسوم الجمركية"
+    ],
+    a: 2,
+    e: "الأمان والاستقرار في الاستثمار العقاري يعتمدان على الظروف المحلية وتطورات سوق العقارات."
+  },
+  {
+    q: "إذا كان معدل العائد الاسمي 18% ونسبة التضخم 5%، فإن معدل العائد الحقيقي يساوي:",
+    o: [
+      "23%",
+      "13%",
+      "5%",
+      "30%"
+    ],
+    a: 1,
+    e: "معدل العائد الحقيقي = العائد الاسمي − نسبة التضخم = 18% − 5% = 13%."
+  },
+  {
+    q: "ما العامل الأكبر تأثيراً في تحديد القيمة الإيجارية للعقار؟",
+    o: [
+      "قدرة المستأجرين على الدفع",
+      "تكلفة تمويل شراء العقار",
+      "سمعة المالك في السوق",
+      "عدد مميزات المبنى الإضافية"
+    ],
+    a: 0,
+    e: "قدرة المستأجرين على الدفع هي العامل الأكبر تأثيراً في تحديد القيمة الإيجارية للعقار."
+  },
+  {
+    q: "أي مما يلي يُعد من مبادئ إدارة المحفظة الاستثمارية؟",
+    o: [
+      "ترك المحفظة دون مراجعة لعدة سنوات متتالية",
+      "مراجعة المحفظة دورياً وإعادة توازنها حسب الحاجة",
+      "بيع كل الاستثمارات فور حدوث أي انخفاض",
+      "تثبيت توزيع الأصول ومنع أي تغيير فيه"
+    ],
+    a: 1,
+    e: "من المهم مراجعة المحفظة دورياً وإعادة توازنها حسب الحاجة، ببيع بعض ما ارتفع وشراء المزيد من الأقل قيمة للحفاظ على التوزيع المستهدف."
+  }
+],
+
+u2c1: [
+  {
+    q: "أي مما يلي يعرّف (علم الإحصاء) تعريفاً صحيحاً؟",
+    o: [
+      "العلم الذي يهتم بتحصيل الإيرادات الحكومية وتنظيم إنفاقها",
+      "العلم الذي يوفّر الحقائق الرقمية للظواهر ثم يرتبها ويحللها لنتائج دقيقة",
+      "علم دراسة سلوك الأفراد تجاه الاستخدام الأمثل للموارد النادرة",
+      "علم تقدير قيمة العقارات والأصول وفق تعريف محدد للقيمة"
+    ],
+    a: 1,
+    e: "الإحصاء علم يهتم بتوفير الحقائق الرقمية للظواهر، ثم ترتيبها وعرضها وتحليلها للوصول إلى نتائج محددة بدقة بهدف فهم الظاهرة ووضع المقترحات."
+  },
+  {
+    q: "تتكون عملية الإحصاء من عدة مراحل مرتبة، هي:",
+    o: [
+      "الجمع ثم التنظيم ثم العرض ثم المعالجة",
+      "البيع ثم الشراء ثم التأجير ثم الرهن",
+      "التعريف ثم التحليل ثم التقييم ثم التوثيق",
+      "الندرة ثم الاختيار ثم التوزيع ثم الإنتاج"
+    ],
+    a: 0,
+    e: "تتكون عملية الإحصاء من مراحل: الجمع، ثم التنظيم، ثم العرض، ثم المعالجة."
+  },
+  {
+    q: "جميع القيم أو المفردات التي يمكن أن يأخذها المتغير ونرغب في استنتاجات حولها تُسمى:",
+    o: [
+      "العينة المسحوبة",
+      "المجتمع الإحصائي",
+      "الإحصائية المميزة",
+      "المَعلم المقدّر"
+    ],
+    a: 1,
+    e: "المجتمع الإحصائي هو جميع القيم أو المفردات التي يمكن أن يأخذها المتغير ونرغب في الحصول على استنتاجات حولها، فهي تهم الباحث أو متخذ القرار."
+  },
+  {
+    q: "جزء من المجتمع يمثّل مجموعة مشاهدات اختيرت بطريقة ما منه، يُسمى:",
+    o: [
+      "البيانات",
+      "العينة",
+      "المعلم",
+      "الوسيط"
+    ],
+    a: 1,
+    e: "العينة جزء من المجتمع يمثّل مجموعة من المشاهدات اختيرت بطريقة ما منه."
+  },
+  {
+    q: "السمة أو الشيء الذي يميز العينة يُسمى:",
+    o: [
+      "الإحصائية",
+      "المتغير التابع",
+      "المتغير المستقل",
+      "المَعلم"
+    ],
+    a: 0,
+    e: "الإحصائية هي سمة أو شيء يميز العينة، بينما المَعلم يميز المجتمع."
+  },
+  {
+    q: "في دراسة تبحث أثر العرض والطلب على أسعار الوحدات السكنية، ما المتغير التابع؟",
+    o: [
+      "العرض والطلب في السوق",
+      "أسعار الوحدات السكنية",
+      "عدد العملاء الجدد للشركة",
+      "النمو السنوي لحجم المبيعات"
+    ],
+    a: 1,
+    e: "المتغير التابع هو أسعار الوحدات السكنية لأنه ما نحاول تفسير تغيره، بينما العرض والطلب هما المتغيران المستقلان المؤثران فيه."
+  },
+  {
+    q: "بيانات تتبع نظاماً مع قياس محدد للمسافة بينها تُسمى بيانات:",
+    o: [
+      "الفترة",
+      "الأولية",
+      "الترتيبية",
+      "الاسمية"
+    ],
+    a: 0,
+    e: "بيانات الفترة هي بيانات تتبع نظاماً مع قياس محدد للمسافة بينها."
+  },
+  {
+    q: "تصنيف مثل (جيد جداً، جيد، متوسط، سيئ) يمثّل بيانات:",
+    o: [
+      "الفترة الزمنية",
+      "الأولية المصدرية",
+      "الترتيبية",
+      "الاسمية"
+    ],
+    a: 2,
+    e: "البيانات الترتيبية تُصنّف في فئات لها ترتيب منطقي مثل (جيد جداً، جيد، متوسط، سيئ)، دون قياس دقيق للمسافة بينها."
+  },
+  {
+    q: "تصنيف مثل نوع المولود (ذكر أو أنثى) يمثّل بيانات:",
+    o: [
+      "الفترة الزمنية",
+      "الأولية المصدرية",
+      "الترتيبية المرتبة",
+      "الاسمية"
+    ],
+    a: 3,
+    e: "البيانات الاسمية تُصنّف في فئات لا يوجد بينها ترتيب منطقي، مثل نوع المولود (ذكر أو أنثى)."
+  },
+  {
+    q: "أي مما يلي يُعد سمة من سمات المقياس الاسمي؟",
+    o: [
+      "يسمح بإجراء العمليات الحسابية على القيم",
+      "تُصنّف البيانات فيه إلى فئات",
+      "يقيس الكميات بدقة عالية ومحددة",
+      "يُستخدم للقياس في الفضاء ثلاثي الأبعاد"
+    ],
+    a: 1,
+    e: "من سمات المقياس الاسمي تصنيف البيانات إلى فئات دون ترتيب منطقي بينها ودون إمكانية إجراء عمليات حسابية عليها."
+  },
+  {
+    q: "ما السمة الرئيسة للمقياس الترتيبي؟",
+    o: [
+      "تصنيف البيانات إلى فئات يمكن ترتيبها",
+      "إمكانية إجراء كل العمليات الحسابية عليها",
+      "وجود مسافة قياسية دقيقة بين الدرجات",
+      "قياس البيانات بمعدلات ونسب محددة تماماً"
+    ],
+    a: 0,
+    e: "السمة الرئيسة للمقياس الترتيبي تصنيف البيانات إلى فئات يمكن ترتيبها، دون مسافة قياسية دقيقة بين الدرجات."
+  },
+  {
+    q: "عند تطبيق المُقيِّم لأسلوب السوق، كيف يستفيد من علم الإحصاء؟",
+    o: [
+      "يبحث عن معدلات الدخل في السوق",
+      "يجمع المقارنات وينظمها",
+      "ينظر إلى دليل الأسعار الاسترشادي",
+      "يحلل المؤشرات الاقتصادية الكلية"
+    ],
+    a: 1,
+    e: "عند تطبيق أسلوب السوق يستخدم المُقيِّم الإحصاء في جمع المقارنات وتنظيمها، بينما يبحث عن معدلات الدخل في أسلوب الدخل، ودليل الأسعار في أسلوب التكلفة."
+  },
+  {
+    q: "أي مما يلي يصف (المنوال) ضمن مقاييس النزعة المركزية؟",
+    o: [
+      "القيمة الوسطى في مجموعة البيانات المرتبة",
+      "القيمة الأكثر تكراراً في مجموعة البيانات",
+      "ناتج قسمة مجموع القيم على عددها",
+      "الفرق بين أعلى قيمة وأقل قيمة"
+    ],
+    a: 1,
+    e: "المنوال هو القيمة (أو السعر) الأكثر تكراراً في مجموعة البيانات."
+  },
+  {
+    q: "أسعار أراضٍ بالريال: 1000، 2000، 2000، 2000، 3000، 3000، 2000. ما الوسيط بعد ترتيبها تصاعدياً؟",
+    o: [
+      "1000",
+      "2500",
+      "2000",
+      "3000"
+    ],
+    a: 2,
+    e: "بعد الترتيب: 1000، 2000، 2000، 2000، 2000، 3000، 3000، والقيمة الوسطى (الرابعة من سبع) هي 2000، وهي كذلك المنوال لأنها الأكثر تكراراً."
+  }
+],
+
+u2c2: [
+  {
+    q: "أي مما يلي يعرّف (البحث) تعريفاً صحيحاً؟",
+    o: [
+      "جمع البيانات بطريقة عشوائية دون منهجية محددة مسبقاً",
+      "مجموعة قواعد عامة للوصول إلى الحقيقة حتى بلوغ نتيجة معلومة",
+      "تقدير قيمة العقار في لحظة محددة وفق تعريف للقيمة",
+      "عرض إجابات المشاركين دون تحليل الأسباب الكامنة وراءها"
+    ],
+    a: 1,
+    e: "البحث مجموعة من القواعد العامة المستخدمة للوصول إلى الحقيقة في العلم، تهيمن على سير العقل وتحدد عملياته حتى يصل إلى نتيجة معلومة."
+  },
+  {
+    q: "ينحصر البحث في نوعين رئيسين، هما:",
+    o: [
+      "البحث الكمي والبحث النوعي",
+      "البحث السكني والبحث التجاري",
+      "البحث المالي والبحث الإداري",
+      "البحث الأولي والبحث الثانوي"
+    ],
+    a: 0,
+    e: "ينحصر البحث في نوعين رئيسين هما البحث الكمي والبحث النوعي."
+  },
+  {
+    q: "بحث يفترض وجود حقائق موضوعية معزولة عن مشاعر الأفراد ويعتمد الأساليب الإحصائية في جمع البيانات. هذا هو البحث:",
+    o: [
+      "النوعي",
+      "الكمي",
+      "الاستكشافي",
+      "الوصفي"
+    ],
+    a: 1,
+    e: "البحث الكمي يفترض وجود حقائق اجتماعية موضوعية منفردة معزولة عن مشاعر الأفراد ومعتقداتهم، ويعتمد الأساليب الإحصائية في جمع البيانات وتحليلها."
+  },
+  {
+    q: "علام يعتمد البحث الكمي بشكل أساسي؟",
+    o: [
+      "على البيانات والأرقام",
+      "على الوصف والشرح المتعمّق",
+      "على التحليل النصي للمفاهيم",
+      "على آراء الأفراد ووجهات نظرهم"
+    ],
+    a: 0,
+    e: "البحث الكمي يعتمد على البيانات والأرقام، وينتج بيانات عددية قابلة للتحويل إلى أرقام مثل الإحصاءات الوطنية، ويسمح بالتكرار."
+  },
+  {
+    q: "أي مما يلي يُعد من مزايا البحث الكمي؟",
+    o: [
+      "القدرة على تعميم النتائج باستخدام الإحصاءات",
+      "الوصول إلى فهم عميق للأسباب الكامنة وراء الظاهرة",
+      "الاعتماد على الوصف والشرح التفصيلي للحالات",
+      "تحليل النصوص والمحادثات بين المشاركين"
+    ],
+    a: 0,
+    e: "من مزايا البحث الكمي تعميم النتائج باستخدام الإحصاءات، وملاءمته لعلوم كثيرة، واختباره للمتغيرات التجريبية."
+  },
+  {
+    q: "أي مما يلي يُعد من عيوب البحث الكمي؟",
+    o: [
+      "عدم الاعتداد بآراء الباحث الشخصية في الدراسة",
+      "توفيره تفاصيل دقيقة عن الجوانب النوعية",
+      "احتمالية التعرض لأخطاء في القياس والمعاينة",
+      "تركيزه العميق على الجوانب الاجتماعية للسلوك"
+    ],
+    a: 2,
+    e: "من عيوب البحث الكمي التحيز والبعد عن الموضوعية، واحتمالية التعرض لأخطاء في القياس والمعاينة."
+  },
+  {
+    q: "بحث يفترض وجود ظواهر اجتماعية تُبنى من خلال وجهات نظر الأفراد والجماعات المشاركة فيه. هذا هو البحث:",
+    o: [
+      "الكمي",
+      "النوعي",
+      "التجريبي",
+      "الإحصائي"
+    ],
+    a: 1,
+    e: "البحث النوعي يفترض وجود حقائق وظواهر اجتماعية تُبنى من خلال وجهات نظر الأفراد والجماعات، ولا يستعرض الإجابات فقط بل يكتشف أسبابها الكامنة."
+  },
+  {
+    q: "أي مما يلي يُعد من مزايا البحث النوعي؟",
+    o: [
+      "التركيز على تحليل البيانات الكمية والأرقام",
+      "توفير إجابات رقمية واضحة قابلة للتعميم",
+      "استكشاف تفاعلات الأفراد مع الظواهر",
+      "الاعتماد على الإحصاءات والمعالجة العددية"
+    ],
+    a: 2,
+    e: "من مزايا البحث النوعي استكشاف تفاعلات الأفراد مع الظواهر وفهم الأسباب الكامنة، بينما البحث الكمي هو ما يوفر الإجابات الرقمية القابلة للتعميم."
+  },
+  {
+    q: "أي مما يلي يُعد من أدوات النمذجة؟",
+    o: [
+      "تحليل الانحدار البسيط",
+      "الدراسة التجريبية الميدانية",
+      "الاستبانات الموزعة",
+      "المقابلات الشخصية المعمّقة"
+    ],
+    a: 0,
+    e: "تحليل الانحدار البسيط من أدوات النمذجة المستخدمة لتفسير العلاقة بين المتغيرات."
+  },
+  {
+    q: "أي مما يلي يُعد من أساليب البحث الكمي؟",
+    o: [
+      "البحث الاستقصائي الميداني",
+      "تحليل الانحدار المتعدد",
+      "الدراسة التجريبية الحالية",
+      "المخططات النقطية المبدئية"
+    ],
+    a: 1,
+    e: "تحليل الانحدار المتعدد من أساليب البحث الكمي المستخدمة في تحليل البيانات."
+  },
+  {
+    q: "عند تفسير الإيجار السنوي للشقق بالمساحة والقرب من المرافق في نموذج انحدار، يكون (الإيجار السنوي) متغيراً:",
+    o: [
+      "مستقلاً",
+      "تابعاً",
+      "عشوائياً",
+      "ثابتاً"
+    ],
+    a: 1,
+    e: "في نموذج الانحدار، الإيجار السنوي هو المتغير التابع لأنه ما نحاول تفسير تغيره، بينما المساحة والقرب من المرافق متغيرات مستقلة."
+  },
+  {
+    q: "أي البرامج التالية يُستخدم للتحليل الإحصائي وإعداد تقارير ورسوم وتحليلات معقدة في العلوم الاجتماعية؟",
+    o: [
+      "برنامج SPSS",
+      "برنامج Photoshop",
+      "برنامج AutoCAD",
+      "برنامج PowerPoint"
+    ],
+    a: 0,
+    e: "برنامج SPSS يُستخدم للتحليل الإحصائي وإعداد تقارير مجدولة ورسوم بيانية وتحليلات إحصائية معقدة في العلوم الاجتماعية."
+  },
+  {
+    q: "أي مما يلي يُعد من مزايا المقابلات الشخصية كأداة لجمع البيانات؟",
+    o: [
+      "توفير الوقت والجهد على الباحث",
+      "تسجيل المعلومات بشكل عشوائي سريع",
+      "الحصول على أجوبة تفصيلية معمّقة",
+      "الاستغناء عن خبرة الباحث في الاستجواب"
+    ],
+    a: 2,
+    e: "من مزايا المقابلات الشخصية الحصول على أجوبة تفصيلية ومعمّقة من المشاركين."
+  }
+],
+
+u3c1: [
+  {
+    q: "أي مما يلي يعرّف (الاقتصاد) تعريفاً صحيحاً؟",
+    o: [
+      "علم يهتم بتقدير قيمة العقارات والأصول وفق معايير محددة",
+      "علم اجتماعي يدرس سلوك الأفراد تجاه الاستخدام الأمثل للموارد النادرة",
+      "علم يهتم بجمع البيانات الرقمية للظواهر وترتيبها وتحليلها",
+      "علم يدرس القوانين والأنظمة المنظمة للقطاع العقاري"
+    ],
+    a: 1,
+    e: "الاقتصاد علم اجتماعي يدرس سلوك الأفراد تجاه الاستخدام الأمثل للموارد النادرة، بما يتطلب إدارة كفؤة للموارد لإشباع الاحتياجات المتعددة."
+  },
+  {
+    q: "يركز علم الاقتصاد على مجالين رئيسين، هما:",
+    o: [
+      "الاقتصاد المحلي والاقتصاد الدولي",
+      "الاقتصاد الجزئي والاقتصاد الكلي",
+      "الاقتصاد المالي والاقتصاد النقدي",
+      "الاقتصاد الحكومي والاقتصاد الخاص"
+    ],
+    a: 1,
+    e: "يركز علم الاقتصاد على مجالين رئيسين هما الاقتصاد الجزئي والاقتصاد الكلي."
+  },
+  {
+    q: "الفرع المعني بدراسة اختيارات المستهلكين والمنتجين وتحليل الأسواق وأسعار السلع هو:",
+    o: [
+      "الاقتصاد الكلي",
+      "الاقتصاد الجزئي",
+      "الاقتصاد النقدي",
+      "الاقتصاد المالي"
+    ],
+    a: 1,
+    e: "الاقتصاد الجزئي يُعنى بدراسة اختيارات المستهلكين والمنتجين، وتحليل القرارات الاقتصادية للشركات والأسواق وأسعار السلع وعناصر الإنتاج."
+  },
+  {
+    q: "الفرع المعني بالمتغيرات الكلية كالناتج المحلي والبطالة والتضخم والادخار هو:",
+    o: [
+      "الاقتصاد الجزئي",
+      "الاقتصاد الكلي",
+      "اقتصاد السوق الحر",
+      "الاقتصاد الإداري"
+    ],
+    a: 1,
+    e: "الاقتصاد الكلي يُعنى بالمتغيرات الاقتصادية الكلية ومن أهمها الناتج والاستهلاك والادخار والاستثمار والصادرات والتضخم والبطالة."
+  },
+  {
+    q: "فيمَ تتمثّل المشكلة الاقتصادية؟",
+    o: [
+      "في توفر السلع والخدمات بشكل غير محدود للجميع",
+      "في إدارة الموارد المحدودة لمقابلة الحاجات غير المحدودة",
+      "في وجود موارد غير محدودة مع حاجات بشرية محدودة",
+      "في غياب الحاجات والرغبات لدى الأفراد في المجتمع"
+    ],
+    a: 1,
+    e: "المشكلة الاقتصادية تتمثل في القدرة على إدارة الموارد المحدودة لمقابلة الحاجات والرغبات غير المحدودة."
+  },
+  {
+    q: "أي مما يلي يصف مفهوم (الندرة)؟",
+    o: [
+      "حالة توفر غير محدود للسلع والخدمات في المجتمع",
+      "مشكلة اقتصادية تركز على رغبات البشر في عالم محدود الموارد",
+      "قدرة المجتمع على إنتاج كل ما يحتاجه دون قيود",
+      "حالة انعدام الحاجات والرغبات لدى أفراد المجتمع"
+    ],
+    a: 1,
+    e: "الندرة مشكلة اقتصادية تركز على رغبات وحاجات البشر غير المحدودة في عالم محدود الموارد، وبسببها يجب الاختيار بين البدائل."
+  },
+  {
+    q: "ما عناصر الإنتاج التي تسهم في إنتاج السلع والخدمات؟",
+    o: [
+      "الأرض والعمالة والسلع النهائية والمشروعات الصغيرة",
+      "الأرض والعمالة ورأس المال وعنصر ريادة الأعمال",
+      "العمالة والأراضي ورأس المال والسلع الاعتيادية",
+      "الأرض والعمالة ورأس المال والمشروعات الصغيرة"
+    ],
+    a: 1,
+    e: "عناصر الإنتاج هي: الأرض، والعمل (العنصر البشري)، ورأس المال، وعنصر التنظيم (ريادة الأعمال)."
+  },
+  {
+    q: "ما الدور الأساسي للحكومة في اقتصاد السوق الحر؟",
+    o: [
+      "تنظيم الأسعار والتدخل المباشر في العمليات الاقتصادية",
+      "تحديد كمية المنتجات التي يستهلكها الأفراد",
+      "حماية حقوق الملكية وقيمة المال والعملة",
+      "زيادة القيمة السوقية لعمل كل فرد في المجتمع"
+    ],
+    a: 2,
+    e: "الدور الأساسي للحكومة في اقتصاد السوق الحر هو حماية حقوق الملكية وقيمة المال والعملة، دون تدخل مباشر في تحديد الأسعار أو الكميات."
+  },
+  {
+    q: "متى تظهر سوق المنافسة الكاملة؟",
+    o: [
+      "في حالة وجود عوامل خارجية للشبكات",
+      "في حالة تجانس المنتجات وتشابهها",
+      "في حالة وجود منتج موحد أو متباين",
+      "في حالة سيطرة الحواجز التقنية والاقتصادية"
+    ],
+    a: 1,
+    e: "سوق المنافسة الكاملة تظهر في حالة تجانس المنتجات، مع وجود عدد كبير من البائعين والمشترين وسهولة الدخول والخروج."
+  },
+  {
+    q: "فيمَ تتمثّل المنافسة الاحتكارية؟",
+    o: [
+      "في وجود عدد قليل من الشركات يتفاعل بعضها مع بعض",
+      "في ضغوط حالات الركود الاقتصادي على الشركات",
+      "في عدم استقرار منحنى الطلب وسهولة الدخول والخروج",
+      "في التحكم في مورد نادر يمنع دخول المنافسين"
+    ],
+    a: 2,
+    e: "تتمثل المنافسة الاحتكارية في عدم استقرار منحنى الطلب وسهولة الدخول والخروج من السوق، مع تمايز المنتجات."
+  },
+  {
+    q: "بسبب أي مما يلي تظهر الاحتكارات في السوق؟",
+    o: [
+      "التحكم في مورد نادر",
+      "اختلاف وتمايز المنتجات",
+      "تساوي الإيرادات والتكاليف",
+      "تجانس المنتجات وتشابهها"
+    ],
+    a: 0,
+    e: "تظهر الاحتكارات بسبب التحكم في مورد نادر، أو وجود حواجز تمنع دخول منافسين جدد إلى السوق."
+  },
+  {
+    q: "أي مما يلي يميّز الاقتصاد الجزئي عن الاقتصاد الكلي؟",
+    o: [
+      "دراسة سلوك الصناعات الفردية والوحدات الصغيرة",
+      "دراسة السلوك الاقتصادي للقيم الإجمالية الوطنية",
+      "تحليل إجراءات اتخاذ القرار داخل الحكومة",
+      "قياس الدخل الوطني الإجمالي للدولة"
+    ],
+    a: 0,
+    e: "الاقتصاد الجزئي يميزه دراسة سلوك الصناعات الفردية والوحدات الاقتصادية الصغيرة، بينما الاقتصاد الكلي يدرس القيم الإجمالية الوطنية كالدخل الوطني."
+  }
+],
+
+u3c2: [
+  {
+    q: "بماذا يُعنى التحليل الاقتصادي الجزئي؟",
+    o: [
+      "بدراسة السلوك الاقتصادي لكل وحدة اقتصادية على حدة",
+      "بدراسة السلوك الاقتصادي للمجتمع كالبطالة والتضخم",
+      "بدراسة السياسات النقدية والمالية للحكومة",
+      "بدراسة كل الوحدات الاقتصادية مجتمعةً على المستوى الوطني"
+    ],
+    a: 0,
+    e: "يُعنى التحليل الاقتصادي الجزئي بدراسة السلوك الاقتصادي لكل وحدة اقتصادية على حدة، كالمستهلك الفرد أو المنتج الفرد."
+  },
+  {
+    q: "أي مما يلي يعرّف (الطلب) تعريفاً صحيحاً؟",
+    o: [
+      "كمية المنتج التي يكون المنتجون مستعدين لإنتاجها وبيعها",
+      "الكمية التي يكون المستهلك مستعداً لشرائها عند سعر معين",
+      "نقطة التقاء العرض والطلب التي تحدد سعر التوازن",
+      "الفرق بين الكمية المعروضة والكمية المطلوبة في السوق"
+    ],
+    a: 1,
+    e: "الطلب هو الكمية التي يكون المستهلك مستعداً لشرائها من سلعة معينة عند سعر معين خلال فترة زمنية محددة."
+  },
+  {
+    q: "أي مما يلي يعرّف (العرض) تعريفاً صحيحاً؟",
+    o: [
+      "الكمية التي يكون المستهلك مستعداً لشرائها عند سعر معين",
+      "كمية المنتج التي يكون المنتجون مستعدين لإنتاجه وبيعه",
+      "نقطة توازن السوق بين رغبات البائعين والمشترين",
+      "حجم الفائض الناتج عن زيادة الطلب على المعروض"
+    ],
+    a: 1,
+    e: "العرض هو كمية المنتج التي يكون المنتجون مستعدين لإنتاجه وبيعه عند سعر معين."
+  },
+  {
+    q: "زيادة الكمية المطلوبة من سلعة نتيجة انخفاض سعرها تمثّل:",
+    o: [
+      "انتقالاً على نفس منحنى الطلب",
+      "انتقالاً لمنحنى الطلب إلى اليسار",
+      "انتقالاً لمنحنى الطلب إلى اليمين",
+      "ثباتاً تاماً عند نفس نقطة الطلب"
+    ],
+    a: 0,
+    e: "زيادة الكمية المطلوبة نتيجة انخفاض السعر هي انتقال على نفس منحنى الطلب (تغير في الكمية المطلوبة)، لا انتقال للمنحنى نفسه."
+  },
+  {
+    q: "أي العوامل التالية يؤدي إلى انخفاض الطلب على سلعة معينة؟",
+    o: [
+      "انخفاض أسعار السلع البديلة لها",
+      "ارتفاع دخل المستهلكين المتاح",
+      "انخفاض أسعار السلع المكمّلة لها",
+      "انخفاض تكاليف شحن السلعة وتوصيلها"
+    ],
+    a: 0,
+    e: "انخفاض أسعار السلع البديلة يؤدي إلى انخفاض الطلب على السلعة الأصلية، لأن المستهلك يتجه نحو البديل الأرخص."
+  },
+  {
+    q: "إلامَ يؤدي التحرك في عوامل الطلب غير السعرية؟",
+    o: [
+      "إلى انتقال منحنى الطلب بالكامل",
+      "إلى انخفاض دخل المستهلكين",
+      "إلى انخفاض أسعار السلع البديلة",
+      "إلى ثبات الطلب عند مستواه الحالي"
+    ],
+    a: 0,
+    e: "التحرك في عوامل الطلب غير السعرية يؤدي إلى انتقال منحنى الطلب بالكامل (يميناً أو يساراً)، لا مجرد التحرك على المنحنى."
+  },
+  {
+    q: "ما الجدول الذي يبيّن العلاقة بين سعر منتج والكمية التي يستعد المستهلك لشرائها؟",
+    o: [
+      "جدول الطلب",
+      "منحنى العرض",
+      "جدول الفائض",
+      "منحنى التوازن"
+    ],
+    a: 0,
+    e: "جدول الطلب يبيّن العلاقة بين سعر منتج معين والكمية التي يكون المستهلك مستعداً لشرائها."
+  },
+  {
+    q: "في أي حالة يحدث التقاء العرض والطلب عند نقطة واحدة؟",
+    o: [
+      "توازن السوق",
+      "فوق توازن السوق",
+      "تحت توازن السوق",
+      "فائض العرض"
+    ],
+    a: 0,
+    e: "توازن السوق هو الحالة التي يلتقي فيها العرض والطلب عند نقطة معينة تحدد سعر التوازن وكميته."
+  },
+  {
+    q: "في أي حالة ينخفض السعر فيزيد الطلب وتقل الكمية المعروضة ويصبح هناك نقص في الإنتاج؟",
+    o: [
+      "توازن السوق",
+      "فوق توازن السوق",
+      "تحت توازن السوق",
+      "فائض العرض"
+    ],
+    a: 2,
+    e: "تحت توازن السوق هي الحالة التي ينخفض فيها السعر فيزيد الطلب وتقل الكمية المعروضة ويصبح هناك نقص في الإنتاج."
+  },
+  {
+    q: "كيف يؤثر انخفاض عدد السكان على الشراء في السوق؟",
+    o: [
+      "انخفاض الطلب",
+      "ارتفاع الطلب",
+      "ارتفاع العرض",
+      "ثبات العرض"
+    ],
+    a: 0,
+    e: "انخفاض عدد السكان يؤدي إلى انخفاض الطلب على العقار والسلع، لأن عدد المشترين المحتملين يقل."
+  },
+  {
+    q: "إلامَ تؤدي الزيادة في الطلب مع ثبات العرض؟",
+    o: [
+      "انخفاض سعر التوازن",
+      "زيادة سعر التوازن",
+      "ثبات سعر التوازن",
+      "اختفاء نقطة التوازن"
+    ],
+    a: 1,
+    e: "الزيادة في الطلب ترفع سعر التوازن، إذ ينتقل منحنى الطلب إلى اليمين فيرتفع السعر والكمية عند نقطة التوازن الجديدة."
+  },
+  {
+    q: "إلامَ يؤدي الانخفاض في الطلب على سلعة؟",
+    o: [
+      "ارتفاع سعر التوازن",
+      "خفض سعر التوازن",
+      "زيادة فائض الطلب",
+      "ثبات الكمية المعروضة"
+    ],
+    a: 1,
+    e: "الانخفاض في الطلب يؤدي إلى خفض سعر التوازن، إذ ينتقل منحنى الطلب إلى اليسار."
+  },
+  {
+    q: "أي العوامل تأتي على رأس المؤثرات في طلب العقار؟",
+    o: [
+      "الخصائص السكانية",
+      "تكلفة مواد البناء",
+      "أدوات السياسة النقدية",
+      "نسب الاحتياطي البنكي"
+    ],
+    a: 0,
+    e: "الخصائص السكانية تأتي على رأس العوامل المؤثرة في طلب العقار، إذ يؤثر عدد السكان وتركيبتهم على حجم الطلب."
+  }
+],
+
+u3c3: [
+  {
+    q: "بماذا يُعنى الاقتصاد الكلي؟",
+    o: [
+      "بدراسة السلوك الاقتصادي لكل وحدة اقتصادية على حدة",
+      "بدراسة السلوك الاقتصادي للتفاعلات في المجتمع كالبطالة",
+      "بدراسة سلوك المستهلك الفرد عند الشراء فقط",
+      "بدراسة أسعار سلعة واحدة في سوق محددة"
+    ],
+    a: 1,
+    e: "يُعنى الاقتصاد الكلي بدراسة السلوك الاقتصادي للتفاعلات في المجتمع، مثل البطالة والتضخم والناتج المحلي."
+  },
+  {
+    q: "أي مما يلي يُعد من أهداف السياسة النقدية؟",
+    o: [
+      "تحقيق التوظيف الكامل للقوى العاملة",
+      "توزيع الدخل بشكل عادل بين الأفراد",
+      "استقرار الأسعار والسيطرة على التضخم",
+      "زيادة الإنفاق الحكومي على المشاريع"
+    ],
+    a: 2,
+    e: "من أهداف السياسة النقدية استقرار الأسعار (السيطرة على التضخم)."
+  },
+  {
+    q: "أي القرارات التالية تشملها سياسة المالية العامة؟",
+    o: [
+      "ضبط كمية النقود المتداولة في الاقتصاد",
+      "تحصيل الإيرادات العامة وأوجه إنفاقها",
+      "التحكم في أسعار الفائدة داخل السوق",
+      "تنظيم شؤون التمويل الشخصي للأفراد"
+    ],
+    a: 1,
+    e: "تشمل سياسة المالية العامة قرارات الحكومة بشأن تحصيل الإيرادات (الضرائب) وطريقة إنفاقها، بينما إدارة عرض النقود وأسعار الفائدة من اختصاص السياسة النقدية."
+  },
+  {
+    q: "أي مما يلي يُعد من أدوات السياسة النقدية؟",
+    o: [
+      "الإنفاق الحكومي على المشاريع",
+      "فرض الضرائب على الأفراد",
+      "التغيير في نسب الاحتياطي",
+      "تحصيل الإيرادات وإنفاقها"
+    ],
+    a: 2,
+    e: "التغيير في نسب الاحتياطي من أدوات السياسة النقدية، بينما الإنفاق الحكومي والضرائب من أدوات السياسة المالية العامة."
+  },
+  {
+    q: "ما نوع البطالة الناتج عن تغير النشاط الاقتصادي باستمرار وتوفر فرص شاغرة بانتظام أثناء انتقال الأفراد بين الوظائف؟",
+    o: [
+      "البطالة الموسمية",
+      "البطالة الدورية",
+      "البطالة الانتقالية",
+      "البطالة الهيكلية"
+    ],
+    a: 2,
+    e: "البطالة الانتقالية (الاحتكاكية) تحدث بسبب تغير النشاط الاقتصادي باستمرار وتوفر فرص شاغرة بانتظام أثناء انتقال الأفراد بين الوظائف."
+  },
+  {
+    q: "ما الانحراف المؤقت في حجم البطالة على المدى الطويل الذي يرتفع وينخفض مع الدورة الاقتصادية؟",
+    o: [
+      "البطالة الموسمية",
+      "البطالة الدورية",
+      "البطالة الانتقالية",
+      "البطالة الهيكلية"
+    ],
+    a: 1,
+    e: "البطالة الدورية هي الانحراف المؤقت في حجم البطالة على المدى الطويل الذي يرتفع وينخفض مع مرور الوقت تبعاً للدورة الاقتصادية."
+  },
+  {
+    q: "أي مما يلي يعرّف (التضخم) تعريفاً صحيحاً؟",
+    o: [
+      "الزيادة في حجم الإنتاج الصناعي للدولة",
+      "الزيادة المستدامة في مستوى الأسعار والمستوى التراكمي",
+      "انخفاض مستوى البطالة في الاقتصاد الوطني",
+      "تقليل النفقات الحكومية وضبط الميزانية"
+    ],
+    a: 1,
+    e: "التضخم هو الزيادة المستدامة في مستوى الأسعار والمستوى التراكمي."
+  },
+  {
+    q: "أي مما يلي يُعد من الأسباب الرئيسة للتضخم الناتج عن الطلب؟",
+    o: [
+      "ثبات سعر الصرف للعملة الوطنية",
+      "المحفزات المالية والنقدية للاقتصاد",
+      "تقديم المعونات النقدية للأفراد",
+      "التغيير في نسب الاحتياطي البنكي"
+    ],
+    a: 1,
+    e: "من الأسباب الرئيسة للتضخم الناتج عن الطلب المحفزات المالية العامة والمحفزات النقدية التي تزيد الطلب الكلي."
+  },
+  {
+    q: "أي مما يلي يُعد من الأهداف الرئيسة للاقتصاد الكلي؟",
+    o: [
+      "تطوير أداء الشركات الفردية في السوق",
+      "معرفة مصادر التضخم وكيفية السيطرة عليه",
+      "تحليل سلوك المستهلك الفرد عند الشراء",
+      "دراسة أسعار سلعة واحدة في سوق محددة"
+    ],
+    a: 1,
+    e: "من الأهداف الرئيسة للاقتصاد الكلي معرفة مصادر تضخم الأسعار وكيفية السيطرة عليه، إضافة إلى دراسة البطالة والنمو الاقتصادي."
+  }
+]
+
+};
+
+
+const STRUCTURE = [
+  {
+    unit: "الوحدة الأولى",
+    title: "مقدمة في التقييم العقاري",
+    chapters: [
+      { id: "u1c1", n: "الفصل الأول", t: "تعريف العقار وأنواعه ومبادئ التقييم" },
+      { id: "u1c2", n: "الفصل الثاني", t: "خصائص العقار والسوق العقاري" },
+      { id: "u1c3", n: "الفصل الثالث", t: "مبادئ الاستثمار ومصادره" }
+    ]
+  },
+  {
+    unit: "الوحدة الثانية",
+    title: "مقدمة في علم الإحصاء",
+    chapters: [
+      { id: "u2c1", n: "الفصل الأول", t: "مدخل إلى علم الإحصاء" },
+      { id: "u2c2", n: "الفصل الثاني", t: "البحث والتحليل والنمذجة" }
+    ]
+  },
+  {
+    unit: "الوحدة الثالثة",
+    title: "مقدمة عن الاقتصاد",
+    chapters: [
+      { id: "u3c1", n: "الفصل الأول", t: "تعريف الاقتصاد" },
+      { id: "u3c2", n: "الفصل الثاني", t: "الاقتصاد الجزئي" },
+      { id: "u3c3", n: "الفصل الثالث", t: "الاقتصاد الكلي" }
+    ]
+  }
+];
+
+/* ===== lessons.js ===== */
+/* ============================================================
+   محتوى الشرح لكل فصل — مبني على المنهج الفعلي
+   كل فصل: عنوان + أقسام (عنوان فرعي + نقاط)
+   ============================================================ */
+
+
+/* ===== formulas + calc + exam2 ===== */
+/* ============================================================
+   إضافات: القوانين + أسئلة حسابية + اختبار شامل ثانٍ (صعب)
+   قواعد صارمة على الأسئلة: الإجابة الصحيحة ليست الأطول ولا
+   الأقصر، بلا علامات تكشفها، مواضع موزّعة، مشتتات واقعية.
+   ============================================================ */
+
+/* ---------- القوانين (خام، بالإنجليزي، بلا شرح) ---------- */
+const FORMULAS = [
+  { g: "Investment (Unit 1 · Ch 3)", items: [
+    "Real Return = Nominal Return − Inflation",
+    "ROI = ( (Selling Price − Cost) ÷ Cost ) × 100",
+    "S = −C₀ + (1 − c)Y",
+    "I = I₀ + bY − ri"
+  ]},
+  { g: "Statistics (Unit 2 · Ch 2)", items: [
+    "Ŷ = β₀ + β₁X₁ + β₂X₂ + … + βₙXₙ + ϵ"
+  ]}
+];
+
+/* ---------- أسئلة حسابية على المعادلات ----------
+   تُدمج داخل فصلها: u1c3 (استثمار) و u2c2 (إحصاء).
+   الشرح e = الحل الكامل بالقانون، ثم تحديد الخيار.       */
+
+const CALC = {
+
+u1c3: [
+  // ===== ROI =====
+  {
+    q: "مستثمر اشترى قطعة أرض بمبلغ 640,000 ريال وباعها لاحقاً بمبلغ 800,000 ريال. ما العائد على الاستثمار الذي حققه من هذه الصفقة؟",
+    o: ["25%","20%","80%","125%"],
+    a: 0,
+    e: "بالقانون: ROI = ((البيع − التكلفة) ÷ التكلفة) × 100. صافي الربح = 800,000 − 640,000 = 160,000. ثم 160,000 ÷ 640,000 = 0.25، وبالضرب × 100 = 25%. من الخيارات: الصحيح 25%. الخيار 20% ناتج قسمة الربح على البيع خطأً، و125% ناتج قسمة البيع على التكلفة، و80% ناتج قسمة التكلفة على البيع."
+  },
+  {
+    q: "دخل مطوّر في مشروع بتكلفة إجمالية 250,000 ريال، ثم باع المشروع بمبلغ 340,000 ريال بعد اكتماله. احسب العائد على الاستثمار.",
+    o: ["136%","26%","36%","90%"],
+    a: 2,
+    e: "بالقانون: ROI = ((البيع − التكلفة) ÷ التكلفة) × 100. الربح = 340,000 − 250,000 = 90,000. ثم 90,000 ÷ 250,000 = 0.36، × 100 = 36%. من الخيارات: الصحيح 36%. الخيار 90% هو الربح بالريال لا النسبة، و136% قسمة البيع على التكلفة، و26% قسمة الربح على البيع خطأً."
+  },
+  {
+    q: "شخص استثمر 50,000 ريال في أداة مالية، وبعد سنة أصبحت قيمة استثماره 62,500 ريال. ما نسبة العائد على استثماره؟",
+    o: ["125%","20%","30%","25%"],
+    a: 3,
+    e: "بالقانون: ROI = ((القيمة النهائية − التكلفة) ÷ التكلفة) × 100. الربح = 62,500 − 50,000 = 12,500. ثم 12,500 ÷ 50,000 = 0.25، × 100 = 25%. من الخيارات: الصحيح 25%. الخيار 20% قسمة الربح على القيمة النهائية، و125% قسمة القيمة النهائية على التكلفة، و30% رقم لا ينتج من العملية."
+  },
+  // ===== العائد الحقيقي =====
+  {
+    q: "بلغ العائد الاسمي على استثمار عقاري خلال العام 17%، وكانت نسبة التضخم في الفترة نفسها 6%. ما معدل العائد الحقيقي؟",
+    o: ["23%","6%","11%","17%"],
+    a: 2,
+    e: "بالقانون: العائد الحقيقي = العائد الاسمي − التضخم = 17% − 6% = 11%. من الخيارات: الصحيح 11%. الخيار 23% ناتج جمع الرقمين بدل طرحهما، و17% هو العائد الاسمي كما هو، و6% هو التضخم نفسه."
+  },
+  {
+    q: "حصل مستثمر على عائد اسمي مقداره 14% على محفظته، بينما سجّل التضخم مستوى 9% في تلك السنة. احسب العائد الحقيقي الذي جناه فعلياً.",
+    o: ["9%","23%","5%","14%"],
+    a: 2,
+    e: "بالقانون: العائد الحقيقي = العائد الاسمي − التضخم = 14% − 9% = 5%. من الخيارات: الصحيح 5%. الخيار 23% جمع بدل الطرح، و14% العائد الاسمي، و9% نسبة التضخم."
+  },
+  // ===== الادخار =====
+  {
+    q: "دخل أحد الأفراد الشهري 9,000 ريال، واستهلاكه التلقائي 2,500 ريال، وميله الحدي للاستهلاك 0.6. ما مقدار ما يدّخره وفق دالة الادخار؟",
+    o: ["3,600","2,900","1,100","6,500"],
+    a: 2,
+    e: "بالقانون: S = −C₀ + (1 − c)Y. نحسب (1 − 0.6) = 0.4، ثم 0.4 × 9,000 = 3,600، ثم S = −2,500 + 3,600 = 1,100. من الخيارات: الصحيح 1,100. الخيار 3,600 هو الجزء الثاني قبل طرح الاستهلاك التلقائي، و2,900 ناتج استخدام الميل الحدي للاستهلاك بدل الميل الحدي للادخار، و6,500 ناتج طرح الاستهلاك من الدخل مباشرة دون ضربه في الميل."
+  },
+  {
+    q: "شخص دخله الشهري 12,000 ريال، والاستهلاك التلقائي لديه 3,000 ريال، وميله الحدي للاستهلاك 0.75. احسب ادخاره الشهري.",
+    o: ["9,000","6,000","0","3,000"],
+    a: 0,
+    e: "بالقانون: S = −C₀ + (1 − c)Y. نحسب (1 − 0.75) = 0.25، ثم 0.25 × 12,000 = 3,000. ثم S = −3,000 + 3,000 = 0. القيمة الصحيحة 0. من الخيارات: الصحيح 0."
+  },
+  {
+    q: "بلغ الدخل الشهري لأحد الأشخاص 8,000 ريال، والاستهلاك التلقائي 1,600 ريال، والميل الحدي للاستهلاك 0.7. ما مقدار ادخاره؟",
+    o: ["800","2,400","3,200","6,400"],
+    a: 0,
+    e: "بالقانون: S = −C₀ + (1 − c)Y. نحسب (1 − 0.7) = 0.3، ثم 0.3 × 8,000 = 2,400. ثم S = −1,600 + 2,400 = 800. من الخيارات: الصحيح 800. الخيار 2,400 هو حاصل الجزء الثاني قبل طرح الاستهلاك التلقائي، والباقي أخطاء في الطرح."
+  },
+  // ===== الاستثمار =====
+  {
+    q: "مستثمر دخله الشهري 15,000 ريال، والاستثمار التلقائي 45,000 ريال، والميل الحدي للاستثمار 0.2، ومعدل الفائدة 4%، وتأثير معدل الفائدة على الاستثمار 20,000 ريال. ما حجم استثماره؟",
+    o: ["48,800","47,200","49,200","800"],
+    a: 1,
+    e: "بالقانون: I = I₀ + bY − ri. نحسب bY = 0.2 × 15,000 = 3,000، و ri = 20,000 × 0.04 = 800. ثم I = 45,000 + 3,000 − 800 = 47,200. من الخيارات: الصحيح 47,200. الخيار 48,800 ناتج جمع جزء الفائدة بدل طرحه، والباقي أخطاء في العمليات."
+  },
+  {
+    q: "رجل أعمال دخله الشهري 20,000 ريال، واستثماره التلقائي 30,000 ريال، وميله الحدي للاستثمار 0.15، ومعدل الفائدة 5%، وتأثير معدل الفائدة على الاستثمار 16,000 ريال. احسب استثماره.",
+    o: ["33,000","32,200","33,800","2,200"],
+    a: 1,
+    e: "بالقانون: I = I₀ + bY − ri. نحسب bY = 0.15 × 20,000 = 3,000، و ri = 16,000 × 0.05 = 800. ثم I = 30,000 + 3,000 − 800 = 32,200. من الخيارات: الصحيح 32,200. الخيار 33,800 ناتج جمع الفائدة بدل طرحها، و33,000 نسيان طرح الفائدة، و2,200 خطأ في تجاهل الاستثمار التلقائي."
+  }
+],
+
+u2c2: [
+  // ===== الانحدار =====
+  {
+    q: "نموذج انحدار لتقدير سعر الوحدة السكنية: السعر الأساسي 90,000 ريال، ويزيد بمقدار 4 ريال عن كل ريال في سعر البناء للمتر المربع، ويزيد بمقدار 2,000 ريال عن كل متر مربع في المساحة. قدّر سعر وحدة سعر بنائها 3,500 ريال للمتر ومساحتها 200 متر مربع.",
+    o: ["504,000","104,000","494,000","400,000"],
+    a: 0,
+    e: "بالقانون: Ŷ = الأساس + (معامل سعر البناء × سعر البناء) + (معامل المساحة × المساحة). نحسب 4 × 3,500 = 14,000، و 2,000 × 200 = 400,000. ثم Ŷ = 90,000 + 14,000 + 400,000 = 504,000. من الخيارات: الصحيح 504,000. الخيار 400,000 هو جزء المساحة وحده، و494,000 نسيان جزء سعر البناء، و104,000 نسيان جزء المساحة."
+  },
+  {
+    q: "يقدّر مكتب تقييم سعر الشقة بنموذج: السعر الأساسي 120,000 ريال، ويزيد 5 ريال عن كل ريال في سعر البناء للمتر، ويزيد 2,500 ريال عن كل متر في المساحة. احسب سعر شقة سعر بنائها 4,000 ريال للمتر ومساحتها 180 متراً.",
+    o: ["570,000","590,000","140,000","450,000"],
+    a: 1,
+    e: "بالقانون: Ŷ = الأساس + (معامل سعر البناء × سعر البناء) + (معامل المساحة × المساحة). نحسب 5 × 4,000 = 20,000، و 2,500 × 180 = 450,000. ثم Ŷ = 120,000 + 20,000 + 450,000 = 590,000. من الخيارات: الصحيح 590,000. الخيار 570,000 ناتج نسيان جزء سعر البناء، و140,000 نسيان جزء المساحة، و450,000 هو جزء المساحة وحده دون إضافة الأساس وسعر البناء."
+  }
+]
+
+};
+
+/* بنك الاختبار الشامل الثاني — أسئلة أصعب، تمييز دقيق بين المفاهيم المتقاربة */
+const BANK2 = {
+
+u1c1: [
+  {
+    q: "أنفق مطوّر مبلغاً على تشييد مبنى شمل أجور العمال وثمن مواد البناء. عند تقييم المبنى لاحقاً، تبيّن أن المبلغ الذي يُعرض في السوق مقابله يختلف عن هذا الإنفاق. أي ثلاثة مفاهيم تُميَّز في هذا الموقف على الترتيب؟",
+    o: [
+      "الإنفاق تكلفة، والمعروض في السوق سعر، ورأي السوق في المنافع قيمة",
+      "الإنفاق قيمة، والمعروض في السوق تكلفة، ورأي المقيّم في المنفعة سعر",
+      "الإنفاق سعر، والمعروض في السوق قيمة، وتقدير المنفعة تكلفة",
+      "الإنفاق قيمة سوقية، والمعروض تكلفة إحلال، والرأي المهني سعر عادل"
+    ],
+    a: 0,
+    e: "التكلفة هي المصروفات اللازمة للإنشاء (أجور ومواد)، والسعر هو المقابل المعروض أو المدفوع في السوق، والقيمة رأي تقديري يعبّر عن وجهة نظر السوق في المنافع. الترتيب الصحيح: تكلفة ← سعر ← قيمة."
+  },
+  {
+    q: "ورث ثلاثة إخوة عقاراً على الشيوع، فلا يستطيع أحدهم بيع نصيبه المفرز أو قسمة العقار إلا بموافقة البقية. ثم تنازل أحدهم لجاره عن حق مرورٍ دائم عبر أرض العقار مقابل عوض. ما التكييف الصحيح للحالتين؟",
+    o: [
+      "الأولى ملكية مشروطة تؤول للمانح، والثانية حق انتفاع شخصي مؤقت",
+      "الأولى ملكية مقيدة تحد من التصرف، والثانية حق ارتفاق يتبع العقار",
+      "الأولى ملكية مطلقة كاملة التصرف، والثانية حق حيازة إيجارية بعوض",
+      "الأولى حيازة إيجارية محددة المدة، والثانية حق انتفاع غير محدد المدة"
+    ],
+    a: 1,
+    e: "الملكية على الشيوع تقيّد حرية التصرف (بيع أو قسمة) دون نزع الملك، فهي ملكية مقيدة لا مشروطة (لا يؤول الملك لأحد عند كسر القيد). وحق المرور الدائم المقرر لمنفعة عقار الجار على عقار آخر هو حق ارتفاق يتبع العقار وينتقل معه، لا انتفاع شخصي."
+  },
+  {
+    q: "أضاف مالكٌ مصعداً خارجياً لعمارته كلّفه مبلغاً كبيراً، لكن قيمة العمارة في السوق لم ترتفع إلا بجزء يسير من ذلك المبلغ. أي مبدأ من مبادئ التقييم ينطبق مباشرةً على هذه النتيجة؟",
+    o: [
+      "مبدأ التوقع، لأن سعر العمارة يعكس منافعها المستقبلية المرتقبة",
+      "مبدأ الاستبدال، لأن للمشتري بدائل مماثلة تحدّ من استعداده للدفع",
+      "مبدأ الإسهام، لأن قيمة الجزء تُقاس بأثره في القيمة لا بتكلفته",
+      "مبدأ الاستخدام الأعلى والأفضل، لأن العمارة استُغلّت بأعلى منفعة"
+    ],
+    a: 2,
+    e: "مبدأ الإسهام ينص على أن مساهمة أي جزء تُقاس بمقدار ما يضيفه إلى القيمة الكلية بصرف النظر عن تكلفته، وهذا يفسّر أن قيمة الإضافة قد تقل كثيراً عن تكلفتها."
+  },
+  {
+    q: "عند إعداد تقرير تقييم، أدرج المقيّم بنداً يوضّح ما إذا كان الأصل مملوكاً ملكية مطلقة أو مقيّدة أو محل حيازة إيجارية. ما المسوّغ المهني الأدق لهذا البند؟",
+    o: [
+      "لأن النظام يمنع إصدار التقرير ما لم يُستكمل هذا البند شكلياً",
+      "لأن الحيازة الإيجارية شرط لصحة انتفاع المستأجر بالأصل",
+      "لأن نوع الملكية والحقوق المرتبطة به يؤثران في قيمة الأصل",
+      "لأن الملكية المطلقة وحدها تتيح الانتفاع الكامل بالعقار"
+    ],
+    a: 2,
+    e: "نوع الملكية والحقوق المرتبطة بها تؤثر مباشرةً في قيمة الأصل، فالانتفاع ممكن بحيازة إيجارية أو ملكية مقيدة، والملكية المطلقة ليست شرطاً للانتفاع. لذلك يُذكر البند لأثره في القيمة لا لسبب شكلي."
+  },
+  {
+    q: "قرّر مشترٍ ألّا يدفع لعقار سعراً يتجاوز ما يكلّفه الحصول على عقار بديل مكافئ متاح في السوق. على أي مبدأ بنى قراره؟",
+    o: [
+      "مبدأ الإسهام في تكوين القيمة الكلية للأصل",
+      "مبدأ الاستبدال بين الخيارات المتاحة",
+      "مبدأ التوقع للمنافع الاقتصادية المقبلة",
+      "مبدأ الاستخدام الأعلى والأفضل للأصل"
+    ],
+    a: 1,
+    e: "مبدأ الاستبدال يقوم على أن لكل طرف بدائل في السوق، فلا يدفع المشتري لأصلٍ أكثر من كلفة الحصول على بديل مماثل له المنفعة نفسها."
+  }
+],
+
+u1c2: [
+  {
+    q: "قطعتا أرض متجاورتان بالمساحة نفسها والتنظيم نفسه، غير أن سعر إحداهما أعلى لأن واجهتها على شارع تجاري بينما الأخرى داخلية. ثم تعذّر على مطوّر إيجاد أي قطعة شاغرة في الحي كله. أي خاصيتين اقتصاديتين/مكانيتين ظهرتا على الترتيب؟",
+    o: [
+      "الاستقرار طويل المدى أولاً، ثم صعوبة تسييل العقار ثانياً",
+      "تفضيلات الموقع أولاً، ثم الندرة ومحدودية المعروض ثانياً",
+      "قابلية التطوير أولاً، ثم عدم مرونة الطلب على الأرض ثانياً",
+      "صعوبة التسييل أولاً، ثم التفاوت وعدم التماثل ثانياً"
+    ],
+    a: 1,
+    e: "اختلاف السعر تبعاً لجاذبية الواجهة التجارية يعكس تفضيلات الموقع، وتعذّر إيجاد قطعة شاغرة في الحي يعكس الندرة ومحدودية المعروض من الأراضي."
+  },
+  {
+    q: "يصف أحد المحللين السوق العقاري بأنه يفتقر إلى منصة تداول مركزية موحّدة، وتتباين فيه الأسعار بين المدن، ولا يستجيب معروض الأراضي فيه بسرعة لارتفاع الطلب. أي وصف يجمع هذه السمات؟",
+    o: [
+      "سيولة عالية تسهّل تحويل العقار إلى نقد بسرعة",
+      "تماثل تام بين الوحدات يبسّط عملية التسعير",
+      "تشتت وقلة تنظيم مع عدم مرونة عرض الأراضي",
+      "قابلية دائمة لتجزئة الأموال المستثمرة في العقار"
+    ],
+    a: 2,
+    e: "غياب المنصة المركزية وتباين الأسعار إقليمياً وبطء استجابة المعروض كلها من خصائص السوق العقاري: التشتت وقلة التنظيم، والأبعاد الوطنية والإقليمية، وعدم مرونة عرض الأراضي."
+  },
+  {
+    q: "رصد باحث أن ارتفاع تكلفة التمويل العقاري خفّض الطلب، وأن تغيّر أذواق الأسر نحو نمط سكني معيّن رفعه، وأن قرب المشروع من المرافق زاد جاذبيته. ما التصنيف الصحيح لهذه العوامل الثلاثة على الترتيب؟",
+    o: [
+      "اقتصادي، ثم اجتماعي ثقافي، ثم مكاني بيئي",
+      "اجتماعي ثقافي، ثم اقتصادي، ثم حكومي تنظيمي",
+      "مكاني، ثم اقتصادي، ثم اجتماعي ثقافي",
+      "حكومي، ثم مكاني بيئي، ثم اقتصادي"
+    ],
+    a: 0,
+    e: "تكلفة التمويل عامل اقتصادي، وأذواق الأسر عامل اجتماعي ثقافي، والقرب من المرافق عامل مكاني بيئي. الترتيب: اقتصادي ← اجتماعي ← مكاني."
+  }
+],
+
+u1c3: [
+  {
+    q: "يوازن مستثمر بين أداتين: الأولى سندات حكومية تؤمّن رأس المال بقيمته الاسمية لكن عائدها منخفض، والثانية أسهم عادية عائدها المتوقع أعلى لكن قيمتها متقلّبة. أي مبدأ استثماري يفسّر هذا التباين بينهما؟",
+    o: [
+      "مبدأ التنويع الذي يوزّع المخاطر على أصول متعددة",
+      "العلاقة الطردية بين العائد المطلوب ودرجة المخاطرة",
+      "مبدأ الصبر والانضباط في الاحتفاظ بالأصل طويلاً",
+      "قاعدة إعادة توازن المحفظة عند تغيّر قيم الأصول"
+    ],
+    a: 1,
+    e: "التباين يعكس العلاقة الطردية بين العائد والمخاطرة: كلما ارتفع العائد المطلوب ارتفعت المخاطرة. السندات الحكومية منخفضة العائد لأنها منخفضة المخاطرة، والأسهم أعلى عائداً لأنها أعلى مخاطرة."
+  },
+  {
+    q: "قارن اثنان بين استثمارين: الأول عائده الاسمي 12% في دولة تضخمها 9%، والثاني عائده الاسمي 8% في دولة تضخمها 2%. أيهما أفضل من حيث القوة الشرائية الفعلية، ولماذا؟",
+    o: [
+      "الأول، لأن عائده الاسمي أعلى فيمنح دخلاً نقدياً أكبر",
+      "متساويان، لأن الفارق في التضخم يقابله الفارق في العائد",
+      "الثاني، لأن عائده الحقيقي 6% مقابل 3% للأول",
+      "الأول، لأن ارتفاع التضخم يرفع القيمة الرأسمالية للأصل"
+    ],
+    a: 2,
+    e: "العائد الحقيقي = الاسمي − التضخم. الأول: 12 − 9 = 3%. الثاني: 8 − 2 = 6%. الثاني أفضل رغم انخفاض عائده الاسمي، لأن قوته الشرائية الفعلية أعلى."
+  },
+  {
+    q: "شخص دخله الشهري 10,000 ريال، واستهلاكه التلقائي 2,000 ريال، وميله الحدي للاستهلاك 0.8. عند تطبيق دالة الادخار، ماذا يمثّل الرقم الناتج، وكم قيمته؟",
+    o: [
+      "يمثّل استهلاكه الكلي، وقيمته 8,000 ريال",
+      "يمثّل ادخاره الشهري، وقيمته 6,000 ريال",
+      "يمثّل ادخاره الشهري، وقيمته صفر ريال",
+      "يمثّل ميله الحدي للادخار، وقيمته 2,000 ريال"
+    ],
+    a: 2,
+    e: "S = −C₀ + (1 − c)Y. نحسب (1 − 0.8) = 0.2، ثم 0.2 × 10,000 = 2,000، ثم S = −2,000 + 2,000 = 0. الناتج يمثّل الادخار الشهري وقيمته صفر (كل الدخل استُهلك)."
+  }
+],
+
+u2c1: [
+  {
+    q: "أرادت شركة تقدير متوسط دخل الأسرة في مدينة كاملة، فاختارت حياً واحداً وجمعت بيانات أسره واستخدمت النتيجة مؤشراً للمدينة. ما التوصيف الإحصائي الصحيح لدخل أسر الحي مقابل دخل أسر المدينة؟",
+    o: [
+      "دخل الحي مجتمع إحصائي، ودخل المدينة عيّنة ممثِّلة له",
+      "دخل الحي عيّنة، ودخل المدينة مجتمع إحصائي",
+      "دخل الحي معلم، ودخل المدينة إحصائية مشتقة منه",
+      "دخل الحي متغير تابع، ودخل المدينة متغير مستقل"
+    ],
+    a: 1,
+    e: "الحي جزء من المدينة اختير لتمثيلها، فهو العيّنة، والمدينة بأكملها هي المجتمع الإحصائي. متوسط دخل الحي إحصائية تُستخدم لتقدير معلم المجتمع."
+  },
+  {
+    q: "في دراسة تبحث أثر قرب المشروع من الطريق السريع في حجم مبيعاته، حُدّد متغيران. ما تصنيفهما، وبأي رمز يُشار للمتغير الذي نحاول تفسير تغيّره؟",
+    o: [
+      "المسافة تابع والمبيعات مستقل، ويُرمز للمبيعات بالرمز X",
+      "المسافة مستقل والمبيعات تابع، ويُرمز للمبيعات بالرمز Y",
+      "كلاهما مستقل، ويُرمز للمتغير محل التفسير بالرمز X",
+      "المسافة معلم والمبيعات إحصائية، ويُرمز للمبيعات بالرمز N"
+    ],
+    a: 1,
+    e: "المبيعات هي ما نحاول تفسير تغيّره، فهي المتغير التابع ويُرمز له بـ Y. المسافة تؤثر فيه فهي المتغير المستقل ويُرمز له بـ X."
+  },
+  {
+    q: "لديك القيم التالية لأسعار وحدات (بالآلاف): 4، 6، 6، 6، 8، 9، 6. ما العلاقة بين منوال هذه القيم ووسيطها بعد ترتيبها؟",
+    o: [
+      "المنوال أكبر من الوسيط بمقدار وحدتين",
+      "الوسيط أكبر من المنوال بمقدار ثلاث وحدات",
+      "المنوال يساوي الوسيط وكلاهما القيمة 6",
+      "لا منوال لهذه القيم والوسيط هو القيمة 8"
+    ],
+    a: 2,
+    e: "المنوال هو الأكثر تكراراً وهو 6 (تكرّر أربع مرات). بالترتيب: 4، 6، 6، 6، 6، 8، 9، والقيمة الوسطى (الرابعة من سبع) هي 6. إذن المنوال يساوي الوسيط وكلاهما 6."
+  }
+],
+
+u2c2: [
+  {
+    q: "يميّز باحث بين منهجين: الأول يفترض حقائق موضوعية مستقلة عن مشاعر الأفراد ويعتمد الإحصاء والأرقام ويتيح التعميم والتكرار، والثاني يبني الظاهرة من وجهات نظر المشاركين ويستكشف الأسباب الكامنة. ما المنهجان على الترتيب؟",
+    o: [
+      "الأول نوعي والثاني كمي، لأن الأرقام سمة البحث النوعي",
+      "الأول كمي والثاني نوعي، لأن التعميم الإحصائي سمة الكمي",
+      "كلاهما كمي، والفارق في حجم العيّنة المستخدمة فقط",
+      "الأول استكشافي والثاني وصفي، والفرق في أداة الجمع"
+    ],
+    a: 1,
+    e: "المنهج الذي يعتمد الأرقام والإحصاء ويتيح التعميم والتكرار هو الكمي، والذي يبني الظاهرة من وجهات نظر المشاركين ويستكشف أسبابها هو النوعي. الترتيب: كمي ← نوعي."
+  },
+  {
+    q: "في نموذج انحدار لتقدير سعر وحدة سكنية بدلالة سعر البناء والمساحة، أُعطيت المعادلة Ŷ = 100,000 + 2X₁ + 3,000X₂. ماذا يعني المعامل 3,000 تحديداً؟",
+    o: [
+      "سعر الوحدة حين يكون سعر البناء والمساحة صفراً",
+      "زيادة سعر الوحدة بمقدار 3,000 لكل متر مربع في المساحة",
+      "زيادة سعر الوحدة بمقدار 3,000 لكل ريال في سعر البناء للمتر",
+      "متوسط الخطأ العشوائي غير المفسَّر في النموذج"
+    ],
+    a: 1,
+    e: "المعامل الملتصق بمتغيرٍ يقيس أثر تغيّر وحدة واحدة من ذلك المتغير في القيمة المتوقعة. بما أن 3,000 معامل المساحة X₂، فهو مقدار الزيادة في السعر لكل متر مربع إضافي في المساحة."
+  },
+  {
+    q: "أعدّ باحث دراسة تعتمد المقابلات الشخصية المعمّقة لاستكشاف دوافع المشترين، بينما اعتمد آخر تحليل الانحدار على بيانات عددية واسعة. ما التصنيف المنهجي لأداتَي الباحثَين على الترتيب؟",
+    o: [
+      "المقابلات أداة كمية، والانحدار أداة نوعية استكشافية",
+      "المقابلات أداة نوعية، والانحدار أداة كمية نمذجية",
+      "كلاهما أداة نوعية تختلف في حجم العيّنة فقط",
+      "المقابلات أداة نمذجة، والانحدار أداة جمع وصفي"
+    ],
+    a: 1,
+    e: "المقابلات الشخصية المعمّقة أداة بحث نوعي تستكشف الدوافع والأسباب، وتحليل الانحدار أداة نمذجة في البحث الكمي يعمل على بيانات عددية. الترتيب: نوعية ← كمية."
+  }
+],
+
+u3c1: [
+  {
+    q: "يدرس فرعٌ من الاقتصاد قرارات مستهلكٍ فردٍ ومنتجٍ فردٍ وتسعير سلعةٍ في سوقٍ بعينها، بينما يدرس فرعٌ آخر البطالة والتضخم والناتج المحلي على مستوى الدولة. ما الفرعان على الترتيب؟",
+    o: [
+      "الأول كلي والثاني جزئي، لأن تسعير السلعة الفردية شأن كلي",
+      "الأول جزئي والثاني كلي، لأن الوحدات الفردية شأن جزئي",
+      "كلاهما جزئي، والفرق في حجم السوق المدروسة فقط",
+      "الأول نقدي والثاني مالي، والفرق في أداة السياسة"
+    ],
+    a: 1,
+    e: "دراسة الوحدات الفردية (مستهلك، منتج، سلعة في سوق) هي الاقتصاد الجزئي، ودراسة المتغيرات الكلية على مستوى الدولة (بطالة، تضخم، ناتج) هي الاقتصاد الكلي. الترتيب: جزئي ← كلي."
+  },
+  {
+    q: "بحث مشترٍ عن سلعةٍ فلم يجدها متوفّرة بالقدر الذي يريده الجميع، فاضطر للاختيار والمفاضلة بين البدائل. أي مفهوم اقتصادي يقف خلف هذا الاضطرار للاختيار؟",
+    o: [
+      "الاحتكار الناتج عن التحكم في مورد نادر",
+      "الندرة الناشئة عن محدودية الموارد أمام الحاجات",
+      "المنافسة الكاملة القائمة على تجانس المنتجات وتشابهها",
+      "التنظيم الحكومي لحماية حقوق الملكية والعملة"
+    ],
+    a: 1,
+    e: "الندرة هي محدودية الموارد في مواجهة حاجات ورغبات غير محدودة، وهي التي تفرض الاختيار والمفاضلة بين البدائل، وتُعدّ جوهر المشكلة الاقتصادية."
+  },
+  {
+    q: "في سوقٍ يوجد فيها عدد كبير من البائعين والمشترين، والمنتجات متجانسة، والدخول والخروج سهل. ثم في سوقٍ أخرى تحكّمت شركة في مورد نادر فمنعت دخول المنافسين. ما نوعا السوقين على الترتيب؟",
+    o: [
+      "منافسة احتكارية أولاً، ثم منافسة كاملة ثانياً",
+      "منافسة كاملة أولاً، ثم احتكار ثانياً",
+      "احتكار أولاً، ثم منافسة كاملة ثانياً",
+      "منافسة كاملة أولاً، ثم منافسة احتكارية ثانياً"
+    ],
+    a: 1,
+    e: "تجانس المنتجات مع كثرة البائعين والمشترين وسهولة الدخول والخروج سمة المنافسة الكاملة. والتحكّم في مورد نادر يمنع دخول المنافسين سمة الاحتكار. الترتيب: منافسة كاملة ← احتكار."
+  }
+],
+
+u3c2: [
+  {
+    q: "انخفض سعر سلعةٍ فزادت الكمية المطلوبة منها، ثم في موقفٍ آخر ارتفع دخل المستهلكين فتغيّر الطلب على السلعة. ما الفرق بين ما حدث في الموقفين على مستوى منحنى الطلب؟",
+    o: [
+      "الأول انتقال للمنحنى كله، والثاني تحرك على المنحنى نفسه",
+      "الأول تحرك على المنحنى نفسه، والثاني انتقال للمنحنى كله",
+      "كلاهما تحرك على المنحنى دون انتقاله في الحالتين",
+      "كلاهما انتقال كامل للمنحنى في الاتجاهين معاً"
+    ],
+    a: 1,
+    e: "تغيّر الكمية المطلوبة بسبب تغيّر سعر السلعة نفسها هو تحرك على منحنى الطلب. أما تغيّر عامل غير سعري كالدخل فينقل المنحنى بالكامل يميناً أو يساراً."
+  },
+  {
+    q: "في سوقٍ عقارية انخفض السعر عن مستوى التوازن، فزاد الطلب وتراجعت الكمية المعروضة ونشأ نقص في المعروض. ما توصيف هذه الحالة، وما أثرها المتوقع على السعر لاحقاً؟",
+    o: [
+      "فوق مستوى التوازن، ويميل السعر للانخفاض لامتصاص الفائض",
+      "تحت التوازن، ويميل السعر للارتفاع نحو نقطة التوازن",
+      "توازن تام، ويبقى السعر ثابتاً دون تغيّر يُذكر",
+      "فائض عرض، ويميل السعر للارتفاع لزيادة الإنتاج"
+    ],
+    a: 1,
+    e: "انخفاض السعر دون التوازن مع زيادة الطلب ونقص المعروض حالة (تحت التوازن)، والنقص يدفع السعر للارتفاع تدريجياً عائداً نحو نقطة التوازن."
+  },
+  {
+    q: "في مدينةٍ ارتفع عدد السكان ارتفاعاً ملحوظاً مع ثبات المعروض من الوحدات السكنية. ما الأثر المتسلسل المتوقع على الطلب وسعر التوازن؟",
+    o: [
+      "ينخفض الطلب فينخفض سعر التوازن تبعاً له",
+      "يرتفع الطلب فيرتفع سعر التوازن تبعاً له",
+      "يثبت الطلب فيبقى سعر التوازن دون تغيّر",
+      "يرتفع العرض فينخفض سعر التوازن مباشرةً"
+    ],
+    a: 1,
+    e: "الخصائص السكانية على رأس محددات الطلب العقاري. ارتفاع عدد السكان يرفع الطلب، ومع ثبات المعروض ينتقل منحنى الطلب يميناً فيرتفع سعر التوازن."
+  }
+],
+
+u3c3: [
+  {
+    q: "أرادت جهة حكومية السيطرة على التضخم عبر إجراءٍ يتعلق بعرض النقود، بينما أرادت أخرى تحفيز الاقتصاد عبر زيادة الإنفاق العام وتعديل الضرائب. ما نوع السياستين على الترتيب؟",
+    o: [
+      "الأولى مالية عامة، والثانية نقدية تخص إدارة عرض النقود",
+      "الأولى نقدية، والثانية مالية عامة تخص الإنفاق والضرائب",
+      "كلاهما سياسة نقدية تختلف في الأداة المستخدمة فقط",
+      "الأولى مالية والثانية مالية، والفرق في الجهة المنفّذة"
+    ],
+    a: 1,
+    e: "ما يتعلق بعرض النقود والسيطرة على التضخم من اختصاص السياسة النقدية، وما يتعلق بالإنفاق العام والضرائب من اختصاص سياسة المالية العامة. الترتيب: نقدية ← مالية عامة."
+  },
+  {
+    q: "يميّز اقتصاديٌّ بين نوعين من البطالة: الأول يحدث أثناء انتقال الأفراد بين الوظائف مع توفّر فرص شاغرة بانتظام، والثاني ينشأ من تقلّبات الدورة الاقتصادية صعوداً وهبوطاً. ما النوعان على الترتيب؟",
+    o: [
+      "الأولى دورية مؤقتة، والثانية انتقالية مرتبطة بتغيّر الوظائف",
+      "الأولى انتقالية، والثانية دورية مرتبطة بالدورة الاقتصادية",
+      "كلاهما هيكلية، والفرق في مدة بقاء العامل عاطلاً",
+      "الأولى موسمية، والثانية انتقالية بين القطاعات"
+    ],
+    a: 1,
+    e: "البطالة المرتبطة بانتقال الأفراد بين الوظائف مع توفّر فرص شاغرة هي الانتقالية (الاحتكاكية). والمرتبطة بصعود الدورة الاقتصادية وهبوطها هي الدورية. الترتيب: انتقالية ← دورية."
+  },
+  {
+    q: "لاحظ محلل أن زيادة المحفزات المالية والنقدية رفعت الطلب الكلي في الاقتصاد فارتفع المستوى العام للأسعار ارتفاعاً مستداماً. ما المفهوم الذي يصف هذه النتيجة، وما مصدرها هنا؟",
+    o: [
+      "بطالة دورية مصدرها تراجع الطلب الكلي في مجمل الاقتصاد",
+      "تضخم مصدره الطلب الناتج عن المحفزات المالية والنقدية",
+      "انكماش مصدره ارتفاع أسعار الفائدة على الاقتراض",
+      "ركود مصدره جمود الأجور وارتفاع تكاليف الإنتاج"
+    ],
+    a: 1,
+    e: "الارتفاع المستدام في المستوى العام للأسعار هو التضخم. وارتفاعه نتيجة زيادة الطلب الكلي بفعل المحفزات المالية والنقدية يُصنّف تضخماً ناتجاً عن الطلب."
+  }
+]
+
+};
+
+/* ===== lessons ===== */
+const LESSONS = {
+
+u1c1: {
+  intro: "التقييم العقاري يجمع بين العلم والفن: العلم في تحليل البيانات والمنهجية الرياضية، والفن في تكوين الرأي والموازنة بين الحقائق الحالية والتنبؤات المستقبلية. هذا الفصل يؤسس المفاهيم الأساسية: القيمة، السعر، التكلفة، العقار، الملكية، أنواع العقارات، ومبادئ التقييم.",
+  sections: [
+    {
+      h: "المفاهيم الأساسية (القيمة والسعر والتكلفة)",
+      points: [
+        "<b>القيمة:</b> رأي تقديري للمبلغ الممكن دفعه مقابل سلعة أو خدمة في وقت محدد. القيمة ليست حقيقة، بل رأي يبيّن وجهة نظر السوق.",
+        "<b>السعر:</b> المقابل النقدي المطلوب أو المعروض أو المدفوع فعلاً مقابل الأصل. وقد يختلف عن القيمة.",
+        "<b>التكلفة:</b> الدفعات أو المصروفات اللازمة لاقتناء الأصل أو إنشائه (أجور، مواد بناء…).",
+        "<b>المُقيِّم يحتاج:</b> المعرفة المهنية + المهارات المهنية + القيم الأخلاقية والسلوكية."
+      ]
+    },
+    {
+      h: "تعريف العقار والملكية والأصول",
+      points: [
+        "<b>العقار:</b> الأرض وكل ما اتصل بها اتصالاً دائماً لا يمكن نقله دون تلف، كالمباني والأشجار.",
+        "<b>الملكية العقارية:</b> سلطة المالك في استعمال المملوك واستغلاله والتصرف فيه بما يجوز شرعاً. وتُسمى الحقوق المرتبطة بها (حزمة الحقوق).",
+        "<b>الأصول:</b> موارد تتحكم فيها المنشأة نتيجة أحداث سابقة وتتوقع منها منافع اقتصادية.",
+        "<b>الأصول المتداولة:</b> قصيرة الأجل (≤ سنة) كالمخزون والنقدية. <b>غير المتداولة:</b> ثابتة طويلة الأجل كالآلات والمعدات.",
+        "في ظروف خاصة تُعامل العقارات الثابتة كأصول متداولة (المخزون لدى المطورين كالأراضي المحتفظ بها للبيع)."
+      ]
+    },
+    {
+      h: "حزمة الحقوق العقارية",
+      points: [
+        "<b>حق البيع</b> – <b>حق التأجير</b> – <b>حق الاستخدام</b> – <b>حق التعديل</b> – <b>حق الرهن</b>.",
+        "<b>حق الوقف:</b> تحبيس مال متقوّم وتسبيل منفعته أو ريعه لمصرف خيري أو أهلي.",
+        "<b>حق الهبة:</b> عقد يملّك بمقتضاه الواهب حال حياته الموهوب له مالاً دون عوض.",
+        "<b>الحقوق المتفرعة:</b> حق الانتفاع (يخوّل استعمال شيء مملوك للغير، قد يكون بمقابل أو بدون، غير محدد المدة)، حق الاستعمال والسكنى، حق الارتفاق (لمنفعة عقار على عقار آخر)، حق الوقف.",
+        "<b>الفرق بين الانتفاع والحيازة الإيجارية:</b> الانتفاع قد يكون بدون مقابل وغير محدد المدة؛ الحيازة الإيجارية رخصة شخصية بمقابل مالي ومدة محددة."
+      ]
+    },
+    {
+      h: "التصنيف القانوني للملكية",
+      points: [
+        "<b>المطلقة:</b> غير محددة المدة، سلطة مطلقة في التصرف (تشمل الحرة غير المقيدة).",
+        "<b>المقيدة:</b> عليها حدود شرعية أو قانونية تحد من التصرف (مثل الميراث المشترك أو الرهن).",
+        "<b>المشروطة:</b> باقية ما لم يقع شرط، وعند وقوعه تؤول للمانح.",
+        "<b>مدى الحياة:</b> دائمة للشخص الممنوح، مقرونة بعمره.",
+        "<b>الحيازة الإيجارية:</b> لمدة محدودة بموجب عقد إيجار بين المؤجر والمستأجر.",
+        "<b>مهم للمُقيِّم:</b> يجب ذكر نوع الملكية في التقرير لتأثيره في قيمة الأصل."
+      ]
+    },
+    {
+      h: "أنواع العقارات",
+      points: [
+        "<b>حسب تحقيق الدخل:</b> عقارات تحقق دخلاً (مكاتب، تجزئة، صناعية، سكني مؤجر) / لا تحقق دخلاً (يشغلها مالكوها كالمنازل).",
+        "<b>حسب الاستخدام:</b> سكنية، تجارية، صناعية، زراعية، أراضي مشاريع تطوير عقاري.",
+        "<b>أراضي التطوير العقاري:</b> استثمارات تحقق أرباحاً رأسمالية أو ريعاً (شقق فندقية، وحدات مكتبية…).",
+        "<b>عند المعاينة:</b> يجب التحقق من الاستخدام الفعلي ومقارنته بالمستندات الرسمية."
+      ]
+    },
+    {
+      h: "المبادئ العامة للتقييم",
+      points: [
+        "<b>مبدأ الاستبدال:</b> لكل من البائع والمشتري خيارات بديلة، فلا يدفع المشتري أكثر من تكلفة بديل مماثل.",
+        "<b>مبدأ التوقع:</b> سعر العقار الحالي توقع لمنافعه المستقبلية (القيمة الحالية للمنافع المستقبلية).",
+        "<b>مبدأ المنافسة:</b> الأسواق العقارية ديناميكية، فقيمة العقارات في تغير مستمر.",
+        "<b>مبدأ الإسهام:</b> إسهام جزء من العقار في تحديد قيمته السوقية بغض النظر عن تكلفته.",
+        "<b>الاستخدام الأعلى والأفضل (تعظيم الأرباح):</b> استخدام الأصل بما يحقق أعلى منفعة اقتصادية على المدى الطويل في ظروف تنافسية."
+      ]
+    }
+  ]
+},
+
+u1c2: {
+  intro: "كل عقار يتميز بخصائص تؤثر على قيمته، تنقسم إلى مكانية وتطويرية واقتصادية. والسوق العقاري له خصائص فريدة تميزه عن الأسواق الأخرى. هذا الفصل يغطي الخصائص والعوامل المؤثرة على العرض والطلب.",
+  sections: [
+    {
+      h: "الخصائص المكانية (الجغرافية)",
+      points: [
+        "<b>التفاوت وعدم التماثل:</b> كل أرض فريدة بموقعها، لا توجد قطعتان متماثلتان بل متشابهتان فقط.",
+        "<b>تفضيلات الموقع:</b> القيمة تتغير حسب جاذبية الموقع والقرب من المرافق والخدمات.",
+        "<b>سهولة الوصول:</b> مدى سهولة الوصول عبر الطرق ووسائل النقل.",
+        "<b>الغطاء الأخضر</b> ووجود المساحات الخضراء، و<b>التواجد في مركز المدينة</b>."
+      ]
+    },
+    {
+      h: "الخصائص التطويرية",
+      points: [
+        "<b>قابلية التطوير:</b> إمكانية التعديل على الأراضي بتطويرها أو زراعتها أو تشييد مبانٍ.",
+        "<b>التحسينات:</b> تعديلات على العقار كتحديث البنية التحتية وإزالة العوائق.",
+        "<b>التشييد والبناء:</b> إمكانية البناء والمساحات المتاحة والقيود القانونية.",
+        "<b>تحسين المظهر الجمالي:</b> التشجير وإضافة المساحات الخضراء وتحسين الواجهات."
+      ]
+    },
+    {
+      h: "الخصائص الاقتصادية",
+      points: [
+        "<b>الندرة:</b> عدد الأراضي محدود ولا يمكن إنتاج أراضٍ جديدة.",
+        "<b>إمكانية الاستثمار:</b> القدرة على تحقيق عائد بالتأجير أو البيع أو التطوير.",
+        "<b>صعوبة التسييل:</b> صعوبة تحويل العقار إلى نقد بسرعة، وعدم قابلية تجزئة الأموال المستثمرة.",
+        "<b>الاستقرار:</b> الاستثمار في الأراضي طويل المدى مع طول مدة الاحتفاظ بالعقار."
+      ]
+    },
+    {
+      h: "خصائص السوق العقاري",
+      points: [
+        "التشتت وقلة التنظيم والتوجيه العام للسوق.",
+        "السوق ذات طبيعة متنوعة ومعقدة.",
+        "الأبعاد الوطنية والإقليمية للسوق.",
+        "عدم مرونة العرض بالنسبة للأراضي."
+      ]
+    },
+    {
+      h: "العوامل المؤثرة على العرض والطلب",
+      points: [
+        "<b>عوامل اقتصادية:</b> دخل الأفراد، معدل النمو الاقتصادي، تكلفة التمويل العقاري.",
+        "<b>عوامل اجتماعية وثقافية:</b> ثقافة وذوق الأفراد، الخصائص السكانية.",
+        "<b>عوامل مكانية وبيئية:</b> موقع العقار، البيئة المناخية، التطوير العقاري.",
+        "<b>عوامل حكومية:</b> القرارات والحوافز الحكومية في المجال العقاري."
+      ]
+    }
+  ]
+},
+
+u1c3: {
+  intro: "الاستثمار هو استخدام رأس المال لتحقيق منفعة اقتصادية. هذا الفصل يغطي تعريف الاستثمار والعائد، مبادئ الاستثمار، أنواعه ومصادره، والاستثمار الخالي من المخاطر، والعلاقة بين العائد والمخاطرة.",
+  sections: [
+    {
+      h: "تعريف الاستثمار والعائد",
+      points: [
+        "<b>الاستثمار:</b> استخدام رأس المال لإنشاء مشروع استثماري أو توسيعه أو تطويره أو تمويله أو تملّكه؛ لتحقيق منفعة اقتصادية.",
+        "<b>العائد:</b> الدخل المتأتي من الاستثمار (فوائد سنوية، قيمة إيجارية، نمو في القيمة الرأسمالية).",
+        "<b>العلاقة بين العائد والمخاطرة طردية:</b> كلما زاد العائد المطلوب زادت المخاطرة."
+      ]
+    },
+    {
+      h: "مبادئ الاستثمار",
+      points: [
+        "تحديد الأهداف المالية قبل البدء.",
+        "<b>التنويع:</b> توزيع الأموال على أصول متنوعة لتقليل المخاطر.",
+        "الفهم والمعرفة قبل الاستثمار في أي أصل.",
+        "وجود استراتيجية واضحة لإدارة المخاطر، والصبر والانضباط.",
+        "مراجعة المحفظة دورياً وإعادة توازنها، والانتباه لتكاليف الاستثمار (الرسوم والعمولات)."
+      ]
+    },
+    {
+      h: "أسواق الاستثمار ومصادره",
+      points: [
+        "<b>أسواق العقارات</b> (مبانٍ، أراضٍ).",
+        "<b>أسواق الذهب والمجوهرات</b> (المعادن الثمينة).",
+        "<b>الأسواق المالية والنقدية</b> (الأوراق المالية: أسهم، سندات، صناديق مشتركة).",
+        "<b>الأسهم الممتازة</b> مقارنة بالعادية: لها الأولوية في تلقي توزيعات الأرباح."
+      ]
+    },
+    {
+      h: "الاستثمار الخالي من المخاطر",
+      points: [
+        "هو الاستثمار في <b>السندات الحكومية وأذونات الخزينة</b>.",
+        "<b>مزاياه:</b> تأمين رأس المال بالقيمة الاسمية.",
+        "<b>عيوبه:</b> انخفاض معدل العوائد.",
+        "<b>معدل العائد الحقيقي = العائد الاسمي − نسبة التضخم.</b> مثال: 18% − 5% = 13%."
+      ]
+    },
+    {
+      h: "الاستثمار العقاري",
+      points: [
+        "<b>الأمان والاستقرار</b> يعتمدان على الظروف المحلية وتطورات سوق العقارات.",
+        "<b>القيمة الإيجارية</b> أكبر عامل مؤثر فيها هو قدرة المستأجرين على الدفع.",
+        "العقار من الاستثمارات المستقرة وأقل تقلباً من الأسواق الأخرى، لكنه صعب التسييل."
+      ]
+    }
+  ]
+},
+
+u2c1: {
+  intro: "علم الإحصاء أداة أساسية للمُقيِّم العقاري في جمع البيانات وتحليلها واتخاذ القرارات. هذا الفصل يغطي تعريف الإحصاء ومراحله، المفاهيم الإحصائية، أنواع البيانات، ومستويات القياس.",
+  sections: [
+    {
+      h: "تعريف الإحصاء ومراحله",
+      points: [
+        "<b>الإحصاء:</b> العلم الذي يهتم بتوفير الحقائق الرقمية للظواهر، ثم ترتيبها وعرضها وتحليلها للوصول إلى نتائج بدقة.",
+        "<b>مراحل عملية الإحصاء:</b> الجمع ← التنظيم ← العرض ← المعالجة.",
+        "<b>تطبيقاته في التقييم:</b> أسلوب السوق (جمع المقارنات وتنظيمها)، أسلوب التكلفة (دليل الأسعار الاسترشادي)، أسلوب الدخل (معدلات الدخل)."
+      ]
+    },
+    {
+      h: "المفاهيم الإحصائية",
+      points: [
+        "<b>المجتمع الإحصائي:</b> جميع القيم أو المفردات التي يمكن أن يأخذها المتغير ونرغب باستنتاجات حولها.",
+        "<b>العينة:</b> جزء من المجتمع يمثّل مجموعة مشاهدات اختيرت بطريقة ما.",
+        "<b>الإحصائية:</b> سمة أو شيء يميز العينة.",
+        "<b>المَعلم:</b> سمة تميز المجتمع.",
+        "<b>المتغير التابع:</b> الذي نحاول تفسير تغيره. <b>المستقل:</b> المؤثر فيه."
+      ]
+    },
+    {
+      h: "أنواع البيانات",
+      points: [
+        "<b>البيانات الاسمية:</b> تُصنّف في فئات بلا ترتيب منطقي (مثل: ذكر/أنثى).",
+        "<b>البيانات الترتيبية:</b> فئات لها ترتيب منطقي (مثل: جيد جداً، جيد، متوسط، سيئ).",
+        "<b>بيانات الفترة:</b> تتبع نظاماً مع قياس محدد للمسافة بينها.",
+        "<b>البيانات الأولية:</b> تُجمع مباشرة من المصدر."
+      ]
+    },
+    {
+      h: "مستويات القياس",
+      points: [
+        "<b>المقياس الاسمي:</b> تصنيف البيانات إلى فئات دون ترتيب أو عمليات حسابية.",
+        "<b>المقياس الترتيبي:</b> تصنيف يمكن ترتيبه، دون مسافة قياسية دقيقة.",
+        "<b>مقياس الفترة:</b> مسافات متساوية بين القيم دون صفر حقيقي.",
+        "<b>مقياس النسبة:</b> يسمح بكل العمليات الحسابية ويملك صفراً حقيقياً."
+      ]
+    },
+    {
+      h: "مقاييس التحليل الوصفي (النزعة المركزية)",
+      points: [
+        "<b>المتوسط الحسابي:</b> مجموع القيم ÷ عددها.",
+        "<b>الوسيط:</b> القيمة الوسطى بعد ترتيب البيانات تصاعدياً.",
+        "<b>المنوال:</b> القيمة (السعر) الأكثر تكراراً في مجموعة البيانات."
+      ]
+    }
+  ]
+},
+
+u2c2: {
+  intro: "البحث العلمي أساس الوصول للحقيقة، وينقسم إلى كمي ونوعي. هذا الفصل يغطي تعريف البحث، مزايا وعيوب كل نوع، أساليب البحث وتحليل البيانات، والنمذجة، وبرامج التحليل الإحصائي.",
+  sections: [
+    {
+      h: "تعريف البحث",
+      points: [
+        "<b>البحث:</b> مجموعة قواعد عامة للوصول إلى الحقيقة في العلم حتى الوصول إلى نتيجة معلومة.",
+        "<b>شروط البحث الجيد:</b> عنوان واضح، تحديد الخطوات والأهداف والحدود، الإلمام بالموضوع، التوثيق، الموضوعية والابتعاد عن التحيز.",
+        "ينحصر البحث في نوعين: <b>الكمي</b> و<b>النوعي</b>."
+      ]
+    },
+    {
+      h: "البحث الكمي",
+      points: [
+        "<b>التعريف:</b> يفترض وجود حقائق موضوعية معزولة عن مشاعر الأفراد، ويعتمد الأساليب الإحصائية.",
+        "<b>يعتمد على:</b> البيانات والأرقام، وينتج بيانات عددية قابلة للتكرار.",
+        "<b>مزاياه:</b> مناسب لعلوم كثيرة، يختبر المتغيرات التجريبية، يعمم النتائج بالإحصاء.",
+        "<b>عيوبه:</b> التحيز والبعد عن الموضوعية، احتمالية أخطاء القياس والمعاينة."
+      ]
+    },
+    {
+      h: "البحث النوعي",
+      points: [
+        "<b>التعريف:</b> يفترض وجود حقائق وظواهر اجتماعية تُبنى من خلال وجهات نظر الأفراد والجماعات.",
+        "لا يستعرض الإجابات فقط، بل يكتشف الأسباب الكامنة وراءها.",
+        "<b>مزاياه:</b> استكشاف تفاعلات الأفراد مع الظواهر وفهم عميق.",
+        "<b>أدوات جمع البيانات:</b> المقابلات الشخصية (أجوبة تفصيلية)، الاستبانات."
+      ]
+    },
+    {
+      h: "أساليب البحث وتحليل البيانات والنمذجة",
+      points: [
+        "<b>أساليب البحث الكمي:</b> تحليل الانحدار المتعدد، المخططات النقطية.",
+        "<b>أدوات النمذجة:</b> تحليل الانحدار البسيط.",
+        "<b>تحليل الانحدار المتعدد:</b> المتغير المراد تفسيره (كالإيجار السنوي) هو <b>التابع</b>، والمساحة والقرب من المرافق <b>مستقلة</b>.",
+        "<b>برامج التحليل:</b> SPSS (تقارير ورسوم وتحليلات معقدة)، SAS، STATA، Excel."
+      ]
+    }
+  ]
+},
+
+u3c1: {
+  intro: "الاقتصاد علم اجتماعي يدرس الاستخدام الأمثل للموارد النادرة. هذا الفصل يغطي تعريف الاقتصاد ومجالاته، المشكلة الاقتصادية والندرة، النظام الاقتصادي، وأنواع الأسواق.",
+  sections: [
+    {
+      h: "تعريف الاقتصاد ومجالاته",
+      points: [
+        "<b>الاقتصاد:</b> علم اجتماعي يدرس سلوك الأفراد تجاه الاستخدام الأمثل للموارد النادرة.",
+        "<b>الاقتصاد الجزئي:</b> دراسة اختيارات المستهلكين والمنتجين، وتحليل الأسواق والأسعار وعناصر الإنتاج وسلوك الصناعات الفردية.",
+        "<b>الاقتصاد الكلي:</b> المتغيرات الكلية كالناتج والاستهلاك والادخار والاستثمار والتضخم والبطالة على المستوى الوطني."
+      ]
+    },
+    {
+      h: "المشكلة الاقتصادية والندرة",
+      points: [
+        "<b>المشكلة الاقتصادية:</b> إدارة الموارد المحدودة لمقابلة الحاجات والرغبات غير المحدودة.",
+        "<b>الندرة:</b> مشكلة أساسية تركز على رغبات البشر غير المحدودة في عالم محدود الموارد، وبسببها يجب الاختيار بين البدائل.",
+        "<b>عناصر الإنتاج:</b> الأرض، العمل (العنصر البشري)، رأس المال، التنظيم (ريادة الأعمال)."
+      ]
+    },
+    {
+      h: "النظام الاقتصادي",
+      points: [
+        "<b>اقتصاد السوق الحر:</b> دور الحكومة حماية حقوق الملكية وقيمة المال والعملة، دون تدخل مباشر في الأسعار.",
+        "أنظمة اقتصادية أخرى تتفاوت في درجة تدخل الحكومة."
+      ]
+    },
+    {
+      h: "أنواع الأسواق الاقتصادية",
+      points: [
+        "<b>المنافسة الكاملة:</b> تجانس المنتجات، عدد كبير من البائعين والمشترين، سهولة الدخول والخروج.",
+        "<b>المنافسة الاحتكارية:</b> تمايز المنتجات، عدم استقرار منحنى الطلب، سهولة الدخول والخروج.",
+        "<b>الاحتكار:</b> يظهر بسبب التحكم في مورد نادر أو حواجز تمنع المنافسين.",
+        "<b>احتكار القلة:</b> عدد قليل من الشركات وتفاعلها مع بعضها."
+      ]
+    }
+  ]
+},
+
+u3c2: {
+  intro: "الاقتصاد الجزئي يدرس سلوك الوحدات الاقتصادية الفردية. هذا الفصل يغطي العرض والطلب، التوازن، التغير في الكمية مقابل التغير في الطلب، والعوامل المؤثرة على سوق العقار.",
+  sections: [
+    {
+      h: "الطلب والعرض",
+      points: [
+        "<b>الطلب:</b> الكمية التي يكون المستهلك مستعداً لشرائها عند سعر معين.",
+        "<b>العرض:</b> كمية المنتج التي يكون المنتجون مستعدين لإنتاجه وبيعه.",
+        "<b>جدول الطلب:</b> يبيّن العلاقة بين السعر والكمية التي يستعد المستهلك لشرائها.",
+        "<b>التحليل الجزئي:</b> دراسة السلوك الاقتصادي لكل وحدة اقتصادية على حدة."
+      ]
+    },
+    {
+      h: "التغير في الكمية مقابل التغير في الطلب",
+      points: [
+        "<b>تغير في الكمية المطلوبة:</b> بسبب تغير السعر = انتقال على نفس منحنى الطلب.",
+        "<b>تغير في الطلب نفسه:</b> بسبب عوامل غير سعرية = انتقال منحنى الطلب بالكامل (يميناً أو يساراً).",
+        "<b>عوامل تخفض الطلب:</b> انخفاض أسعار السلع البديلة (يتجه المستهلك للبديل).",
+        "<b>انخفاض عدد السكان</b> يؤدي إلى انخفاض الطلب."
+      ]
+    },
+    {
+      h: "توازن السوق",
+      points: [
+        "<b>توازن السوق:</b> نقطة التقاء العرض والطلب (تحدد سعر التوازن وكميته).",
+        "<b>تحت توازن السوق:</b> ينخفض السعر فيزيد الطلب وتقل الكمية المعروضة (نقص في الإنتاج).",
+        "<b>الزيادة في الطلب</b> ← رفع سعر التوازن. <b>الانخفاض في الطلب</b> ← خفض سعر التوازن."
+      ]
+    },
+    {
+      h: "العوامل المؤثرة على سوق العقار",
+      points: [
+        "<b>الخصائص السكانية</b> على رأس العوامل المؤثرة في طلب العقار.",
+        "<b>التوزيع الجغرافي للعقارات</b> يؤثر على الأسعار.",
+        "أهمية التحليل الاقتصادي لسوق العقارات في التخطيط الاستراتيجي والاستثماري."
+      ]
+    }
+  ]
+},
+
+u3c3: {
+  intro: "الاقتصاد الكلي يدرس التفاعلات الاقتصادية على مستوى المجتمع. هذا الفصل يغطي البطالة وأنواعها، التضخم وأسبابه، والسياسة النقدية والمالية العامة وأدواتهما.",
+  sections: [
+    {
+      h: "مفهوم الاقتصاد الكلي وأهدافه",
+      points: [
+        "<b>الاقتصاد الكلي:</b> دراسة السلوك الاقتصادي للتفاعلات في المجتمع، مثل البطالة والتضخم.",
+        "<b>من أهدافه:</b> معرفة مصادر تضخم الأسعار وكيفية السيطرة عليه، ودراسة البطالة والنمو."
+      ]
+    },
+    {
+      h: "البطالة وأنواعها",
+      points: [
+        "<b>البطالة الانتقالية (الاحتكاكية):</b> بسبب تغير النشاط الاقتصادي وتوفر فرص شاغرة بانتظام، أثناء انتقال الأفراد بين الوظائف.",
+        "<b>البطالة الدورية:</b> انحراف مؤقت في حجم البطالة يرتفع وينخفض مع الدورة الاقتصادية.",
+        "<b>البطالة الموسمية:</b> مرتبطة بمواسم معينة.",
+        "<b>البطالة الهيكلية:</b> ناتجة عن تغيرات هيكلية في الاقتصاد."
+      ]
+    },
+    {
+      h: "التضخم وأسبابه",
+      points: [
+        "<b>التضخم:</b> الزيادة المستدامة في مستوى الأسعار والمستوى التراكمي.",
+        "<b>التضخم الناتج عن الطلب:</b> أسبابه المحفزات المالية العامة والمحفزات النقدية للاقتصاد.",
+        "زيادة الطلب الكلي تدفع الأسعار للارتفاع."
+      ]
+    },
+    {
+      h: "السياسة النقدية والمالية",
+      points: [
+        "<b>السياسة النقدية:</b> أهدافها استقرار الأسعار والتوظيف والنمو. <b>أدواتها:</b> التغيير في نسب الاحتياطي، إدارة عرض النقود وأسعار الفائدة.",
+        "<b>السياسة المالية العامة:</b> قرارات الحكومة بشأن تحصيل الإيرادات (الضرائب) وطريقة إنفاقها. <b>أدواتها:</b> الإنفاق الحكومي والضرائب.",
+        "<b>تمييز مهم:</b> نسب الاحتياطي وعرض النقود = نقدية / الإنفاق والضرائب = مالية."
+      ]
+    }
+  ]
+}
+
+};
+
+
+/* ===== app.js ===== */
+
+/* ============ helpers ============ */
+const $ = s => document.querySelector(s);
+const arabicDigits = n => String(n).replace(/[0-9]/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+const KEYS = ["أ","ب","ج","د"];
+const PASS = 70;
+
+/* flatten structure for lookups */
+const CHMAP = {};
+STRUCTURE.forEach(u => u.chapters.forEach(c => CHMAP[c.id] = {...c, unitTitle:u.title, unit:u.unit}));
+
+/* دمج أسئلة الفصل المفاهيمية مع الحسابية (إن وُجدت) */
+function chapterPool(id){
+  let base = BANK[id] ? BANK[id].slice() : [];
+  if(typeof CALC!=="undefined" && CALC[id]) base = base.concat(CALC[id]);
+  return base;
+}
+function chapterCount(id){ return chapterPool(id).length; }
+
+/* total questions (شامل الحسابية) */
+const TOTAL_Q = Object.keys(CHMAP).reduce((s,id)=>s+chapterCount(id),0);
+
+/* أي مجموعات قوانين تُعرض فوق كل اختبار */
+function formulaGroupsFor(id){
+  if(id==="u1c3" || id==="unit:0") return ["Investment (Unit 1 · Ch 3)"];
+  if(id==="u2c2" || id==="unit:1") return ["Statistics (Unit 2 · Ch 2)"];
+  if(id==="final" || id==="final2") return FORMULAS.map(f=>f.g);
+  return [];
+}
+function formulaHTML(groupNames){
+  if(!groupNames || !groupNames.length) return "";
+  let inner="";
+  FORMULAS.filter(f=>groupNames.includes(f.g)).forEach(f=>{
+    inner+=`<div class="fgroup"><div class="glabel">${f.g}</div>`;
+    f.items.forEach(it=>inner+=`<div class="fitem">${it}</div>`);
+    inner+=`</div>`;
+  });
+  return `<div class="formula-box"><h4>القوانين المعتمدة في هذا الاختبار</h4>${inner}</div>`;
+}
+
+/* ============ progress (localStorage-free; in-memory + best effort) ============ */
+let PROG = {}; // {chapterId: bestPct}
+try { const saved = JSON.parse(localStorage.getItem("taqeem102")||"{}"); PROG = saved; } catch(e){ PROG={}; }
+function saveProg(){ try{ localStorage.setItem("taqeem102", JSON.stringify(PROG)); }catch(e){} }
+function setChapterScore(id,pct){ if(!PROG[id]||pct>PROG[id]){ PROG[id]=pct; saveProg(); } }
+
+/* ============ shuffle ============ */
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+/* ============ build a question set with shuffled options ============ */
+function prepQuestions(list){
+  return list.map(q=>{
+    const idx=q.o.map((_,i)=>i);
+    const order=shuffle(idx);
+    return {
+      q:q.q,
+      o:order.map(i=>q.o[i]),
+      a:order.indexOf(q.a),
+      e:q.e
+    };
+  });
+}
+
+/* ============ STATE ============ */
+let QUIZ=null; // {id,title,sub,questions,answers,submitted}
+
+/* ============ HOME RENDER ============ */
+function renderCurriculum(){
+  const host=$("#curriculum"); host.innerHTML="";
+  STRUCTURE.forEach((u,ui)=>{
+    const block=document.createElement("div"); block.className="unit-block";
+    const unitQ=u.chapters.reduce((s,c)=>s+chapterCount(c.id),0);
+    block.innerHTML=`
+      <div class="unit-head">
+        <span class="tag">${u.unit}</span>
+        <h3>${u.title}</h3>
+        <span class="meta">${arabicDigits(u.chapters.length)} فصول · ${arabicDigits(unitQ)} سؤال</span>
+      </div>
+      <div class="ch-grid" id="grid${ui}"></div>`;
+    host.appendChild(block);
+    const grid=block.querySelector("#grid"+ui);
+    u.chapters.forEach((c,ci)=>{
+      const qn=chapterCount(c.id);
+      const best=PROG[c.id];
+      const badge = best!=null
+        ? `<span class="pill done">أعلى نتيجة ${arabicDigits(best)}٪</span>`
+        : `<span class="pill q">${arabicDigits(qn)} سؤال</span>`;
+      const card=document.createElement("div"); card.className="ch-card";
+      card.onclick=()=>openLesson(c.id);
+      card.innerHTML=`
+        <div class="idx">${arabicDigits(ci+1)}</div>
+        <div class="body">
+          <div class="n">${c.n}</div>
+          <div class="t">${c.t}</div>
+          <div class="d">شرح + اختبار (${arabicDigits(qn)} سؤال)</div>
+        </div>
+        <div class="stat-badge">${badge}</div>
+        <span class="arrow">←</span>`;
+      grid.appendChild(card);
+    });
+    // unit exam card
+    const ec=document.createElement("div"); ec.className="exam-card";
+    ec.onclick=()=>startQuiz("unit:"+ui);
+    ec.innerHTML=`
+      <div class="ic">📝</div>
+      <div class="body">
+        <div class="t">اختبار ${u.unit} — شامل لفصولها</div>
+        <div class="d">أسئلة مختارة من كل فصول الوحدة · شرط النجاح ٧٠٪</div>
+      </div>
+      <span class="arrow">←</span>`;
+    block.appendChild(ec);
+  });
+  updateMiniProg();
+}
+
+function updateMiniProg(){
+  const done=Object.keys(CHMAP).filter(id=>PROG[id]!=null).length;
+  const total=Object.keys(CHMAP).length;
+  const pct=Math.round(done/total*100);
+  $("#miniBar").style.width=pct+"%";
+  $("#miniTxt").textContent=arabicDigits(pct)+"%";
+}
+
+/* ============ VIEW SWITCH ============ */
+function show(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  $("#"+id).classList.add("active");
+  window.scrollTo({top:0,behavior:"instant"});
+}
+function goHome(){ QUIZ=null; renderCurriculum(); show("home"); }
+
+/* ============ LESSON ============ */
+function openLesson(id){
+  const c=CHMAP[id]; const L=LESSONS[id];
+  const qn=chapterCount(id);
+  let html=`
+    <div class="lesson-head">
+      <div class="crumb">${c.unit} · ${c.n}</div>
+      <h2>${c.t}</h2>
+    </div>
+    <div class="lesson-intro">${L.intro}</div>`;
+  L.sections.forEach(s=>{
+    html+=`<div class="lsec"><h4>${s.h}</h4><ul>`;
+    s.points.forEach(p=>html+=`<li>${p}</li>`);
+    html+=`</ul></div>`;
+  });
+  html+=`
+    <div class="start-quiz-bar">
+      <h4>جاهز تختبر نفسك في هذا الفصل؟</h4>
+      <p>${arabicDigits(qn)} سؤال بأسلوب الهيئة · كل الأسئلة بصفحة واحدة · النتيجة والتصحيح بعد التسليم</p>
+      <button class="btn btn-gold" onclick="startQuiz('${id}')">ابدأ اختبار الفصل ←</button>
+    </div>`;
+  $("#lessonBody").innerHTML=html;
+  show("lessonView");
+}
+
+/* ============ QUIZ START ============ */
+function startQuiz(spec){
+  let list, title, sub, id;
+  if(spec.startsWith("unit:")){
+    const ui=+spec.split(":")[1]; const u=STRUCTURE[ui];
+    let pool=[]; u.chapters.forEach(c=>pool.push(...chapterPool(c.id)));
+    list=prepQuestions(shuffle(pool));
+    title=`اختبار ${u.unit}`; sub=u.title; id=spec;
+  } else if(spec==="final"){
+    let pool=[]; Object.keys(CHMAP).forEach(cid=>pool.push(...chapterPool(cid)));
+    pool=shuffle(pool).slice(0,50);
+    list=prepQuestions(pool);
+    title="الاختبار الشامل النهائي"; sub="كل المنهج · ٥٠ سؤال"; id="final";
+  } else if(spec==="final2"){
+    let pool=[]; Object.values(BANK2).forEach(a=>pool.push(...a));
+    pool=shuffle(pool);
+    list=prepQuestions(pool);
+    title="الاختبار الشامل الثاني"; sub=`تطبيقي متقدّم · ${arabicDigits(list.length)} سؤال`; id="final2";
+  } else {
+    const c=CHMAP[spec];
+    list=prepQuestions(shuffle(chapterPool(spec)));
+    title=`اختبار ${c.n}`; sub=c.t; id=spec;
+  }
+  QUIZ={id,title,sub,questions:list,answers:new Array(list.length).fill(null),submitted:false,formulas:formulaGroupsFor(id)};
+  renderQuiz();
+  show("quizView");
+}
+
+function renderQuiz(){
+  $("#quizTitle").innerHTML=`${QUIZ.title}<br><small>${QUIZ.sub}</small>`;
+  const host=$("#quizBody");
+  host.innerHTML = (QUIZ.formulas && QUIZ.formulas.length) ? formulaHTML(QUIZ.formulas) : "";
+  QUIZ.questions.forEach((q,qi)=>{
+    const card=document.createElement("div"); card.className="qcard"; card.id="q"+qi;
+    let opts="";
+    q.o.forEach((txt,oi)=>{
+      opts+=`<div class="opt" data-q="${qi}" data-o="${oi}" onclick="pick(${qi},${oi})">
+        <span class="ki">${KEYS[oi]}</span><span class="txt">${txt}</span></div>`;
+    });
+    card.innerHTML=`
+      <span class="qnum">السؤال ${arabicDigits(qi+1)} من ${arabicDigits(QUIZ.questions.length)}</span>
+      <div class="qtext">${q.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="expl" id="exp${qi}"></div>`;
+    host.appendChild(card);
+  });
+  updateQuizMeta();
+}
+
+function pick(qi,oi){
+  if(QUIZ.submitted) return;
+  QUIZ.answers[qi]=oi;
+  const card=$("#q"+qi);
+  card.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));
+  card.querySelector(`.opt[data-o="${oi}"]`).classList.add("sel");
+  updateQuizMeta();
+}
+
+function updateQuizMeta(){
+  const ans=QUIZ.answers.filter(a=>a!=null).length;
+  const tot=QUIZ.questions.length;
+  $("#quizCount").textContent=`${arabicDigits(ans)} / ${arabicDigits(tot)} مُجاب`;
+  $("#quizBar").style.width=(ans/tot*100)+"%";
+  const ready=ans===tot;
+  $("#submitBtn").disabled=!ready;
+  $("#submitWarn").style.display=ready?"none":"block";
+}
+
+function confirmLeaveQuiz(){
+  if(QUIZ && !QUIZ.submitted && QUIZ.answers.some(a=>a!=null)){
+    if(!confirm("بتطلع من الاختبار؟ إجاباتك بتروح.")) return;
+  }
+  goHome();
+}
+
+/* ============ SUBMIT + SCORE ============ */
+function submitQuiz(){
+  QUIZ.submitted=true;
+  let correct=0;
+  QUIZ.questions.forEach((q,qi)=>{
+    const card=$("#q"+qi);
+    const chosen=QUIZ.answers[qi];
+    const isOk=chosen===q.a;
+    if(isOk) correct++;
+    card.querySelectorAll(".opt").forEach((o,oi)=>{
+      o.classList.add("locked");o.classList.remove("sel");
+      if(oi===q.a) o.classList.add("correct");
+      else if(oi===chosen) o.classList.add("wrong");
+    });
+    const exp=$("#exp"+qi);
+    exp.innerHTML=`<span class="verdict ${isOk?'ok':'no'}">${isOk?'✓ إجابة صحيحة':'✗ إجابة خاطئة'}</span>${q.e}`;
+    exp.classList.add("show");
+  });
+  const pct=Math.round(correct/QUIZ.questions.length*100);
+  // save score for chapter quizzes only (id without : and not final)
+  if(!QUIZ.id.includes(":") && QUIZ.id!=="final" && CHMAP[QUIZ.id]){
+    setChapterScore(QUIZ.id,pct);
+  }
+  renderResult(correct,pct);
+  show("resultView");
+}
+
+function renderResult(correct,pct){
+  const tot=QUIZ.questions.length, wrong=tot-correct;
+  const passed=pct>=PASS;
+  const circ=2*Math.PI*64;
+  const off=circ*(1-pct/100);
+  const col=passed?"var(--ok)":(pct>=50?"var(--gold)":"var(--no)");
+
+  let verdict;
+  if(pct>=90) verdict="ممتاز. متمكن من هذا الجزء — انتقل للي بعده بثقة.";
+  else if(pct>=PASS) verdict="اجتزت. لكن راجع الأسئلة الغلط تحت قبل لا تمشي، فيها نقاط تنفعك.";
+  else if(pct>=50) verdict="قريب من الاجتياز بس ما وصلت ٧٠٪. ارجع للشرح وأعد الاختبار — لا تنتقل وأنت كذا.";
+  else verdict="النتيجة ضعيفة. لا تكمل على هذا الفصل — ارجع للشرح من البداية وأعد المحاولة.";
+
+  const isCh = !QUIZ.id.includes(":") && QUIZ.id!=="final" && CHMAP[QUIZ.id];
+
+  let html=`
+    <div class="back-row" style="margin-top:24px">
+      <button class="btn btn-ghost" onclick="goHome()">→ القائمة الرئيسية</button>
+    </div>
+    <div class="result">
+      <div class="pass-badge ${passed?'p':'f'}">${passed?'✓ اجتزت الاختبار':'✗ لم تجتز (٧٠٪ مطلوبة)'}</div>
+      <div class="ring">
+        <svg width="150" height="150">
+          <circle cx="75" cy="75" r="64" fill="none" stroke="var(--line-soft)" stroke-width="11"/>
+          <circle cx="75" cy="75" r="64" fill="none" stroke="${col}" stroke-width="11"
+            stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${circ}"
+            style="transition:stroke-dashoffset 1s ease" id="ringFill"/>
+        </svg>
+        <div class="pct" style="color:${col}">${arabicDigits(pct)}٪<small>${QUIZ.title}</small></div>
+      </div>
+      <div class="verdict-txt">${verdict}</div>
+      <div class="score-line">
+        <div class="sc ok"><div class="n">${arabicDigits(correct)}</div><div class="l">صحيحة</div></div>
+        <div class="sc no"><div class="n">${arabicDigits(wrong)}</div><div class="l">خاطئة</div></div>
+        <div class="sc tot"><div class="n">${arabicDigits(tot)}</div><div class="l">الإجمالي</div></div>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-gold" onclick="retryQuiz()">⟳ أعد الاختبار</button>
+        ${isCh?`<button class="btn btn-ghost" onclick="openLesson('${QUIZ.id}')">📖 راجع الشرح</button>`:''}
+        <button class="btn btn-ghost" onclick="goHome()">القائمة الرئيسية</button>
+      </div>
+    </div>
+
+    <div class="rev-head">
+      <h4>مراجعة الإجابات</h4>
+      <div class="rev-filter">
+        <button class="fbtn on" data-f="all" onclick="filterRev('all')">الكل</button>
+        <button class="fbtn" data-f="wrong" onclick="filterRev('wrong')">الغلط فقط (${arabicDigits(wrong)})</button>
+      </div>
+    </div>
+    <div id="reviewList"></div>`;
+  $("#resultBody").innerHTML=html;
+  renderReview("all");
+  setTimeout(()=>{ const r=$("#ringFill"); if(r) r.style.strokeDashoffset=off; },100);
+}
+
+function renderReview(filter){
+  const host=$("#reviewList"); host.innerHTML="";
+  QUIZ.questions.forEach((q,qi)=>{
+    const chosen=QUIZ.answers[qi];
+    const isOk=chosen===q.a;
+    if(filter==="wrong" && isOk) return;
+    const card=document.createElement("div"); card.className="qcard";
+    let opts="";
+    q.o.forEach((txt,oi)=>{
+      let cls="opt locked";
+      if(oi===q.a) cls+=" correct";
+      else if(oi===chosen) cls+=" wrong";
+      opts+=`<div class="${cls}"><span class="ki">${KEYS[oi]}</span><span class="txt">${txt}</span></div>`;
+    });
+    card.innerHTML=`
+      <span class="qnum">السؤال ${arabicDigits(qi+1)} ${isOk?'· ✓':'· ✗'}</span>
+      <div class="qtext">${q.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="expl show"><span class="verdict ${isOk?'ok':'no'}">${isOk?'✓ إجابة صحيحة':'✗ إجابة خاطئة'}</span>${q.e}</div>`;
+    host.appendChild(card);
+  });
+  if(!host.children.length){
+    host.innerHTML=`<div class="qcard" style="text-align:center;color:var(--ok)">ما فيه أخطاء — كل إجاباتك صحيحة 🎯</div>`;
+  }
+}
+
+function filterRev(f){
+  document.querySelectorAll(".fbtn").forEach(b=>b.classList.toggle("on",b.dataset.f===f));
+  renderReview(f);
+}
+
+function retryQuiz(){
+  // rebuild same scope freshly (reshuffled)
+  const id=QUIZ.id;
+  startQuiz(id);
+}
+
+/* ============ INIT ============ */
+$("#totalQ").textContent=arabicDigits(TOTAL_Q);
+renderCurriculum();
+
+
+</script>
+</body>
+</html>
